@@ -17,6 +17,10 @@ class ResPartnerInherit(models.Model):
     sector = fields.Many2one('res.partner.sector', 'Sector')
     # 产品类别
     product_category = fields.Many2one('res.partner.product.category', 'Product Category')
+    # 年收入额
+    annual_income = fields.Many2one('res.partner.annual.income', 'Annual Income')
+    # 注册资本
+    registered_capital = fields.Many2one('res.partner.registered.capital', 'Registered Capital')
     # 营业执照
     business_license = fields.Char('Business License', size=64)
     # 企业规模
@@ -59,6 +63,16 @@ class BaseType(models.AbstractModel):
     name = fields.Char('Name', size=64, required=True)
 
     _sql_constraints = [('partner_base_type_unique', 'unique(name)', _('name must be unique !'))]
+
+
+class RegisteredCapital(models.Model):
+    _name = 'res.partner.registered.capital'
+    _inherit = 'res.partner.base.type'
+
+
+class AnnualIncome(models.Model):
+    _name = 'res.partner.annual.income'
+    _inherit = 'res.partner.base.type'
 
 
 class CompanyType(models.Model):
