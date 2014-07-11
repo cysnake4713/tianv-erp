@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<openerp>
+    <data>
+        <!-- Views-->
+        <record id="view_company_type_tree" model="ir.ui.view">
+            <field name="name">res.partner.company.type.tree</field>
+            <field name="model">res.partner.company.type</field>
+            <field name="arch" type="xml">
+                <tree string="Company Types" editable="top">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_partner_company_type" model="ir.actions.act_window">
+            <field name="name">Project Company Type Setting</field>
+            <field name="res_model">res.partner.company.type</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+        </record>
+        <!--config root-->
+        <menuitem id="menu_config_partner_type" parent="base.menu_base_config" name="Partner Types" sequence="50" groups="base.group_system"/>
+        <!--types-->
+        <menuitem name="Company Type" action="action_partner_company_type" id="menu_partner_company_type" parent="menu_config_partner_type"
+                  sequence="2" groups="base.group_system"/>
+    </data>
+</openerp>
