@@ -1,0 +1,423 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* tianv_sale
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 8.0rc1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-07-18 06:14+0000\n"
+"PO-Revision-Date: 2014-07-18 06:14+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: tianv_sale
+#: model:ir.actions.act_window,name:tianv_sale.action_partner_annual_income
+#: model:ir.ui.menu,name:tianv_sale.menu_partner_annual_income
+#: field:res.partner,annual_income:0
+#: view:res.partner.annual.income:0
+msgid "Annual Income"
+msgstr "年收入额"
+
+#. module: tianv_sale
+#: selection:res.partner,relation:0
+msgid "Bad"
+msgstr "比较糟糕"
+
+#. module: tianv_sale
+#: field:res.partner,business_license:0
+msgid "Business License"
+msgstr "营业执照"
+
+#. module: tianv_sale
+#: field:res.partner,classification:0
+msgid "Classification"
+msgstr "客户分类"
+
+#. module: tianv_sale
+#: selection:res.partner,classification:0
+msgid "Common Client"
+msgstr "普通客户"
+
+#. module: tianv_sale
+#: view:res.partner:0
+msgid "Company Information"
+msgstr "公司信息"
+
+#. module: tianv_sale
+#: view:res.partner:0
+msgid "Company Introduction"
+msgstr "公司简介"
+
+#. module: tianv_sale
+#: model:ir.ui.menu,name:tianv_sale.menu_partner_company_type
+#: field:res.partner,company_type:0
+msgid "Company Type"
+msgstr "公司类型"
+
+#. module: tianv_sale
+#: model:ir.actions.act_window,name:tianv_sale.action_partner_company_type
+#: view:res.partner.company.type:0
+msgid "Company Types"
+msgstr "公司类型"
+
+#. module: tianv_sale
+#: field:res.partner.annual.income,create_uid:0
+#: field:res.partner.company.type,create_uid:0
+#: field:res.partner.customer.type,create_uid:0
+#: field:res.partner.interest.product,create_uid:0
+#: field:res.partner.main.category,create_uid:0
+#: field:res.partner.product.category,create_uid:0
+#: field:res.partner.registered.capital,create_uid:0
+#: field:res.partner.scale,create_uid:0
+#: field:res.partner.sector,create_uid:0
+#: field:res.partner.source,create_uid:0
+#: field:res.partner.status,create_uid:0
+msgid "Created by"
+msgstr "创建人"
+
+#. module: tianv_sale
+#: field:res.partner.annual.income,create_date:0
+#: field:res.partner.company.type,create_date:0
+#: field:res.partner.customer.type,create_date:0
+#: field:res.partner.interest.product,create_date:0
+#: field:res.partner.main.category,create_date:0
+#: field:res.partner.product.category,create_date:0
+#: field:res.partner.registered.capital,create_date:0
+#: field:res.partner.scale,create_date:0
+#: field:res.partner.sector,create_date:0
+#: field:res.partner.source,create_date:0
+#: field:res.partner.status,create_date:0
+msgid "Created on"
+msgstr "创建时间"
+
+#. module: tianv_sale
+#: view:res.partner:0
+msgid "Customer Information"
+msgstr "客户信息"
+
+#. module: tianv_sale
+#: model:ir.actions.act_window,name:tianv_sale.action_partner_customer_type
+#: model:ir.ui.menu,name:tianv_sale.menu_partner_customer_type
+msgid "Customer Type"
+msgstr "客户类型"
+
+#. module: tianv_sale
+#: selection:res.partner,classification:0
+msgid "Else"
+msgstr "其他"
+
+#. module: tianv_sale
+#: field:res.partner,founded_date:0
+msgid "Founded Date"
+msgstr "成立时间"
+
+#. module: tianv_sale
+#: selection:res.partner,relation:0
+msgid "Good"
+msgstr "一般友好"
+
+#. module: tianv_sale
+#: field:res.partner,hobby:0
+msgid "Hobby"
+msgstr "兴趣爱好"
+
+#. module: tianv_sale
+#: field:res.partner,hot:0
+msgid "Hot Client"
+msgstr "热点客户"
+
+#. module: tianv_sale
+#: field:res.partner.annual.income,id:0
+#: field:res.partner.base.type,id:0
+#: field:res.partner.company.type,id:0
+#: field:res.partner.customer.type,id:0
+#: field:res.partner.interest.product,id:0
+#: field:res.partner.main.category,id:0
+#: field:res.partner.product.category,id:0
+#: field:res.partner.registered.capital,id:0
+#: field:res.partner.scale,id:0
+#: field:res.partner.sector,id:0
+#: field:res.partner.source,id:0
+#: field:res.partner.status,id:0
+msgid "ID"
+msgstr "ID"
+
+#. module: tianv_sale
+#: view:res.partner:0
+msgid "Industry Information"
+msgstr "行业信息"
+
+#. module: tianv_sale
+#: model:ir.actions.act_window,name:tianv_sale.action_partner_interest_product
+#: model:ir.ui.menu,name:tianv_sale.menu_partner_interest_product
+#: field:res.partner,interest_product:0
+#: view:res.partner.interest.product:0
+msgid "Interest Product"
+msgstr "兴趣产品"
+
+#. module: tianv_sale
+#: field:res.partner,introduction:0
+msgid "Introduction"
+msgstr "简介"
+
+#. module: tianv_sale
+#: field:res.partner.annual.income,write_uid:0
+#: field:res.partner.company.type,write_uid:0
+#: field:res.partner.customer.type,write_uid:0
+#: field:res.partner.interest.product,write_uid:0
+#: field:res.partner.main.category,write_uid:0
+#: field:res.partner.product.category,write_uid:0
+#: field:res.partner.registered.capital,write_uid:0
+#: field:res.partner.scale,write_uid:0
+#: field:res.partner.sector,write_uid:0
+#: field:res.partner.source,write_uid:0
+#: field:res.partner.status,write_uid:0
+msgid "Last Updated by"
+msgstr "最后编辑人"
+
+#. module: tianv_sale
+#: field:res.partner.annual.income,write_date:0
+#: field:res.partner.company.type,write_date:0
+#: field:res.partner.customer.type,write_date:0
+#: field:res.partner.interest.product,write_date:0
+#: field:res.partner.main.category,write_date:0
+#: field:res.partner.product.category,write_date:0
+#: field:res.partner.registered.capital,write_date:0
+#: field:res.partner.scale,write_date:0
+#: field:res.partner.sector,write_date:0
+#: field:res.partner.source,write_date:0
+#: field:res.partner.status,write_date:0
+msgid "Last Updated on"
+msgstr "最后编辑时间"
+
+#. module: tianv_sale
+#: field:res.partner,legal:0
+msgid "Legal"
+msgstr "法定代表"
+
+#. module: tianv_sale
+#: model:ir.actions.act_window,name:tianv_sale.action_partner_main_category
+#: model:ir.ui.menu,name:tianv_sale.menu_partner_main_category
+#: field:res.partner,main_category:0
+#: view:res.partner.main.category:0
+msgid "Main Category"
+msgstr "主营类别"
+
+#. module: tianv_sale
+#: field:res.partner.annual.income,name:0
+#: field:res.partner.base.type,name:0
+#: field:res.partner.company.type,name:0
+#: field:res.partner.customer.type,name:0
+#: field:res.partner.interest.product,name:0
+#: field:res.partner.main.category,name:0
+#: field:res.partner.product.category,name:0
+#: field:res.partner.registered.capital,name:0
+#: field:res.partner.scale,name:0
+#: field:res.partner.sector,name:0
+#: field:res.partner.source,name:0
+#: field:res.partner.status,name:0
+msgid "Name"
+msgstr "名称"
+
+#. module: tianv_sale
+#: field:res.partner.product.category,parent_id:0
+msgid "Parent Category"
+msgstr "上级类别"
+
+#. module: tianv_sale
+#: model:ir.model,name:tianv_sale.model_res_partner
+#: selection:res.partner,classification:0
+msgid "Partner"
+msgstr "业务伙伴"
+
+#. module: tianv_sale
+#: view:res.partner:0
+#: field:res.partner,number:0
+msgid "Partner Number"
+msgstr "客户编码"
+
+#. module: tianv_sale
+#: model:ir.ui.menu,name:tianv_sale.menu_config_partner_type
+msgid "Partner Types"
+msgstr "客户类型"
+
+#. module: tianv_sale
+#: model:ir.actions.act_window,name:tianv_sale.action_partner_product_category
+#: view:res.partner.product.category:0
+msgid "Product Categories"
+msgstr "产品类别"
+
+#. module: tianv_sale
+#: model:ir.ui.menu,name:tianv_sale.menu_partner_product_category
+#: field:res.partner,product_category:0
+msgid "Product Category"
+msgstr "产品类别"
+
+#. module: tianv_sale
+#: selection:res.partner,classification:0
+msgid "Proxy Client"
+msgstr "代理客户"
+
+#. module: tianv_sale
+#: field:res.partner,qq:0
+msgid "QQ & MSN"
+msgstr "QQ 或 MSN"
+
+#. module: tianv_sale
+#: model:ir.actions.act_window,name:tianv_sale.action_partner_registered_capital
+#: model:ir.ui.menu,name:tianv_sale.menu_partner_registered_capital
+#: field:res.partner,registered_capital:0
+#: view:res.partner.registered.capital:0
+msgid "Registered Capital"
+msgstr "注册资本"
+
+#. module: tianv_sale
+#: field:res.partner,relation:0
+msgid "Relation"
+msgstr "客户关系"
+
+#. module: tianv_sale
+#: model:ir.actions.act_window,name:tianv_sale.action_partner_scale
+#: model:ir.ui.menu,name:tianv_sale.menu_partner_scale
+#: field:res.partner,scale:0
+#: view:res.partner.scale:0
+msgid "Scale"
+msgstr "企业规模"
+
+#. module: tianv_sale
+#: view:res.partner:0
+msgid "Scale Information"
+msgstr "规模信息"
+
+#. module: tianv_sale
+#: model:ir.ui.menu,name:tianv_sale.menu_partner_sector
+#: field:res.partner,sector:0
+msgid "Sector"
+msgstr "行业类别"
+
+#. module: tianv_sale
+#: model:ir.actions.act_window,name:tianv_sale.action_partner_sector
+#: view:res.partner.sector:0
+msgid "Sector Types"
+msgstr "行业类别"
+
+#. module: tianv_sale
+#: model:ir.actions.act_window,name:tianv_sale.action_partner_source
+#: model:ir.ui.menu,name:tianv_sale.menu_partner_source
+#: field:res.partner,source:0
+#: view:res.partner.source:0
+msgid "Source"
+msgstr "客户来源"
+
+#. module: tianv_sale
+#: model:ir.actions.act_window,name:tianv_sale.action_partner_status
+#: model:ir.ui.menu,name:tianv_sale.menu_partner_status
+#: field:res.partner,status:0
+#: view:res.partner.customer.type:0
+#: view:res.partner.status:0
+msgid "Status"
+msgstr "客户状态"
+
+#. module: tianv_sale
+#: selection:res.partner,classification:0
+msgid "Suppler"
+msgstr "供货客户"
+
+#. module: tianv_sale
+#: field:res.partner,customer_type:0
+msgid "Type"
+msgstr "客户类型"
+
+#. module: tianv_sale
+#: selection:res.partner,relation:0
+msgid "Very Bad"
+msgstr "非常糟糕"
+
+#. module: tianv_sale
+#: selection:res.partner,relation:0
+msgid "Very Good"
+msgstr "非常友好"
+
+#. module: tianv_sale
+#: code:addons/tianv_sale/models/res_partner.py:66
+#: sql_constraint:res.partner.annual.income:0
+#: sql_constraint:res.partner.base.type:0
+#: sql_constraint:res.partner.company.type:0
+#: sql_constraint:res.partner.customer.type:0
+#: sql_constraint:res.partner.interest.product:0
+#: sql_constraint:res.partner.main.category:0
+#: sql_constraint:res.partner.product.category:0
+#: sql_constraint:res.partner.registered.capital:0
+#: sql_constraint:res.partner.scale:0
+#: sql_constraint:res.partner.sector:0
+#: sql_constraint:res.partner.source:0
+#: sql_constraint:res.partner.status:0
+#, python-format
+msgid "name must be unique !"
+msgstr "名称不可重复!"
+
+#. module: tianv_sale
+#: model:ir.model,name:tianv_sale.model_res_partner_annual_income
+msgid "res.partner.annual.income"
+msgstr "res.partner.annual.income"
+
+#. module: tianv_sale
+#: model:ir.model,name:tianv_sale.model_res_partner_base_type
+msgid "res.partner.base.type"
+msgstr "res.partner.base.type"
+
+#. module: tianv_sale
+#: model:ir.model,name:tianv_sale.model_res_partner_company_type
+msgid "res.partner.company.type"
+msgstr "res.partner.company.type"
+
+#. module: tianv_sale
+#: model:ir.model,name:tianv_sale.model_res_partner_customer_type
+msgid "res.partner.customer.type"
+msgstr "res.partner.customer.type"
+
+#. module: tianv_sale
+#: model:ir.model,name:tianv_sale.model_res_partner_interest_product
+msgid "res.partner.interest.product"
+msgstr "res.partner.interest.product"
+
+#. module: tianv_sale
+#: model:ir.model,name:tianv_sale.model_res_partner_main_category
+msgid "res.partner.main.category"
+msgstr "res.partner.main.category"
+
+#. module: tianv_sale
+#: model:ir.model,name:tianv_sale.model_res_partner_product_category
+msgid "res.partner.product.category"
+msgstr "res.partner.product.category"
+
+#. module: tianv_sale
+#: model:ir.model,name:tianv_sale.model_res_partner_registered_capital
+msgid "res.partner.registered.capital"
+msgstr "res.partner.registered.capital"
+
+#. module: tianv_sale
+#: model:ir.model,name:tianv_sale.model_res_partner_scale
+msgid "res.partner.scale"
+msgstr "res.partner.scale"
+
+#. module: tianv_sale
+#: model:ir.model,name:tianv_sale.model_res_partner_sector
+msgid "res.partner.sector"
+msgstr "res.partner.sector"
+
+#. module: tianv_sale
+#: model:ir.model,name:tianv_sale.model_res_partner_source
+msgid "res.partner.source"
+msgstr "res.partner.source"
+
+#. module: tianv_sale
+#: model:ir.model,name:tianv_sale.model_res_partner_status
+msgid "res.partner.status"
+msgstr "res.partner.status"
+

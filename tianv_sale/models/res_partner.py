@@ -44,7 +44,7 @@ class ResPartnerInherit(models.Model):
     # 客户类型
     customer_type = fields.Many2one('res.partner.customer.type', 'Type')
     # 热点客户
-    hot = fields.Selection(selection=[('hot', 'Hot Client'), ('common', 'Common Client')], string='Hot')
+    hot = fields.Boolean('Hot Client')
     # 兴趣产品
     interest_product = fields.Many2many('res.partner.interest.product', 'rel_partner_interest_product', 'partner_id', 'interest_id',
                                         'Interest Product')

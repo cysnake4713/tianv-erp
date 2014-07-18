@@ -2,6 +2,12 @@
 <openerp>
     <data>
         <!--action-->
+        <record id="action_partner_customer_type" model="ir.actions.act_window">
+            <field name="name">Customer Type</field>
+            <field name="res_model">res.partner.customer.type</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+        </record>
         <record id="action_partner_company_type" model="ir.actions.act_window">
             <field name="name">Company Types</field>
             <field name="res_model">res.partner.company.type</field>
@@ -68,6 +74,8 @@
         <!--types-->
         <menuitem name="Company Type" action="action_partner_company_type" id="menu_partner_company_type" parent="menu_config_partner_type"
                   sequence="2" groups="base.group_system"/>
+        <menuitem name="Customer Type" action="action_partner_customer_type" id="menu_partner_customer_type" parent="menu_config_partner_type"
+                  sequence="12" groups="base.group_system"/>
         <menuitem name="Main Category" action="action_partner_main_category" id="menu_partner_main_category" parent="menu_config_partner_type"
                   sequence="3" groups="base.group_system"/>
         <menuitem name="Product Category" action="action_partner_product_category" id="menu_partner_product_category"
