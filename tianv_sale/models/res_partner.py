@@ -13,10 +13,10 @@ class ResPartnerInherit(models.Model):
     company_type = fields.Many2one('res.partner.company.type', 'Company Type')
     # 主营类别
     main_category = fields.Many2one('res.partner.main.category', 'Main Category')
-    # 行业类别
-    sector = fields.Many2one('res.partner.sector', 'Sector')
     # 产品类别
     product_category = fields.Many2one('res.partner.product.category', 'Product Category')
+    # 行业类别
+    sector = fields.Many2one('res.partner.sector', 'Sector')
     # 年收入额
     annual_income = fields.Many2one('res.partner.annual.income', 'Annual Income')
     # 注册资本
@@ -36,23 +36,24 @@ class ResPartnerInherit(models.Model):
     hobby = fields.Char('Hobby', size=64)
 
     # 客户分类
-    customer_type = fields.Many2one('res.partner.customer.type', 'Type')
+    classification = fields.Selection(
+        selection=[('common', 'Common Client'), ('partner', 'Partner'), ('proxy', 'Proxy Client'), ('suppler', 'Suppler'), ('else', 'Else')],
+        string='Classification')
     # 客户来源
     source = fields.Many2one('res.partner.source', 'Source')
     # 客户类型
-    customer_type2 = fields.Many2one('res.partner.customer.type2', 'Type2')
+    customer_type = fields.Many2one('res.partner.customer.type', 'Type')
     # 热点客户
-    hot = fields.Many2one('res.partner.hot', 'Hot')
+    hot = fields.Selection(selection=[('hot', 'Hot Client'), ('common', 'Common Client')], string='Hot')
     # 兴趣产品
-    interest_product = fields.Many2one('res.partner.interest.product', 'Interest Product')
+    interest_product = fields.Many2many('res.partner.interest.product', 'rel_partner_interest_product', 'partner_id', 'interest_id',
+                                        'Interest Product')
     # 登记时间
     create_date = fields.Datetime('Create Date')
     # 客户状态
     status = fields.Many2one('res.partner.status', 'Status')
-    # 客户进度
-    stage_id = fields.Many2one('res.partner.stage', 'Stage')
     # 客户关系
-    relation = fields.Many2one('res.partner', 'Relation')
+    relation = fields.Selection(selection=[('very_good', 'Very Good'), ('good', 'Good'), ('bad', 'Bad'), ('very_bad', 'Very Bad')], string='Relation')
     # TODO:客户关系历史记录
     # 公司简介
     introduction = fields.Text('Introduction')
@@ -94,6 +95,8 @@ class ProductCategory(models.Model):
     _name = 'res.partner.product.category'
     _inherit = 'res.partner.base.type'
 
+    parent_id = fields.Many2one('res.partner.main.category', 'Parent Category', required=True)
+
 
 class Scale(models.Model):
     _name = 'res.partner.scale'
@@ -105,28 +108,13 @@ class CustomerType(models.Model):
     _inherit = 'res.partner.base.type'
 
 
-class CustomerType2(models.Model):
-    _name = 'res.partner.customer.type2'
-    _inherit = 'res.partner.base.type'
-
-
 class Source(models.Model):
     _name = 'res.partner.source'
     _inherit = 'res.partner.base.type'
 
 
-class Hot(models.Model):
-    _name = 'res.partner.hot'
-    _inherit = 'res.partner.base.type'
-
-
 class Status(models.Model):
     _name = 'res.partner.status'
-    _inherit = 'res.partner.base.type'
-
-
-class Stage(models.Model):
-    _name = 'res.partner.stage'
     _inherit = 'res.partner.base.type'
 
 
