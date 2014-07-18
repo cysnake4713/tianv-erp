@@ -60,48 +60,99 @@
                 <xpath expr="//field[@name='website']" position="after">
                     <field name="hobby" attrs="{'invisible': [('is_company','=', True)]}"/>
                 </xpath>
-
             </field>
         </record>
-        <!--record id="view_partner_tree_inherit" model="ir.ui.view">
-            <field name="name">res.partner.tree.inherit</field>
-            <field name="model">res.partner</field>
-            <field name="inherit_id" ref="base.view_partner_tree"/>
+        <!-- Views-->
+        <record id="view_company_type_tree" model="ir.ui.view">
+            <field name="name">res.partner.company.type.tree</field>
+            <field name="model">res.partner.company.type</field>
             <field name="arch" type="xml">
-                <xpath expr="//field[@name='display_name']" position="before">
-                    <field name="state_id"/>
-                    <field name="city"/>
-                    <field name="parent_id"/>
+                <tree string="Company Types" editable="top">
                     <field name="name"/>
-                    <field name="function"/>
-                </xpath>
-                <xpath expr="//field[@name='phone']" position="after">
-                    <field name="mobile"/>
-                    <field name="related_projects_number"/>
-                    <field name="related_projects"/>
-                    <field name="importance"/>
-                </xpath>
-                <xpath expr="//field[@name='display_name']" position="attributes">
-                    <attribute name="invisible">1</attribute>
-                </xpath>
-                <xpath expr="//field[@name='email']" position="attributes">
-                    <attribute name="invisible">1</attribute>
-                </xpath>
+                </tree>
             </field>
         </record>
-        <record id="view_res_partner_filter_inherit" model="ir.ui.view">
-            <field name="name">res.partner.select.inherit</field>
-            <field name="model">res.partner</field>
-            <field name="inherit_id" ref="base.view_res_partner_filter"/>
+        <record id="view_main_category_tree" model="ir.ui.view">
+            <field name="name">res.partner.main.category.tree</field>
+            <field name="model">res.partner.main.category</field>
             <field name="arch" type="xml">
-                <xpath expr="//field[@name='user_id']" position="after">
-                    <field name="state_id"/>
-                    <field name="city"/>
-                    <field name="function"/>
-                    <field name="importance"/>
-                    <field name="mobile"/>
-                </xpath>
+                <tree string="Main Category" editable="top">
+                    <field name="name"/>
+                </tree>
             </field>
-        </record-->
+        </record>
+        <record id="view_product_category_tree" model="ir.ui.view">
+            <field name="name">res.partner.product.category.tree</field>
+            <field name="model">res.partner.product.category</field>
+            <field name="arch" type="xml">
+                <tree string="Product Categories" editable="top">
+                    <field name="name"/>
+                    <field name="parent_id"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_sector_tree" model="ir.ui.view">
+            <field name="name">res.partner.sector.tree</field>
+            <field name="model">res.partner.sector</field>
+            <field name="arch" type="xml">
+                <tree string="Sector Types" editable="top">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_annual_income_tree" model="ir.ui.view">
+            <field name="name">res.partner.annual.income.tree</field>
+            <field name="model">res.partner.annual.income</field>
+            <field name="arch" type="xml">
+                <tree string="Annual Income" editable="top">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_registered_capital_tree" model="ir.ui.view">
+            <field name="name">res.partner.registered.capital.tree</field>
+            <field name="model">res.partner.registered.capital</field>
+            <field name="arch" type="xml">
+                <tree string="Registered Capital" editable="top">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_scale_tree" model="ir.ui.view">
+            <field name="name">res.partner.scale.tree</field>
+            <field name="model">res.partner.scale</field>
+            <field name="arch" type="xml">
+                <tree string="Scale" editable="top">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_source_tree" model="ir.ui.view">
+            <field name="name">res.partner.source.tree</field>
+            <field name="model">res.partner.source</field>
+            <field name="arch" type="xml">
+                <tree string="Source" editable="top">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_interest_product_tree" model="ir.ui.view">
+            <field name="name">res.partner.interest.product.tree</field>
+            <field name="model">res.partner.interest.product</field>
+            <field name="arch" type="xml">
+                <tree string="Interest Product" editable="top">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_status_tree" model="ir.ui.view">
+            <field name="name">res.partner.status.tree</field>
+            <field name="model">res.partner.status</field>
+            <field name="arch" type="xml">
+                <tree string="Status" editable="top">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
     </data>
 </openerp>

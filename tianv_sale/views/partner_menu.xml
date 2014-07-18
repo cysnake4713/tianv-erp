@@ -1,27 +1,93 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <openerp>
     <data>
-        <!-- Views-->
-        <record id="view_company_type_tree" model="ir.ui.view">
-            <field name="name">res.partner.company.type.tree</field>
-            <field name="model">res.partner.company.type</field>
-            <field name="arch" type="xml">
-                <tree string="Company Types" editable="top">
-                    <field name="name"/>
-                </tree>
-            </field>
-        </record>
-
+        <!--action-->
         <record id="action_partner_company_type" model="ir.actions.act_window">
-            <field name="name">Project Company Type Setting</field>
+            <field name="name">Company Types</field>
             <field name="res_model">res.partner.company.type</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree</field>
         </record>
+        <record id="action_partner_main_category" model="ir.actions.act_window">
+            <field name="name">Main Category</field>
+            <field name="res_model">res.partner.main.category</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+        </record>
+        <record id="action_partner_product_category" model="ir.actions.act_window">
+            <field name="name">Product Categories</field>
+            <field name="res_model">res.partner.product.category</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+        </record>
+        <record id="action_partner_sector" model="ir.actions.act_window">
+            <field name="name">Sector Types</field>
+            <field name="res_model">res.partner.sector</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+        </record>
+        <record id="action_partner_annual_income" model="ir.actions.act_window">
+            <field name="name">Annual Income</field>
+            <field name="res_model">res.partner.annual.income</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+        </record>
+        <record id="action_partner_registered_capital" model="ir.actions.act_window">
+            <field name="name">Registered Capital</field>
+            <field name="res_model">res.partner.registered.capital</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+        </record>
+        <record id="action_partner_scale" model="ir.actions.act_window">
+            <field name="name">Scale</field>
+            <field name="res_model">res.partner.scale</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+        </record>
+        <record id="action_partner_source" model="ir.actions.act_window">
+            <field name="name">Source</field>
+            <field name="res_model">res.partner.source</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+        </record>
+        <record id="action_partner_interest_product" model="ir.actions.act_window">
+            <field name="name">Interest Product</field>
+            <field name="res_model">res.partner.interest.product</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+        </record>
+        <record id="action_partner_status" model="ir.actions.act_window">
+            <field name="name">Status</field>
+            <field name="res_model">res.partner.status</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+        </record>
+
         <!--config root-->
         <menuitem id="menu_config_partner_type" parent="base.menu_base_config" name="Partner Types" sequence="50" groups="base.group_system"/>
         <!--types-->
         <menuitem name="Company Type" action="action_partner_company_type" id="menu_partner_company_type" parent="menu_config_partner_type"
                   sequence="2" groups="base.group_system"/>
+        <menuitem name="Main Category" action="action_partner_main_category" id="menu_partner_main_category" parent="menu_config_partner_type"
+                  sequence="3" groups="base.group_system"/>
+        <menuitem name="Product Category" action="action_partner_product_category" id="menu_partner_product_category"
+                  parent="menu_config_partner_type"
+                  sequence="4" groups="base.group_system"/>
+        <menuitem name="Sector" action="action_partner_sector" id="menu_partner_sector" parent="menu_config_partner_type"
+                  sequence="5" groups="base.group_system"/>
+        <menuitem name="Annual Income" action="action_partner_annual_income" id="menu_partner_annual_income" parent="menu_config_partner_type"
+                  sequence="6" groups="base.group_system"/>
+        <menuitem name="Registered Capital" action="action_partner_registered_capital" id="menu_partner_registered_capital"
+                  parent="menu_config_partner_type"
+                  sequence="7" groups="base.group_system"/>
+        <menuitem name="Scale" action="action_partner_scale" id="menu_partner_scale" parent="menu_config_partner_type"
+                  sequence="8" groups="base.group_system"/>
+        <menuitem name="Source" action="action_partner_source" id="menu_partner_source" parent="menu_config_partner_type"
+                  sequence="9" groups="base.group_system"/>
+        <menuitem name="Interest Product" action="action_partner_interest_product" id="menu_partner_interest_product"
+                  parent="menu_config_partner_type"
+                  sequence="10" groups="base.group_system"/>
+        <menuitem name="Status" action="action_partner_status" id="menu_partner_status" parent="menu_config_partner_type"
+                  sequence="11" groups="base.group_system"/>
     </data>
 </openerp>
