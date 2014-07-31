@@ -1,5 +1,5 @@
 # coding=utf-8
-from openerp import fields, api, models
+from openerp import fields, models
 from openerp.tools.translate import _
 
 __author__ = 'cysnake4713'
@@ -61,9 +61,18 @@ class ResPartnerInherit(models.Model):
 
 class BaseType(models.AbstractModel):
     _name = 'res.partner.base.type'
+    _order = 'index'
+
     name = fields.Char('Name', size=64, required=True)
+    index = fields.Integer('Index')
+    cardinal = fields.Float('Cardinal', (5, 1))
 
     _sql_constraints = [('partner_base_type_unique', 'unique(name)', _('name must be unique !'))]
+
+    _defaults = {
+        'index': 10,
+        'cardinal': 1,
+    }
 
 
 class RegisteredCapital(models.Model):

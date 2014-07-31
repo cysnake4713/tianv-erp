@@ -69,6 +69,8 @@
             <field name="arch" type="xml">
                 <tree string="Company Types" editable="top">
                     <field name="name"/>
+                    <field name="index"/>
+                    <field name="cardinal"/>
                 </tree>
             </field>
         </record>
@@ -78,6 +80,8 @@
             <field name="arch" type="xml">
                 <tree string="Main Category" editable="top">
                     <field name="name"/>
+                    <field name="index"/>
+                    <field name="cardinal"/>
                 </tree>
             </field>
         </record>
@@ -88,6 +92,8 @@
                 <tree string="Product Categories" editable="top">
                     <field name="name"/>
                     <field name="parent_id"/>
+                    <field name="index"/>
+                    <field name="cardinal"/>
                 </tree>
             </field>
         </record>
@@ -97,6 +103,8 @@
             <field name="arch" type="xml">
                 <tree string="Sector Types" editable="top">
                     <field name="name"/>
+                    <field name="index"/>
+                    <field name="cardinal"/>
                 </tree>
             </field>
         </record>
@@ -106,6 +114,8 @@
             <field name="arch" type="xml">
                 <tree string="Annual Income" editable="top">
                     <field name="name"/>
+                    <field name="index"/>
+                    <field name="cardinal"/>
                 </tree>
             </field>
         </record>
@@ -115,6 +125,8 @@
             <field name="arch" type="xml">
                 <tree string="Registered Capital" editable="top">
                     <field name="name"/>
+                    <field name="index"/>
+                    <field name="cardinal"/>
                 </tree>
             </field>
         </record>
@@ -124,6 +136,8 @@
             <field name="arch" type="xml">
                 <tree string="Scale" editable="top">
                     <field name="name"/>
+                    <field name="index"/>
+                    <field name="cardinal"/>
                 </tree>
             </field>
         </record>
@@ -133,6 +147,8 @@
             <field name="arch" type="xml">
                 <tree string="Source" editable="top">
                     <field name="name"/>
+                    <field name="index"/>
+                    <field name="cardinal"/>
                 </tree>
             </field>
         </record>
@@ -142,6 +158,8 @@
             <field name="arch" type="xml">
                 <tree string="Interest Product" editable="top">
                     <field name="name"/>
+                    <field name="index"/>
+                    <field name="cardinal"/>
                 </tree>
             </field>
         </record>
@@ -151,6 +169,8 @@
             <field name="arch" type="xml">
                 <tree string="Status" editable="top">
                     <field name="name"/>
+                    <field name="index"/>
+                    <field name="cardinal"/>
                 </tree>
             </field>
         </record>
@@ -160,6 +180,8 @@
             <field name="arch" type="xml">
                 <tree string="Status" editable="top">
                     <field name="name"/>
+                    <field name="index"/>
+                    <field name="cardinal"/>
                 </tree>
             </field>
         </record>
