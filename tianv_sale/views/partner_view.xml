@@ -28,7 +28,7 @@
                                 <field name="registered_capital"/>
                                 <field name="business_license"/>
                                 <field name="scale"/>
-                                <field name="legal" context="{'default_parent_id':active_id}"/>
+                                <field name="legal"/>
                             </group>
                         </group>
                     </page>
@@ -46,7 +46,7 @@
                                 <field name="relation"/>
                             </group>
                             <group>
-                                <field name="create_date" readonly="1"/>
+                                <field name="register_date"/>
                             </group>
                         </group>
                     </page>
@@ -59,6 +59,7 @@
                 </xpath>
                 <xpath expr="//field[@name='website']" position="after">
                     <field name="hobby" attrs="{'invisible': [('is_company','=', True)]}"/>
+                    <field name="gender" attrs="{'invisible': [('is_company','=', True)]}"/>
                 </xpath>
             </field>
         </record>

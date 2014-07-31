@@ -26,7 +26,7 @@ class ResPartnerInherit(models.Model):
     # 企业规模
     scale = fields.Many2one('res.partner.scale', 'Scale')
     # 法定代表
-    legal = fields.Many2one('res.partner', 'Legal')
+    legal = fields.Char('Legal', size=64)
     # 成立时间
     founded_date = fields.Date('Founded Date')
 
@@ -34,10 +34,12 @@ class ResPartnerInherit(models.Model):
     qq = fields.Char('QQ & MSN', size=32)
     # 兴趣爱好
     hobby = fields.Char('Hobby', size=64)
+    # 性别
+    gender = fields.Selection([('male', 'Male'), ('female', 'Female')], 'Gender')
 
     # 客户分类
     classification = fields.Selection(
-        selection=[('common', 'Common Client'), ('partner', 'Partner'), ('proxy', 'Proxy Client'), ('suppler', 'Suppler'), ('else', 'Else')],
+        selection=[('common', 'Common Client'), ('partner', 'Partner'), ('proxy', 'Proxy Client'), ('important', 'Important'), ('else', 'Else')],
         string='Classification')
     # 客户来源
     source = fields.Many2one('res.partner.source', 'Source')
@@ -49,7 +51,11 @@ class ResPartnerInherit(models.Model):
     interest_product = fields.Many2many('res.partner.interest.product', 'rel_partner_interest_product', 'partner_id', 'interest_id',
                                         'Interest Product')
     # 登记时间
+    register_date = fields.Date('Register Date')
+
     create_date = fields.Datetime('Create Date')
+
+    create_uid = fields.Many2one('res.users', 'Create Uid')
     # 客户状态
     status = fields.Many2one('res.partner.status', 'Status')
     # 客户关系
@@ -60,19 +66,24 @@ class ResPartnerInherit(models.Model):
 
 
 class BaseType(models.AbstractModel):
-    _name = 'res.partner.base.type'
+    _name = 'tools.base.type'
     _order = 'index'
 
     name = fields.Char('Name', size=64, required=True)
     index = fields.Integer('Index')
     cardinal = fields.Float('Cardinal', (5, 1))
 
-    _sql_constraints = [('partner_base_type_unique', 'unique(name)', _('name must be unique !'))]
-
     _defaults = {
         'index': 10,
         'cardinal': 1,
     }
+
+
+class BaseTypeWithConstraints(models.AbstractModel):
+    _name = 'res.partner.base.type'
+    _inherit = 'tools.base.type'
+
+    _sql_constraints = [('partner_base_type_unique', 'unique(name)', _('name must be unique !'))]
 
 
 class RegisteredCapital(models.Model):
@@ -102,9 +113,11 @@ class CompanyPartnerType(models.Model):
 
 class ProductCategory(models.Model):
     _name = 'res.partner.product.category'
-    _inherit = 'res.partner.base.type'
+    _inherit = 'tools.base.type'
 
     parent_id = fields.Many2one('res.partner.main.category', 'Parent Category', required=True)
+
+    _sql_constraints = [('product_category_type_unique', 'unique(name,parent_id)', _('name must be unique !'))]
 
 
 class Scale(models.Model):
