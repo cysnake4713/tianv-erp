@@ -8,7 +8,7 @@ __author__ = 'cysnake4713'
 
 class ResPartnerInherit(models.Model):
     _inherit = "res.partner"
-    # _log_create = False
+    _order = 'create_date desc'
 
     number = fields.Char('Partner Number', size=128)
     # 公司类型
