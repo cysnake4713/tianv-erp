@@ -156,6 +156,12 @@
                     <field name="hobby" attrs="{'invisible': [('is_company','=', True)]}"/>
                     <field name="gender" attrs="{'invisible': [('is_company','=', True)]}"/>
                 </xpath>
+                <xpath expr="//page[@name='sales_purchases']/group" position="after">
+                    <group col="4">
+                        <field name="create_date" readonly="1"/>
+                        <field name="create_uid" readonly="1"/>
+                    </group>
+                </xpath>
             </field>
         </record>
         <!-- Views-->
