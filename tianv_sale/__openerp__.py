@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 # __author__ = cysnake4713@gmail.com
-##############################################################################
+# #############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -31,6 +31,9 @@ Tianv Sales Module
     'data': [
         'views/partner_menu.xml',
         'views/partner_view.xml',
+
+        'security/base_security.xml',
+        'security/ir.model.access.csv',
     ],
     'qweb': [
     ],

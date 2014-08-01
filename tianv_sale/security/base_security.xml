@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<openerp>
+    <data noupdate="1">
+
+        <!--
+            Users Groups
+            Note that the field 'category_id' is set later in
+            base/module/module_data.xml
+        -->
+        <record model="res.groups" id="group_sale_log_market">
+            <field name="name">编辑客户归属</field>
+        </record>
+
+    </data>
+</openerp>
+
