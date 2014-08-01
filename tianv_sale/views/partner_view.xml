@@ -2,6 +2,35 @@
 <openerp>
     <data>
         <!--View Inherit-->
+        <record id="view_partner_tree_contact" model="ir.ui.view">
+            <field name="name">res.partner.tree.contact</field>
+            <field name="model">res.partner</field>
+            <field name="arch" type="xml">
+                <tree string="Contact">
+                    <field name="name"/>
+                    <field name="title"/>
+                    <field name="parent_id"/>
+                    <field name="mobile"/>
+                    <field name="phone"/>
+                    <field name="email"/>
+                    <field name="qq"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_partner_tree_company" model="ir.ui.view">
+            <field name="name">res.partner.tree.company</field>
+            <field name="model">res.partner</field>
+            <field name="arch" type="xml">
+                <tree string="Company">
+                    <field name="name"/>
+                    <field name="classification"/>
+                    <field name="customer_type"/>
+                    <field name="status"/>
+                    <field name="mobile"/>
+                    <field name="phone"/>
+                </tree>
+            </field>
+        </record>
         <record id="view_partner_form_inherit_tianv_project" model="ir.ui.view">
             <field name="name">res.partner.form.inherit</field>
             <field name="model">res.partner</field>
@@ -13,10 +42,7 @@
                                attrs="{'invisible': [('is_company','=', False)]}"/>
                     </h2>
                 </xpath>
-                <xpath expr="//page[@string='Internal Notes']" position="before">
-                    <page string="Company Introduction" attrs="{'invisible': [('is_company','=', False)]}">
-                        <field name="introduction"/>
-                    </page>
+                <xpath expr="//page[@string='Contacts']" position="before">
                     <page string="Company Information" attrs="{'invisible': [('is_company','=', False)]}">
                         <group>
                             <group string="Industry Information">
@@ -34,7 +60,10 @@
                                 <field name="legal"/>
                             </group>
                         </group>
+                        <field name="introduction"/>
                     </page>
+                </xpath>
+                <xpath expr="//page[@string='Contacts']" position="after">
                     <page string="Customer Information" attrs="{'invisible': [('is_company','=', False)]}">
                         <group>
                             <group>
@@ -52,9 +81,72 @@
                                 <field name="register_date"/>
                             </group>
                         </group>
+                        <!--field name="comment" placeholder="Put an internal note..."/-->
                     </page>
                     <page string="Logs" attrs="{'invisible': [('is_company','=', False)]}">
-                        <field name="logs"/>
+                        <field name="logs">
+                            <tree editable="top">
+                                <field name="start_date"/>
+                                <field name="end_date"/>
+                                <field name="belong_type"/>
+                                <field name="belong_to" attrs="{'invisible':[('belong_type','=','company')]}"/>
+                                <field name="build_to"/>
+                                <field name="trace_by"/>
+                                <field name="comment"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+                <!--xpath expr="//page[@name='internal_notes']" position="replace"/-->
+                <xpath expr="//page[@string='Contacts']" position="replace">
+                    <page string="Contacts" attrs="{'invisible': [('is_company','=',False), ('child_ids', '=', [])]}" autofocus="autofocus">
+                        <field name="child_ids"
+                               context="{'tree_view_ref':'tianv_sale.view_partner_tree_contact','default_parent_id': active_id, 'default_street': street, 'default_street2': street2, 'default_city': city, 'default_state_id': state_id, 'default_zip': zip, 'default_country_id': country_id, 'default_supplier': supplier, 'default_customer': customer, 'default_use_parent_address': True}">
+                            <form string="Contact">
+                                <sheet>
+                                    <field name="image" widget='image' class="oe_avatar oe_left" options='{"preview_image": "image_medium"}'/>
+                                    <div class="oe_title">
+                                        <label for="name" class="oe_edit_only"/>
+                                        <h1>
+                                            <field name="name" style="width: 70%%"/>
+                                        </h1>
+                                        <field name="category_id" widget="many2many_tags" placeholder="Tags..." style="width: 70%%"/>
+                                    </div>
+                                    <group>
+                                        <field name="function" placeholder="e.g. Sales Director"/>
+                                        <field name="title"/>
+                                        <field name="email"/>
+                                        <field name="phone"/>
+                                        <field name="mobile"/>
+                                        <field name="qq"/>
+                                    </group>
+                                    <div>
+                                        <field name="use_parent_address"/>
+                                        <label for="use_parent_address"/>
+                                    </div>
+                                    <group>
+                                        <label for="type"/>
+                                        <div name="div_type">
+                                            <field class="oe_inline" name="type"/>
+                                        </div>
+                                        <label for="street" string="Address" attrs="{'invisible': [('use_parent_address','=', True)]}"/>
+                                        <div attrs="{'invisible': [('use_parent_address','=', True)]}" name="div_address">
+                                            <field name="street" placeholder="Street..."/>
+                                            <field name="street2"/>
+                                            <div class="address_format">
+                                                <field name="city" placeholder="City" style="width: 40%%"/>
+                                                <field name="state_id" class="oe_no_button" placeholder="State" style="width: 37%%"
+                                                       options='{"no_open": True}' on_change="onchange_state(state_id)"/>
+                                                <field name="zip" placeholder="ZIP" style="width: 20%%"/>
+                                            </div>
+                                            <field name="country_id" placeholder="Country" class="oe_no_button" options='{"no_open": True}'/>
+                                        </div>
+                                    </group>
+                                    <field name="supplier" invisible="True"/>
+                                    <field name="customer" invisible="True"/>
+                                </sheet>
+                            </form>
+                        </field>
                     </page>
                 </xpath>
                 <xpath expr="//field[@name='email']" position="after">
@@ -196,8 +288,9 @@
                 <tree string="Log" editable="top">
                     <field name="start_date"/>
                     <field name="end_date"/>
+                    <field name="partner_id"/>
                     <field name="belong_type"/>
-                    <field name="belong_to"/>
+                    <field name="belong_to" attrs="{'invisible':[('belong_type','=','company')]}"/>
                     <field name="build_to"/>
                     <field name="trace_by"/>
                     <field name="comment"/>

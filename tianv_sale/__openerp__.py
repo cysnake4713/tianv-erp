@@ -29,8 +29,8 @@ Tianv Sales Module
     'category': 'Sales',
     'demo_xml': [],
     'data': [
-        'views/partner_menu.xml',
         'views/partner_view.xml',
+        'views/partner_menu.xml',
 
         'security/base_security.xml',
         'security/ir.model.access.csv',
