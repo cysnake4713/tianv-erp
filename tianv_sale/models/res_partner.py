@@ -1,12 +1,14 @@
 # coding=utf-8
 from openerp import fields, models
 from openerp.tools.translate import _
+import openerp
 
 __author__ = 'cysnake4713'
 
 
 class ResPartnerInherit(models.Model):
     _inherit = "res.partner"
+    # _log_create = False
 
     number = fields.Char('Partner Number', size=128)
     # 公司类型
@@ -53,16 +55,16 @@ class ResPartnerInherit(models.Model):
     # 登记时间
     register_date = fields.Date('Register Date')
 
-    create_date = fields.Datetime('Create Date')
-
-    create_uid = fields.Many2one('res.users', 'Create Uid')
+    create_date_import = fields.Datetime('Create Date Import')
+    create_uid_import = fields.Many2one('res.users', 'Create Uid Import')
     # 客户状态
     status = fields.Many2one('res.partner.status', 'Status')
     # 客户关系
     relation = fields.Selection(selection=[('very_good', 'Very Good'), ('good', 'Good'), ('bad', 'Bad'), ('very_bad', 'Very Bad')], string='Relation')
-    # TODO:客户关系历史记录
     # 公司简介
     introduction = fields.Text('Introduction')
+
+    logs = fields.One2many('res.partner.market.log', 'partner_id', 'Logs')
 
 
 class BaseType(models.AbstractModel):
@@ -143,3 +145,17 @@ class Status(models.Model):
 class InterestProduct(models.Model):
     _name = 'res.partner.interest.product'
     _inherit = 'res.partner.base.type'
+
+
+class PartnerLog(models.Model):
+    _name = 'res.partner.market.log'
+    _order = 'start_date desc'
+
+    start_date = fields.Date('Start Date')
+    end_date = fields.Date('End Date')
+    belong_type = fields.Selection([('company', 'Company Source'), ('partner', 'Partner Source')], 'Belong Type')
+    belong_to = fields.Many2one('res.users', 'Belong To')
+    build_to = fields.Many2one('res.users', 'Build To')
+    trace_by = fields.Many2one('res.users', 'Trace By')
+    partner_id = fields.Many2one('res.partner', 'Partner', ondelete='cascade')
+    comment = fields.Char('Comment')

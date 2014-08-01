@@ -14,6 +14,9 @@
                     </h2>
                 </xpath>
                 <xpath expr="//page[@string='Internal Notes']" position="before">
+                    <page string="Company Introduction" attrs="{'invisible': [('is_company','=', False)]}">
+                        <field name="introduction"/>
+                    </page>
                     <page string="Company Information" attrs="{'invisible': [('is_company','=', False)]}">
                         <group>
                             <group string="Industry Information">
@@ -50,8 +53,8 @@
                             </group>
                         </group>
                     </page>
-                    <page string="Company Introduction" attrs="{'invisible': [('is_company','=', False)]}">
-                        <field name="introduction"/>
+                    <page string="Logs" attrs="{'invisible': [('is_company','=', False)]}">
+                        <field name="logs"/>
                     </page>
                 </xpath>
                 <xpath expr="//field[@name='email']" position="after">
@@ -175,7 +178,7 @@
                 </tree>
             </field>
         </record>
-         <record id="view_customer_type_tree" model="ir.ui.view">
+        <record id="view_customer_type_tree" model="ir.ui.view">
             <field name="name">res.partner.customer.type.tree</field>
             <field name="model">res.partner.customer.type</field>
             <field name="arch" type="xml">
@@ -183,6 +186,21 @@
                     <field name="name"/>
                     <field name="index"/>
                     <field name="cardinal"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_customer_log_tree" model="ir.ui.view">
+            <field name="name">res.partner.market.log.tree</field>
+            <field name="model">res.partner.market.log</field>
+            <field name="arch" type="xml">
+                <tree string="Log" editable="top">
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                    <field name="belong_type"/>
+                    <field name="belong_to"/>
+                    <field name="build_to"/>
+                    <field name="trace_by"/>
+                    <field name="comment"/>
                 </tree>
             </field>
         </record>

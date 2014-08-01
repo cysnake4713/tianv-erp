@@ -68,7 +68,12 @@
             <field name="view_type">form</field>
             <field name="view_mode">tree</field>
         </record>
-
+        <record id="action_partner_log" model="ir.actions.act_window">
+            <field name="name">Logs</field>
+            <field name="res_model">res.partner.market.log</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+        </record>
         <!--config root-->
         <menuitem id="menu_config_partner_type" parent="base.menu_base_config" name="Partner Types" sequence="50" groups="base.group_system"/>
         <!--types-->
@@ -97,5 +102,8 @@
                   sequence="10" groups="base.group_system"/>
         <menuitem name="Status" action="action_partner_status" id="menu_partner_status" parent="menu_config_partner_type"
                   sequence="11" groups="base.group_system"/>
+        <menuitem name="Logs" action="action_partner_log" id="menu_partner_logs" parent="menu_config_partner_type"
+                  sequence="12" groups="base.group_system"/>
+
     </data>
 </openerp>
