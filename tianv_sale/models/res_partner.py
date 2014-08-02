@@ -1,7 +1,6 @@
 # coding=utf-8
 from openerp import fields, models
 from openerp.tools.translate import _
-import openerp
 
 __author__ = 'cysnake4713'
 
