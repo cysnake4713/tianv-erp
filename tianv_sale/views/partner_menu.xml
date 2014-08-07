@@ -7,7 +7,7 @@
             <field name="res_model">res.partner</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
-            <field name="domain" eval="[('is_company','=',True)]"/>
+            <field name="domain" eval="[('is_company','=',True),('customer','=',True)]"/>
             <field name="context">{'tree_view_ref':'tianv_sale.view_partner_tree_company'}</field>
         </record>
         <record id="action_partner_sign" model="ir.actions.act_window">
