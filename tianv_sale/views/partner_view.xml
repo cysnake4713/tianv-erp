@@ -14,6 +14,7 @@
                     <field name="phone"/>
                     <field name="email"/>
                     <field name="qq"/>
+                    <field name="create_date"/>
                 </tree>
             </field>
         </record>
@@ -28,6 +29,7 @@
                     <field name="status"/>
                     <field name="mobile"/>
                     <field name="phone"/>
+                    <field name="create_date"/>
                 </tree>
             </field>
         </record>
