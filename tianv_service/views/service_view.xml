@@ -7,7 +7,12 @@
             <field name="model">tianv.service.service</field>
             <field name="arch" type="xml">
                 <tree string="Services">
-                    <field name="name"/>
+                    <field name="name" string="Service Name"/>
+                    <field name="product_id"/>
+                    <field name="service_status"/>
+                    <field name="date_start"/>
+                    <field name="date"/>
+                    <field name="state"/>
                 </tree>
             </field>
         </record>
