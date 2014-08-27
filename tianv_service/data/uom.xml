@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <openerp>
     <data noupdate="0">
         <record id="uom_cate_0001" model="product.uom.categ">
@@ -10,6 +10,7 @@
             <field name="rounding" eval="1.0"/>
             <field name="uom_type">reference</field>
             <field name="factor_inv" eval="1.0"/>
+            <field name="factor" eval="1.0"/>
         </record>
         <record id="uom_season" model="product.uom">
             <field name="name">季度</field>

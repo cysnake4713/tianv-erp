@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<openerp>
+    <data>
+        <!--客户信息-->
+        <record id="action_service_service_all" model="ir.actions.act_window">
+            <field name="name">服务信息</field>
+            <field name="res_model">tianv.service.service</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!--root-->
+        <menuitem id="menu_service_root" name="服务" sequence="30" groups=""/>
+        <!--management-->
+        <menuitem id="menu_service_service_manager" parent="menu_service_root" name="服务管理" sequence="5" />
+        <menuitem name="服务信息" id="menu_service_service_all" parent="menu_service_service_manager" action="action_service_service_all" sequence="4"/>
+        <!--config-->
+
+    </data>
+</openerp>

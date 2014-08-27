@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<openerp>
+    <data>
+        <!--View Inherit-->
+        <record id="view_service_service_all_tree" model="ir.ui.view">
+            <field name="name">tianv.service.service.tree</field>
+            <field name="model">tianv.service.service</field>
+            <field name="arch" type="xml">
+                <tree string="Services">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_service_service_all_form" model="ir.ui.view">
+            <field name="name">tianv.service.service.form</field>
+            <field name="model">tianv.service.service</field>
+            <field name="arch" type="xml">
+                <form string="Services">
+                    <group>
+                        <field name="name"/>
+                        <field name="date_start"/>
+                        <field name="date"/>
+                        <field name="partner_id"/>
+                        <field name="manager_id"/>
+                        <field name="product_id" domain="[('categ_id', 'child_of', [%(.prod_cate_00002)d])]"/>
+                        <field name="product_unit"/>
+                        <field name="importance"/>
+                        <field name="service_level"/>
+
+                        <field name="account_number"/>
+                        <field name="service_size"/>
+                        <field name="service_price"/>
+                        <field name="service_status"/>
+                        <field name="identification"/>
+                        <field name="password"/>
+                        <field name="port"/>
+                        <field name="domain_info"/>
+                        <field name="connect_info"/>
+                        <field name="comment"/>
+
+                    </group>
+                </form>
+            </field>
+        </record>
+    </data>
+</openerp>
