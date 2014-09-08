@@ -46,11 +46,10 @@
                             </group>
                             <group string="归属信息">
                                 <field name="partner_id" domain="[('customer', '=', True)]"/>
-
                                 <field name="manager_id"/>
                             </group>
                             <group string="产品信息">
-                                <field name="product_id" domain="[('categ_id', 'child_of', [%(.prod_cate_00002)d])]"/>
+                                <field name="product_id" domain="[('categ_id', 'child_of', [%(prod_cate_00002)d])]"/>
                                 <field name="product_size"/>
                                 <field name="product_unit"/>
                                 <field name="service_level"/>

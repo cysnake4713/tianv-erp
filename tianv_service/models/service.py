@@ -71,3 +71,14 @@ class Service(models.Model):
             self.product_id.categ_id.name if self.product_id and self.product_id.categ_id else ''
         ]
         self.name = ''.join(name)
+
+
+class ServiceRecord(models.Model):
+    _name = "tianv.service.service_record"
+    _description = "Service record"
+
+    start_date = fields.Date('Start Date')
+    end_date = fields.Date('End Date')
+    price = fields.Float('Service Price', (10, 2))
+    service_id = fields.Many2one('tianv.service.service', 'Service')
+    order_id = fields.Many2one('sale.order', 'Order')
