@@ -30,9 +30,9 @@ class Service(models.Model):
     service_level = fields.Selection([('stand', 'Stand'), ('pro', 'Pro'), ('pro_iv', 'Pro IV')], 'Service Level')
     # 产品单位
     product_unit = fields.Selection([('MB', 'MB'), ('GB', 'GB'), ('year', 'Year')], 'Product Unit')
-    #服务状态
+    # 服务状态
     service_status = fields.Selection([('stop', 'Stop'), ('pause', 'Pause'), ('normal', 'Normal')], 'Service Status')
-    #唯一标签
+    # 唯一标签
     identification = fields.Char('Identification')
     #服务密码
     password = fields.Char('Password')
@@ -48,3 +48,14 @@ class Service(models.Model):
     _defaults = {
         'type': 'contract',
     }
+
+
+class ServiceRecord(models.Model):
+    _name = "tianv.service.service_record"
+    _description = "Service record"
+
+    start_date = fields.Date('Start Date')
+    end_date = fields.Date('End Date')
+    price = fields.Float('Service Price', (10, 2))
+    service_id = fields.Many2one('tianv.service.service', 'Service')
+    order_id = fields.Many2one('sale.order', 'Order')
