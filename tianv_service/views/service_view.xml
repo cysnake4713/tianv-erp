@@ -22,7 +22,7 @@
                         <field name="date"/>
                         <field name="partner_id"/>
                         <field name="manager_id"/>
-                        <field name="product_id" domain="[('categ_id', 'child_of', [%(.prod_cate_00002)d])]"/>
+                        <field name="product_id" domain="[('categ_id', 'child_of', [%(prod_cate_00002)d])]"/>
                         <field name="product_unit"/>
                         <field name="importance"/>
                         <field name="service_level"/>
