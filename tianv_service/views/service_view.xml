@@ -2,6 +2,19 @@
 <openerp>
     <data>
         <!--View Inherit-->
+        <record id="view_service_record_tree" model="ir.ui.view">
+            <field name="name">tianv.service.service.record.tree</field>
+            <field name="model">tianv.service.service.record</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                    <field name="product_id"/>
+                    <field name="price"/>
+                    <field name="order_id"/>
+                </tree>
+            </field>
+        </record>
         <record id="view_service_service_all_tree" model="ir.ui.view">
             <field name="name">tianv.service.service.tree</field>
             <field name="model">tianv.service.service</field>
@@ -22,7 +35,18 @@
             <field name="arch" type="xml">
                 <form string="Services">
                     <header>
-                        <field name="service_status_function" widget="statusbar" readonly="1"/>
+                        <button name="set_pending" string="To Renew" type="object" states="open"/>
+                        <button name="set_close" string="Close Contract" type="object" states="open,pending"/>
+                        <button name="set_open" string="Set In Progress" type="object" states="pending,close,cancelled,draft"/>
+                        <button name="set_cancel" string="Cancel Contract" type="object" states="open,pending"/>
+                        <field name="state" readonly="1" widget="statusbar"
+                               statusbar_visible="open,pending,close" statusbar_colors='{"pending":"red", "template":"blue"}'/>
+                    </header>
+                    <header>
+                        <button name="open_service" string="启动服务" type="object" attrs="{'invisible':[('service_status','=','normal')]}"/>
+                        <button name="close_service" string="关闭服务" type="object" attrs="{'invisible':[('service_status','=','stop')]}"/>
+                        <button name="pause_service" string="暂停服务" type="object" attrs="{'invisible':[('service_status','=','pause')]}"/>
+                        <field name="service_status" widget="statusbar" readonly="1"/>
                     </header>
                     <sheet>
                         <field name="analytic_account_id" invisible="1" required="0"/>
@@ -39,14 +63,14 @@
                             </p>
                         </group>
                         <group colspan="2">
-                            <group string="服务情况">
-                                <field name="date_start"/>
-                                <field name="date"/>
-                                <field name="service_status"/>
-                            </group>
                             <group string="归属信息">
                                 <field name="partner_id" domain="[('customer', '=', True)]"/>
                                 <field name="manager_id"/>
+                                <field name="code"/>
+                            </group>
+                            <group string="服务情况">
+                                <field name="date_start" readonly="1"/>
+                                <field name="date" readonly="1"/>
                             </group>
                             <group string="产品信息">
                                 <field name="product_id" domain="[('categ_id', 'child_of', [%(prod_cate_00002)d])]"/>
@@ -64,9 +88,14 @@
                                 <field name="connect_info"/>
                             </group>
                         </group>
-                        <group colspan="2" col="1">
-                            <field name="comment" placeholder="Comment" nolabel="1"/>
-                        </group>
+                        <notebook>
+                            <page string="服务记录">
+                                <field name="record_ids" readonly="1"/>
+                            </page>
+                            <page string="备注">
+                                <field name="comment" placeholder="在这里填入备注信息" nolabel="1"/>
+                            </page>
+                        </notebook>
                     </sheet>
                     <div class="oe_chatter">
                         <field name="message_follower_ids" widget="mail_followers"/>

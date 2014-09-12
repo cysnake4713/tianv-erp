@@ -33,5 +33,26 @@
             <field name="uom_type">bigger</field>
             <field name="factor_inv" eval="12.0"/>
         </record>
+
+
+        <!-- Analytic-account-related subtypes for messaging / Chatter -->
+        <record id="mt_account_pending" model="mail.message.subtype">
+            <field name="name">Service to Renew</field>
+            <field name="res_model">tianv.service.service</field>
+            <field name="default" eval="True"/>
+            <field name="description">Service pending</field>
+        </record>
+        <record id="mt_account_closed" model="mail.message.subtype">
+            <field name="name">Service Finished</field>
+            <field name="res_model">tianv.service.service</field>
+            <field name="default" eval="False"/>
+            <field name="description">Service closed</field>
+        </record>
+        <record id="mt_account_opened" model="mail.message.subtype">
+            <field name="name">Service Opened</field>
+            <field name="res_model">tianv.service.service</field>
+            <field name="default" eval="False"/>
+            <field name="description">Service opened</field>
+        </record>
     </data>
 </openerp>

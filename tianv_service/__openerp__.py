@@ -30,6 +30,7 @@ Tianv Service Module
     'demo_xml': [],
     'data': [
         'data/uom.xml',
+        'data/service_cron.xml',
         'data/product.category.csv',
         # 'security/base_security.xml',
         # 'security/ir.model.access.csv',

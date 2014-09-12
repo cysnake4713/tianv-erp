@@ -1,7 +1,11 @@
 # coding=utf-8
+import datetime
+import logging
+import time
 from openerp import models, fields, api
 
 __author__ = 'cysnake4713'
+_logger = logging.getLogger(__name__)
 
 
 class Service(models.Model):
@@ -22,21 +26,28 @@ class Service(models.Model):
              "It enables you to connect services with budgets, planning, cost and revenue analysis, timesheets on services, etc.",
         ondelete="cascade", required=True, auto_join=True)
 
-    product_id = fields.Many2one('product.product', string='Product')
+    _track = {
+        'state': {
+            'tianv_service.mt_account_pending': lambda self, cr, uid, obj, ctx=None: obj.state == 'pending',
+            'tianv_service.mt_account_closed': lambda self, cr, uid, obj, ctx=None: obj.state == 'close',
+            'tianv_service.mt_account_opened': lambda self, cr, uid, obj, ctx=None: obj.state == 'open',
+        },
+    }
+
+    product_id = fields.Many2one('product.product', string='Product', track_visibility='onchange')
     importance = fields.Selection(_importance_selection, 'Importance')
     # 账号个数
     account_number = fields.Integer('Account Number')
     # 服务大小
     product_size = fields.Integer('Product Size')
     # 服务价格
-    product_price = fields.Float('Product Price', (10, 2))
+    product_price = fields.Float('Product Price', (10, 2), track_visibility='onchange')
     # 服务等级
     service_level = fields.Selection(_service_level_selection, 'Service Level')
     # 产品单位
     product_unit = fields.Selection(_product_unit_selection, 'Product Unit')
     # 服务状态
-    service_status = fields.Selection(_status_selection, 'Service Status')
-    service_status_function = fields.Selection(_status_selection, string='Service Status Function', compute='_compute_service_status')
+    service_status = fields.Selection(_status_selection, 'Service Status', track_visibility='onchange')
     # 唯一标签
     identification = fields.Char('Identification')
     # 服务密码
@@ -49,6 +60,8 @@ class Service(models.Model):
     connect_info = fields.Char('Connect Info')
     # 备注信息
     comment = fields.Text('Comment')
+    # 历史记录
+    record_ids = fields.One2many('tianv.service.service.record', 'service_id', 'History Records')
 
     _defaults = {
         'type': 'contract',
@@ -72,13 +85,89 @@ class Service(models.Model):
         ]
         self.name = ''.join(name)
 
+    @api.multi
+    def set_close(self):
+        return self.write({'state': 'close'})
+
+    @api.multi
+    def set_cancel(self):
+        return self.write({'state': 'cancelled'})
+
+    @api.multi
+    def set_open(self):
+        return self.write({'state': 'open'})
+
+    @api.multi
+    def set_pending(self):
+        return self.write({'state': 'pending'})
+
+    @api.multi
+    def open_service(self):
+        return self.write({'service_status': 'normal'})
+
+    @api.multi
+    def close_service(self):
+        return self.write({'service_status': 'stop'})
+
+    @api.multi
+    def pause_service(self):
+        return self.write({'service_status': 'pause'})
+
+    @api.model
+    def cron_computer_explore(self):
+        remind = {}
+
+        def fill_remind(key, domain, write_pending=False):
+            base_domain = [
+                ('type', '=', 'contract'),
+                ('partner_id', '!=', False),
+                ('manager_id', '!=', False),
+                ('manager_id.email', '!=', False),
+            ]
+            base_domain.extend(domain)
+
+            accounts = self.search(base_domain, order='name asc')
+            for account in accounts:
+                if write_pending:
+                    account.write({'state': 'pending'})
+                remind_user = remind.setdefault(account.manager_id.id, {})
+                remind_type = remind_user.setdefault(key, {})
+                remind_partner = remind_type.setdefault(account.partner_id, []).append(account)
+
+        # Already expired
+        fill_remind("old", [('state', 'in', ['pending'])])
+
+        # Expires now
+        fill_remind("new", [('state', 'in', ['draft', 'open']), '&', ('date', '!=', False), ('date', '<=', time.strftime('%Y-%m-%d'))], True)
+
+        # Expires in less than 30 days
+        fill_remind("future", [('state', 'in', ['draft', 'open']), ('date', '!=', False),
+                               ('date', '<', (datetime.datetime.now() + datetime.timedelta(30)).strftime("%Y-%m-%d"))])
+        ctx = {
+            'base_url': self.env['ir.config_parameter'].get_param('web.base.url'),
+            'action_id': self.env['ir.model.data'].get_object_reference('tianv_service', 'action_service_service_all')[1],
+        }
+        template_id = self.env['ir.model.data'].get_object('tianv_service', 'service_cron_email_template')
+        for user_id, data in remind.items():
+            ctx["data"] = data
+            _logger.debug("Sending reminder to uid %s", user_id)
+            template_id.with_context(ctx).send_mail(user_id, force_send=False)
+        return True
+
+    # def _message_get_auto_subscribe_fields(self, cr, uid, updated_fields, auto_follow_fields=None, context=None):
+    #     if auto_follow_fields is None:
+    #         auto_follow_fields = ['manager_id']
+    #     return super(Service, self)._message_get_auto_subscribe_fields(cr, uid, updated_fields, auto_follow_fields, context=context)
+
 
 class ServiceRecord(models.Model):
-    _name = "tianv.service.service_record"
+    _name = "tianv.service.service.record"
     _description = "Service record"
+    _rec_name = 'end_date'
 
     start_date = fields.Date('Start Date')
     end_date = fields.Date('End Date')
+    product_id = fields.Many2one('product.product', string='Product')
     price = fields.Float('Service Price', (10, 2))
-    service_id = fields.Many2one('tianv.service.service', 'Service')
+    service_id = fields.Many2one('tianv.service.service', 'Service', on_delete='cascade')
     order_id = fields.Many2one('sale.order', 'Order')
