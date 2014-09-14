@@ -1,0 +1,5 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+access_tianv_service_service_record_user,access_tianv_service_service_record_user,model_tianv_service_service_record,group_service_user,1,0,0,0
+access_tianv_service_service_record_manager,access_tianv_service_service_record,model_tianv_service_service_record,group_service_manager,1,1,1,1
+access_tianv_service_service_user,access_tianv_service_service_user,model_tianv_service_service,group_service_user,1,0,0,0
+access_tianv_service_service_manager,access_tianv_service_service_manager,model_tianv_service_service,group_service_manager,1,1,1,1

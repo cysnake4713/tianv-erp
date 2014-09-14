@@ -2,7 +2,7 @@
 import datetime
 import logging
 import time
-from openerp import models, fields, api
+from openerp import models, fields, api, _
 
 __author__ = 'cysnake4713'
 _logger = logging.getLogger(__name__)
@@ -154,20 +154,77 @@ class Service(models.Model):
             template_id.with_context(ctx).send_mail(user_id, force_send=False)
         return True
 
-    # def _message_get_auto_subscribe_fields(self, cr, uid, updated_fields, auto_follow_fields=None, context=None):
-    #     if auto_follow_fields is None:
-    #         auto_follow_fields = ['manager_id']
-    #     return super(Service, self)._message_get_auto_subscribe_fields(cr, uid, updated_fields, auto_follow_fields, context=context)
-
 
 class ServiceRecord(models.Model):
     _name = "tianv.service.service.record"
     _description = "Service record"
     _rec_name = 'end_date'
+    _order = 'end_date desc'
 
-    start_date = fields.Date('Start Date')
-    end_date = fields.Date('End Date')
-    product_id = fields.Many2one('product.product', string='Product')
-    price = fields.Float('Service Price', (10, 2))
-    service_id = fields.Many2one('tianv.service.service', 'Service', on_delete='cascade')
+    start_date = fields.Date('Start Date', required=True)
+    end_date = fields.Date('End Date', required=True)
+    price = fields.Float('Service Price', (10, 2), required=True)
+    service_id = fields.Many2one('tianv.service.service', 'Service', on_delete='cascade', required=True)
     order_id = fields.Many2one('sale.order', 'Order')
+
+
+class ServiceRecordWizard(models.TransientModel):
+    _inherit = 'tianv.service.service.record'
+    _name = 'tianv.service.service.wizard'
+
+    state = fields.Selection([('draft', 'Draft'), ('confirm', 'Confirm')], 'State')
+
+    @api.model
+    def default_get(self, fields_list):
+        """
+        This function gets default values
+        """
+        res = super(ServiceRecordWizard, self).default_get(fields_list)
+        res['service_id'] = self.env.context['active_id']
+        last_record = self.env['tianv.service.service.record'].search([('service_id', '=', res['service_id'])], order='end_date desc')[0]
+        res['price'] = last_record.price
+        return res
+
+    _defaults = {
+        'state': 'draft',
+        'start_date': lambda *a: fields.Date.today(),
+    }
+
+    @api.multi
+    def generate_order(self):
+        service = self.service_id
+        order_info = {
+            'partner_id': service.partner_id.id,
+            'project_id': service.analytic_account_id.id,
+            'order_line': [(0, 0, {'product_id': service.product_id.id, 'price_unit': self.price})],
+            'user_id': service.manager_id.id,
+        }
+        order_id = self.env['sale.order'].create(order_info)
+        self.write({'state': 'confirm', 'order_id': order_id.id, 'date': self.end_date})
+        self.env['tianv.service.service.record'].create({
+            'start_date': self.start_date,
+            'end_date': self.end_date,
+            'price': self.price,
+            'service_id': self.service_id.id,
+            'order_id': self.order_id.id,
+        })
+        return {
+            'type': 'ir.actions.act_window',
+            'res_model': 'tianv.service.service.wizard',
+            'view_mode': 'form',
+            'view_type': 'form',
+            'res_id': self.id,
+            'views': [(False, 'form')],
+            'target': 'new',
+        }
+
+    @api.multi
+    def view_order(self):
+        return {
+            'name': _('View Order'),
+            'view_type': 'form',
+            'view_mode': 'form',
+            'res_id': self.order_id.id,
+            'views': [(False, 'form')],
+            'target': 'current',
+        }

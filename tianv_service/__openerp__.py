@@ -26,17 +26,18 @@
 Tianv Service Module
 """,
     'depends': ['base_override', 'tianv_sale', 'analytic', 'sale'],
-    'category': 'Sales',
+    'category': 'Service',
     'demo_xml': [],
     'data': [
         'data/uom.xml',
         'data/service_cron.xml',
+        'security/base_security.xml',
         'data/product.category.csv',
-        # 'security/base_security.xml',
-        # 'security/ir.model.access.csv',
+        'security/ir.model.access.csv',
         #
-        'views/service_view.xml',
         'views/service_menu.xml',
+        'views/service_view.xml',
+
 
     ],
     'qweb': [

@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<openerp>
+    <data noupdate="0">
+        <record model="res.groups" id="group_service_user">
+            <field name="name">服务用户</field>
+            <field name="category_id" ref="base.module_category_service"/>
+        </record>
+        <record model="res.groups" id="group_service_manager">
+            <field name="name">服务经理</field>
+            <field name="category_id" ref="base.module_category_service"/>
+            <field name="implied_ids" eval="[(4, ref('group_service_user'))]"/>
+        </record>
+    </data>
+</openerp>
+
