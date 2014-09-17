@@ -38,7 +38,7 @@
             <field name="name">tianv.service.service.record.tree</field>
             <field name="model">tianv.service.service.record</field>
             <field name="arch" type="xml">
-                <tree>
+                <tree string="服务记录">
                     <field name="start_date"/>
                     <field name="end_date"/>
                     <field name="price"/>
