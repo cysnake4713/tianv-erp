@@ -181,7 +181,7 @@ class ServiceRecordWizard(models.TransientModel):
         """
         res = super(ServiceRecordWizard, self).default_get(fields_list)
         res['service_id'] = self.env.context['active_id']
-        last_record = self.env['tianv.service.service.record'].search([('service_id', '=', res['service_id'])], order='end_date desc')[0]
+        last_record = self.env['tianv.service.service.record'].search([('service_id', '=', res['service_id'])], order='end_date desc',limit=1)
         res['price'] = last_record.price
         return res
 
