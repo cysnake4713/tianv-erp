@@ -18,7 +18,7 @@
 ##############################################################################
 {
     'name': 'Tianv Service Module',
-    'version': '0.1',
+    'version': '1.0',
     'author': 'cysnake4713',
     'maintainer': 'odoosoft@gmail.com',
     'website': 'http://www.odoosoft.com',
