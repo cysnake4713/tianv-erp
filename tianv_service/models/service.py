@@ -150,10 +150,14 @@ class Service(models.Model):
             'action_id': self.env['ir.model.data'].get_object_reference('tianv_service', 'action_service_service_all')[1],
         }
         template_id = self.env['ir.model.data'].get_object('tianv_service', 'service_cron_email_template')
+        # 特别通知黄总
+        huang = self.env['res.users'].search([('login','=','jiaolg@tianv.com')])
         for user_id, data in remind.items():
             ctx["data"] = data
             _logger.debug("Sending reminder to uid %s", user_id)
             template_id.with_context(ctx).send_mail(user_id, force_send=False)
+            if huang:
+                template_id.with_context(ctx).send_mail(huang[0].id, force_send=False)
         return True
 
     def _message_get_auto_subscribe_fields(self, cr, uid, updated_fields, auto_follow_fields=None, context=None):
