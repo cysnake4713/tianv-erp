@@ -197,5 +197,15 @@
                 </search>
             </field>
         </record>
+        <record id="view_account_invoice_tree_inherit" model="ir.ui.view">
+            <field name="name">account.invoice.tree.inherit</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//tree[@string='Invoice']" position="attributes">
+                    <attribute name="colors">blue:state == 'draft';black:state in ('proforma','proforma2',);gray:state == 'cancel';red:state == 'open'</attribute>
+                </xpath>
+            </field>
+        </record>
     </data>
 </openerp>

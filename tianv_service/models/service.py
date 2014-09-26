@@ -13,6 +13,7 @@ class Service(models.Model):
     _description = "Service"
     _inherits = {'account.analytic.account': "analytic_account_id"}
     _inherit = ['mail.thread', 'ir.needaction_mixin']
+    _order = 'id desc'
 
     _status_selection = [('normal', 'Normal'), ('pause', 'Pause'), ('stop', 'Stop')]
     _service_level_selection = [('stand', u'标准I型'), ('pro', u'专业I型'), ('pro_iv', u'专业IV型')]
@@ -66,6 +67,7 @@ class Service(models.Model):
     _defaults = {
         'type': 'contract',
         'service_status': 'normal',
+        'manager_id': lambda self, cr, uid, *args: uid,
     }
 
     @api.one
@@ -154,6 +156,12 @@ class Service(models.Model):
             template_id.with_context(ctx).send_mail(user_id, force_send=False)
         return True
 
+    def _message_get_auto_subscribe_fields(self, cr, uid, updated_fields, auto_follow_fields=None, context=None):
+        if auto_follow_fields is None:
+            auto_follow_fields = ['user_id']
+        auto_follow_fields = auto_follow_fields + ['manager_id']
+        return super(Service, self)._message_get_auto_subscribe_fields(cr, uid, updated_fields, auto_follow_fields, context)
+
 
 class ServiceRecord(models.Model):
     _name = "tianv.service.service.record"
@@ -181,8 +189,9 @@ class ServiceRecordWizard(models.TransientModel):
         """
         res = super(ServiceRecordWizard, self).default_get(fields_list)
         res['service_id'] = self.env.context['active_id']
-        last_record = self.env['tianv.service.service.record'].search([('service_id', '=', res['service_id'])], order='end_date desc')[0]
-        res['price'] = last_record.price
+        last_record = self.env['tianv.service.service.record'].search([('service_id', '=', res['service_id'])], order='end_date desc')
+        if last_record:
+            res['price'] = last_record[0].price
         return res
 
     _defaults = {
@@ -221,7 +230,8 @@ class ServiceRecordWizard(models.TransientModel):
     @api.multi
     def view_order(self):
         return {
-            'name': _('View Order'),
+            'type': 'ir.actions.act_window',
+            'res_model': 'sale.order',
             'view_type': 'form',
             'view_mode': 'form',
             'res_id': self.order_id.id,
