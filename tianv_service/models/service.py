@@ -151,7 +151,7 @@ class Service(models.Model):
         }
         template_id = self.env['ir.model.data'].get_object('tianv_service', 'service_cron_email_template')
         # 特别通知黄总
-        huang = self.env['res.users'].search([('login','=','jiaolg@tianv.com')])
+        huang = self.env['res.users'].search([('login', '=', 'jiaolg@tianv.com')])
         for user_id, data in remind.items():
             ctx["data"] = data
             _logger.debug("Sending reminder to uid %s", user_id)
