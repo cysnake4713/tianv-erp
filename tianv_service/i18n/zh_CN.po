@@ -1,0 +1,812 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* tianv_service
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0rc1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-09-26 13:22+0000\n"
+"PO-Revision-Date: 2014-09-26 13:22+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: tianv_service
+#: model:email.template,body_html:tianv_service.service_cron_email_template
+msgid "\n"
+"Hello ${object.name},\n"
+"\n"
+"% macro account_table(values):\n"
+"<table cellspacing=\"1\" border=\"1\" cellpadding=\"4\">\n"
+"    <tr>\n"
+"        <th>Customer</th>\n"
+"        <th>services</th>\n"
+"        <th>Dates</th>\n"
+"        <th>Prepaid Units</th>\n"
+"        <th>Contact</th>\n"
+"    </tr>\n"
+"    % for partner, accounts in values:\n"
+"        % for account in accounts:\n"
+"        <tr>\n"
+"            <td>${partner.name}</td>\n"
+"            <td><a href=\"${ctx[\"base_url\"]}/#action=${ctx[\"action_id\"]}&id=${account.id}&view_type=form\">${account.name}</a></td>\n"
+"            <td>${account.date_start} to ${account.date and account.date or '???'}</td>\n"
+"            <td>\n"
+"            % if account.quantity_max != 0.0:\n"
+"                ${account.remaining_hours}/${account.quantity_max} units\n"
+"            % endif\n"
+"            </td>\n"
+"            <td>${account.partner_id.phone or ''}, ${account.partner_id.email or ''}</td>\n"
+"        </tr>\n"
+"        % endfor\n"
+"    % endfor\n"
+"</table>\n"
+"% endmacro \n"
+"\n"
+"% if \"new\" in ctx[\"data\"]:\n"
+"    <h2>The following services just expired: </h2>\n"
+"    ${account_table(ctx[\"data\"][\"new\"].iteritems())}\n"
+"% endif\n"
+"\n"
+"% if \"old\" in ctx[\"data\"]:\n"
+"    <h2>The following expired services are still not processed: </h2>\n"
+"    ${account_table(ctx[\"data\"][\"old\"].iteritems())}\n"
+"% endif\n"
+"\n"
+"% if \"future\" in ctx[\"data\"]:\n"
+"    <h2>The following services will expire in less than one month: </h2>\n"
+"    ${account_table(ctx[\"data\"][\"future\"].iteritems())}\n"
+"% endif\n"
+"\n"
+"<p>\n"
+"    You can check all service to be renewed using the menu:\n"
+"</p>\n"
+"<ul>\n"
+"    <li>Service / Service / Services to Renew</li>\n"
+"</ul>\n"
+"<p>\n"
+"    Thanks,\n"
+"</p>\n"
+"\n"
+"<pre>\n"
+"-- \n"
+"Odoo Automatic Email\n"
+"</pre>\n"
+"\n"
+"            "
+msgstr "\n"
+"${object.name} 您好,\n"
+"\n"
+"% macro account_table(values):\n"
+"<table cellspacing=\"1\" border=\"1\" cellpadding=\"4\">\n"
+"    <tr>\n"
+"        <th>甲方</th>\n"
+"        <th>服务</th>\n"
+"        <th>日期</th>\n"
+"        <th>预付单元</th>\n"
+"        <th>合同</th>\n"
+"    </tr>\n"
+"    % for partner, accounts in values:\n"
+"        % for account in accounts:\n"
+"        <tr>\n"
+"            <td>${partner.name}</td>\n"
+"            <td><a href=\"${ctx[\"base_url\"]}/#action=${ctx[\"action_id\"]}&id=${account.id}&view_type=form\">${account.name}</a></td>\n"
+"            <td>${account.date_start} 至 ${account.date and account.date or '???'}</td>\n"
+"            <td>\n"
+"            % if account.quantity_max != 0.0:\n"
+"                ${account.remaining_hours}/${account.quantity_max} 单位\n"
+"            % endif\n"
+"            </td>\n"
+"            <td>${account.partner_id.phone or ''}, ${account.partner_id.email or ''}</td>\n"
+"        </tr>\n"
+"        % endfor\n"
+"    % endfor\n"
+"</table>\n"
+"% endmacro \n"
+"\n"
+"% if \"new\" in ctx[\"data\"]:\n"
+"    <h2>以下的服务刚刚过期: </h2>\n"
+"    ${account_table(ctx[\"data\"][\"new\"].iteritems())}\n"
+"% endif\n"
+"\n"
+"% if \"old\" in ctx[\"data\"]:\n"
+"    <h2>以下的服务仍然没有处理: </h2>\n"
+"    ${account_table(ctx[\"data\"][\"old\"].iteritems())}\n"
+"% endif\n"
+"\n"
+"% if \"future\" in ctx[\"data\"]:\n"
+"    <h2>以下的服务将在一个月内过期: </h2>\n"
+"    ${account_table(ctx[\"data\"][\"future\"].iteritems())}\n"
+"% endif\n"
+"\n"
+"<p>\n"
+"    你能通过以下目录查看这些信息:\n"
+"</p>\n"
+"<ul>\n"
+"    <li>服务 / 服务</li>\n"
+"</ul>\n"
+"<p>\n"
+"    谢谢,\n"
+"</p>\n"
+"\n"
+"<pre>\n"
+"-- \n"
+"Odoo 自动邮件\n"
+"</pre>\n"
+"\n"
+"            "
+
+#. module: tianv_service
+#: view:tianv.service.service:tianv_service.view_service_service_search
+msgid "Account Manager"
+msgstr "服务负责人"
+
+#. module: tianv_service
+#: field:tianv.service.service,account_number:0
+msgid "Account Number"
+msgstr "账号个数"
+
+#. module: tianv_service
+#: view:tianv.service.service:tianv_service.view_service_service_all_form
+msgid "Cancel Contract"
+msgstr "撤销服务"
+
+#. module: tianv_service
+#: view:tianv.service.service:tianv_service.view_service_service_search
+msgid "Cancelled"
+msgstr "撤销的"
+
+#. module: tianv_service
+#: view:tianv.service.service:tianv_service.view_service_service_search
+msgid "Cancelled contracts"
+msgstr "撤销的服务"
+
+#. module: tianv_service
+#: view:tianv.service.service:tianv_service.view_service_service_all_form
+msgid "Close Contract"
+msgstr "关闭服务"
+
+#. module: tianv_service
+#: view:tianv.service.service:tianv_service.view_service_service_search
+msgid "Closed"
+msgstr "关闭"
+
+#. module: tianv_service
+#: view:tianv.service.service:tianv_service.view_service_service_search
+msgid "Closed contracts"
+msgstr "关闭的服务"
+
+#. module: tianv_service
+#: field:tianv.service.service,comment:0
+msgid "Comment"
+msgstr "备注"
+
+#. module: tianv_service
+#: selection:tianv.service.service.wizard,state:0
+msgid "Confirm"
+msgstr "确认"
+
+#. module: tianv_service
+#: field:tianv.service.service,connect_info:0
+msgid "Connect Info"
+msgstr "联系信息"
+
+#. module: tianv_service
+#: view:tianv.service.service:tianv_service.view_service_service_search
+msgid "Contract"
+msgstr "合同"
+
+#. module: tianv_service
+#: field:tianv.service.service,analytic_account_id:0
+msgid "Contract/Analytic"
+msgstr "合同/分析"
+
+#. module: tianv_service
+#: view:tianv.service.service:tianv_service.view_service_service_search
+msgid "Contracts in progress (open, draft)"
+msgstr "进行中的服务 (进行中, 草稿)"
+
+#. module: tianv_service
+#: view:tianv.service.service:tianv_service.view_service_service_search
+msgid "Contracts not assigned"
+msgstr "未分配服务"
+
+#. module: tianv_service
+#: view:tianv.service.service:tianv_service.view_service_service_search
+msgid "Contracts that are not assigned to an account manager."
+msgstr "Contracts that are not assigned to an account manager."
+
+#. module: tianv_service
+#: field:tianv.service.service,create_uid:0
+#: field:tianv.service.service.record,create_uid:0
+#: field:tianv.service.service.wizard,create_uid:0
+msgid "Created by"
+msgstr "创建人"
+
+#. module: tianv_service
+#: field:tianv.service.service,create_date:0
+#: field:tianv.service.service.record,create_date:0
+#: field:tianv.service.service.wizard,create_date:0
+msgid "Created on"
+msgstr "创建时间"
+
+#. module: tianv_service
+#: help:tianv.service.service,message_last_post:0
+msgid "Date of the last message posted on the record."
+msgstr "Date of the last message posted on the record."
+
+#. module: tianv_service
+#: field:tianv.service.service,domain_info:0
+msgid "Domain Info"
+msgstr "域名信息"
+
+#. module: tianv_service
+#: selection:tianv.service.service.wizard,state:0
+msgid "Draft"
+msgstr "草稿"
+
+#. module: tianv_service
+#: field:tianv.service.service.record,end_date:0
+#: field:tianv.service.service.wizard,end_date:0
+msgid "End Date"
+msgstr "结束时间"
+
+#. module: tianv_service
+#: view:tianv.service.service:tianv_service.view_service_service_search
+msgid "End date is in the next month"
+msgstr "End date is in the next month"
+
+#. module: tianv_service
+#: view:tianv.service.service:tianv_service.view_service_service_search
+msgid "End date passed or prepaid unit consumed"
+msgstr "End date passed or prepaid unit consumed"
+
+#. module: tianv_service
+#: view:tianv.service.service:tianv_service.view_service_service_search
+msgid "Expired or consumed"
+msgstr "过期的或者消费的"
+
+#. module: tianv_service
+#: view:tianv.service.service:tianv_service.view_service_service_search
+msgid "Expiring soon"
+msgstr "马上过期"
+
+#. module: tianv_service
+#: field:tianv.service.service,message_follower_ids:0
+msgid "Followers"
+msgstr "关注人"
+
+#. module: tianv_service
+#: selection:tianv.service.service,product_unit:0
+msgid "GB"
+msgstr "GB"
+
+#. module: tianv_service
+#: view:tianv.service.service:tianv_service.view_service_service_search
+msgid "Group By"
+msgstr "分组"
+
+#. module: tianv_service
+#: field:tianv.service.service,record_ids:0
+msgid "History Records"
+msgstr "历史记录"
+
+#. module: tianv_service
+#: help:tianv.service.service,message_summary:0
+msgid "Holds the Chatter summary (number of messages, ...). This summary is directly in html format in order to be inserted in kanban views."
+msgstr "Holds the Chatter summary (number of messages, ...). This summary is directly in html format in order to be inserted in kanban views."
+
+#. module: tianv_service
+#: field:tianv.service.service,id:0
+#: field:tianv.service.service.record,id:0
+#: field:tianv.service.service.wizard,id:0
+msgid "ID"
+msgstr "ID"
+
+#. module: tianv_service
+#: field:tianv.service.service,identification:0
+msgid "Identification"
+msgstr "唯一标签"
+
+#. module: tianv_service
+#: help:tianv.service.service,message_unread:0
+msgid "If checked new messages require your attention."
+msgstr "If checked new messages require your attention."
+
+#. module: tianv_service
+#: field:tianv.service.service,importance:0
+msgid "Importance"
+msgstr "重要性"
+
+#. module: tianv_service
+#: selection:tianv.service.service,importance:0
+msgid "Important"
+msgstr "重要"
+
+#. module: tianv_service
+#: view:tianv.service.service:tianv_service.view_service_service_search
+msgid "In Progress"
+msgstr "运行中"
+
+#. module: tianv_service
+#: field:tianv.service.service,message_is_follower:0
+msgid "Is a Follower"
+msgstr "是一个关注人"
+
+#. module: tianv_service
+#: field:tianv.service.service,message_last_post:0
+msgid "Last Message Date"
+msgstr "最后消息时间"
+
+#. module: tianv_service
+#: field:tianv.service.service,write_uid:0
+#: field:tianv.service.service.record,write_uid:0
+#: field:tianv.service.service.wizard,write_uid:0
+msgid "Last Updated by"
+msgstr "最后更新人"
+
+#. module: tianv_service
+#: field:tianv.service.service,write_date:0
+#: field:tianv.service.service.record,write_date:0
+#: field:tianv.service.service.wizard,write_date:0
+msgid "Last Updated on"
+msgstr "最后更新时间"
+
+#. module: tianv_service
+#: selection:tianv.service.service,importance:0
+msgid "Less Important"
+msgstr "不太重要"
+
+#. module: tianv_service
+#: help:tianv.service.service,analytic_account_id:0
+msgid "Link this service to an analytic account if you need financial management on services. It enables you to connect services with budgets, planning, cost and revenue analysis, timesheets on services, etc."
+msgstr "Link this service to an analytic account if you need financial management on services. It enables you to connect services with budgets, planning, cost and revenue analysis, timesheets on services, etc."
+
+#. module: tianv_service
+#: view:tianv.service.service:tianv_service.view_service_service_search
+msgid "Liquidity"
+msgstr "Liquidity"
+
+#. module: tianv_service
+#: selection:tianv.service.service,product_unit:0
+msgid "MB"
+msgstr "MB"
+
+#. module: tianv_service
+#: field:tianv.service.service,message_ids:0
+msgid "Messages"
+msgstr "消息"
+
+#. module: tianv_service
+#: help:tianv.service.service,message_ids:0
+msgid "Messages and communication history"
+msgstr "消息和通信记录"
+
+#. module: tianv_service
+#: selection:tianv.service.service,service_status:0
+msgid "Normal"
+msgstr "正常"
+
+#. module: tianv_service
+#: selection:tianv.service.service,importance:0
+msgid "Not Important"
+msgstr "不重要"
+
+#. module: tianv_service
+#: field:tianv.service.service.record,order_id:0
+#: field:tianv.service.service.wizard,order_id:0
+msgid "Order"
+msgstr "订单"
+
+#. module: tianv_service
+#: view:tianv.service.service:tianv_service.view_service_service_search
+msgid "Others"
+msgstr "其它"
+
+#. module: tianv_service
+#: view:tianv.service.service:tianv_service.view_service_service_search
+msgid "Partner"
+msgstr "甲方"
+
+#. module: tianv_service
+#: field:tianv.service.service,password:0
+msgid "Password"
+msgstr "服务密码"
+
+#. module: tianv_service
+#: selection:tianv.service.service,service_status:0
+msgid "Pause"
+msgstr "暂停"
+
+#. module: tianv_service
+#: view:tianv.service.service:tianv_service.view_service_service_search
+msgid "Pending contracts"
+msgstr "待续签服务"
+
+#. module: tianv_service
+#: field:tianv.service.service,port:0
+msgid "Port"
+msgstr "服务端口"
+
+#. module: tianv_service
+#: field:tianv.service.service,product_id:0
+msgid "Product"
+msgstr "产品"
+
+#. module: tianv_service
+#: field:tianv.service.service,product_price:0
+msgid "Product Price"
+msgstr "服务价格"
+
+#. module: tianv_service
+#: field:tianv.service.service,product_size:0
+msgid "Product Size"
+msgstr "服务大小"
+
+#. module: tianv_service
+#: field:tianv.service.service,product_unit:0
+msgid "Product Unit"
+msgstr "产品单位"
+
+#. module: tianv_service
+#: view:tianv.service.service:tianv_service.view_service_service_search
+msgid "Purchase"
+msgstr "采购"
+
+#. module: tianv_service
+#: view:tianv.service.service:tianv_service.view_service_service_search
+msgid "Sale"
+msgstr "销售"
+
+#. module: tianv_service
+#: view:tianv.service.service:tianv_service.view_service_service_search
+msgid "Search Services"
+msgstr "搜索服务"
+
+#. module: tianv_service
+#: model:ir.model,name:tianv_service.model_tianv_service_service
+#: field:tianv.service.service.record,service_id:0
+#: field:tianv.service.service.wizard,service_id:0
+msgid "Service"
+msgstr "服务"
+
+#. module: tianv_service
+#: model:mail.message.subtype,name:tianv_service.mt_account_closed
+msgid "Service Finished"
+msgstr "服务结束"
+
+#. module: tianv_service
+#: field:tianv.service.service,service_level:0
+msgid "Service Level"
+msgstr "服务等级"
+
+#. module: tianv_service
+#: view:tianv.service.service:tianv_service.view_service_service_all_form
+msgid "Service Name"
+msgstr "服务名称"
+
+#. module: tianv_service
+#: model:mail.message.subtype,name:tianv_service.mt_account_opened
+msgid "Service Opened"
+msgstr "服务正常"
+
+#. module: tianv_service
+#: field:tianv.service.service.record,price:0
+#: field:tianv.service.service.wizard,price:0
+msgid "Service Price"
+msgstr "服务价格"
+
+#. module: tianv_service
+#: field:tianv.service.service,service_status:0
+msgid "Service Status"
+msgstr "服务状态"
+
+#. module: tianv_service
+#: model:mail.message.subtype,description:tianv_service.mt_account_closed
+msgid "Service closed"
+msgstr "服务关闭"
+
+#. module: tianv_service
+#: model:email.template,subject:tianv_service.service_cron_email_template
+msgid "Service expiration reminder ${user.company_id.name}"
+msgstr "服务续签提醒 ${user.company_id.name}"
+
+#. module: tianv_service
+#: model:mail.message.subtype,description:tianv_service.mt_account_opened
+msgid "Service opened"
+msgstr "服务正常"
+
+#. module: tianv_service
+#: model:mail.message.subtype,description:tianv_service.mt_account_pending
+msgid "Service pending"
+msgstr "服务待续签"
+
+#. module: tianv_service
+#: model:ir.model,name:tianv_service.model_tianv_service_service_record
+#: model:ir.model,name:tianv_service.model_tianv_service_service_wizard
+msgid "Service record"
+msgstr "服务记录"
+
+#. module: tianv_service
+#: model:mail.message.subtype,name:tianv_service.mt_account_pending
+msgid "Service to Renew"
+msgstr "待续签服务"
+
+#. module: tianv_service
+#: view:tianv.service.service:tianv_service.view_service_service_all_form
+#: view:tianv.service.service:tianv_service.view_service_service_all_tree
+msgid "Services"
+msgstr "服务"
+
+#. module: tianv_service
+#: view:tianv.service.service:tianv_service.view_service_service_all_form
+msgid "Set In Progress"
+msgstr "设置为进行中"
+
+#. module: tianv_service
+#: field:tianv.service.service.record,start_date:0
+#: field:tianv.service.service.wizard,start_date:0
+msgid "Start Date"
+msgstr "开始时间"
+
+#. module: tianv_service
+#: field:tianv.service.service.wizard,state:0
+msgid "State"
+msgstr "状态"
+
+#. module: tianv_service
+#: view:tianv.service.service:tianv_service.view_service_service_search
+msgid "Status"
+msgstr "状态"
+
+#. module: tianv_service
+#: selection:tianv.service.service,service_status:0
+msgid "Stop"
+msgstr "停止"
+
+#. module: tianv_service
+#: field:tianv.service.service,message_summary:0
+msgid "Summary"
+msgstr "摘要"
+
+#. module: tianv_service
+#: view:tianv.service.service:tianv_service.view_service_service_all_form
+#: view:tianv.service.service:tianv_service.view_service_service_search
+msgid "To Renew"
+msgstr "待续签"
+
+#. module: tianv_service
+#: field:tianv.service.service,message_unread:0
+msgid "Unread Messages"
+msgstr "未读信息"
+
+#. module: tianv_service
+#: model:product.category,name:tianv_service.rc2012050200025
+msgid "VPS主机"
+msgstr "VPS主机"
+
+#. module: tianv_service
+#: selection:tianv.service.service,importance:0
+msgid "Very Important"
+msgstr "非常重要"
+
+#. module: tianv_service
+#: view:account.invoice:tianv_service.view_account_invoice_tree_inherit
+msgid "blue:state == 'draft';black:state in ('proforma','proforma2',);gray:state == 'cancel';red:state == 'open'"
+msgstr "blue:state == 'draft';black:state in ('proforma','proforma2',);gray:state == 'cancel';red:state == 'open'"
+
+#. module: tianv_service
+#: selection:tianv.service.service,service_level:0
+msgid "专业IV型"
+msgstr "专业IV型"
+
+#. module: tianv_service
+#: selection:tianv.service.service,service_level:0
+msgid "专业I型"
+msgstr "专业I型"
+
+#. module: tianv_service
+#: model:product.category,name:tianv_service.rc2012101300009
+msgid "临时任务"
+msgstr "临时任务"
+
+#. module: tianv_service
+#: model:product.category,name:tianv_service.RC10120300137
+msgid "主机托管"
+msgstr "主机托管"
+
+#. module: tianv_service
+#: view:tianv.service.service:tianv_service.view_service_service_all_form
+msgid "产品信息"
+msgstr "产品信息"
+
+#. module: tianv_service
+#: model:product.category,name:tianv_service.prod_cate_00001
+msgid "任务模式"
+msgstr "任务模式"
+
+#. module: tianv_service
+#: model:product.category,name:tianv_service.RC10120300132
+msgid "企业邮局"
+msgstr "企业邮局"
+
+#. module: tianv_service
+#: view:tianv.service.service:tianv_service.view_service_service_all_form
+msgid "关闭服务"
+msgstr "关闭服务"
+
+#. module: tianv_service
+#: view:tianv.service.service.wizard:tianv_service.view_serivce_wizard_form
+msgid "关闭窗口"
+msgstr "关闭窗口"
+
+#. module: tianv_service
+#: view:tianv.service.service:tianv_service.view_service_service_all_form
+msgid "其它信息"
+msgstr "其它信息"
+
+#. module: tianv_service
+#: model:product.uom,name:tianv_service.uom_half_year
+msgid "半年"
+msgstr "半年"
+
+#. module: tianv_service
+#: view:tianv.service.service:tianv_service.view_service_service_all_form
+msgid "启动服务"
+msgstr "启动服务"
+
+#. module: tianv_service
+#: view:tianv.service.service:tianv_service.view_service_service_all_form
+msgid "在这里填入备注信息"
+msgstr "在这里填入备注信息"
+
+#. module: tianv_service
+#: model:product.category,name:tianv_service.RC10120300127
+msgid "域名注册"
+msgstr "域名注册"
+
+#. module: tianv_service
+#: model:product.uom,name:tianv_service.uom_season
+msgid "季度"
+msgstr "季度"
+
+#. module: tianv_service
+#: model:product.uom,name:tianv_service.uom_year
+#: selection:tianv.service.service,product_unit:0
+msgid "年"
+msgstr "年"
+
+#. module: tianv_service
+#: view:tianv.service.service:tianv_service.view_service_service_all_form
+msgid "归属信息"
+msgstr "归属信息"
+
+#. module: tianv_service
+#: model:product.category,name:tianv_service.RC10120300179
+msgid "技术咨询"
+msgstr "技术咨询"
+
+#. module: tianv_service
+#: model:product.category,name:tianv_service.RC10120300120
+msgid "日常维护"
+msgstr "日常维护"
+
+#. module: tianv_service
+#: view:tianv.service.service:tianv_service.view_service_service_all_form
+msgid "暂停服务"
+msgstr "暂停服务"
+
+#. module: tianv_service
+#: model:product.uom,name:tianv_service.uom_month
+msgid "月"
+msgstr "月"
+
+#. module: tianv_service
+#: model:ir.ui.menu,name:tianv_service.menu_service_root
+msgid "服务"
+msgstr "服务"
+
+#. module: tianv_service
+#: view:tianv.service.service.wizard:tianv_service.view_serivce_wizard_form
+msgid "服务价格"
+msgstr "服务价格"
+
+#. module: tianv_service
+#: model:ir.actions.act_window,name:tianv_service.action_service_service_all
+#: model:ir.ui.menu,name:tianv_service.menu_service_service_all
+msgid "服务信息"
+msgstr "服务信息"
+
+#. module: tianv_service
+#: model:product.uom.categ,name:tianv_service.uom_cate_0001
+#: view:tianv.service.service.wizard:tianv_service.view_serivce_wizard_form
+msgid "服务周期"
+msgstr "服务周期"
+
+#. module: tianv_service
+#: view:tianv.service.service:tianv_service.view_service_service_all_form
+msgid "服务情况"
+msgstr "服务情况"
+
+#. module: tianv_service
+#: model:product.category,name:tianv_service.prod_cate_00002
+msgid "服务模式"
+msgstr "服务模式"
+
+#. module: tianv_service
+#: model:res.groups,name:tianv_service.group_service_user
+msgid "服务用户"
+msgstr "服务用户"
+
+#. module: tianv_service
+#: model:ir.ui.menu,name:tianv_service.menu_service_service_manager
+msgid "服务管理"
+msgstr "服务管理"
+
+#. module: tianv_service
+#: model:res.groups,name:tianv_service.group_service_manager
+msgid "服务经理"
+msgstr "服务经理"
+
+#. module: tianv_service
+#: view:tianv.service.service:tianv_service.view_service_service_all_form
+#: view:tianv.service.service.record:tianv_service.view_service_record_tree
+msgid "服务记录"
+msgstr "服务记录"
+
+#. module: tianv_service
+#: view:tianv.service.service:tianv_service.view_service_service_all_form
+msgid "查看相关合同:"
+msgstr "查看相关合同:"
+
+#. module: tianv_service
+#: view:tianv.service.service.wizard:tianv_service.view_serivce_wizard_form
+msgid "查看订单"
+msgstr "查看订单"
+
+#. module: tianv_service
+#: selection:tianv.service.service,service_level:0
+msgid "标准I型"
+msgstr "标准I型"
+
+#. module: tianv_service
+#: model:ir.actions.act_window,name:tianv_service.action_service_create_order
+#: view:tianv.service.service:tianv_service.view_service_service_all_form
+#: view:tianv.service.service.wizard:tianv_service.view_serivce_wizard_form
+msgid "生成订单"
+msgstr "生成订单"
+
+#. module: tianv_service
+#: model:product.category,name:tianv_service.RC10113000007
+msgid "网站建设"
+msgstr "网站建设"
+
+#. module: tianv_service
+#: model:product.category,name:tianv_service.RC10120300122
+msgid "网络推广"
+msgstr "网络推广"
+
+#. module: tianv_service
+#: model:product.category,name:tianv_service.RC10120300123
+msgid "虚拟主机"
+msgstr "虚拟主机"
+
+#. module: tianv_service
+#: model:product.category,name:tianv_service.RC10120300117
+msgid "设计制作"
+msgstr "设计制作"
+
+#. module: tianv_service
+#: model:product.category,name:tianv_service.RC10120300118
+msgid "软件开发"
+msgstr "软件开发"
+
+#. module: tianv_service
+#: model:product.category,name:tianv_service.RC10120300146
+msgid "软件销售"
+msgstr "软件销售"
+
