@@ -25,7 +25,7 @@
     'description': u"""
 Tianv Service Module
 """,
-    'depends': ['base_override', 'tianv_sale', 'analytic', 'sale', 'account_followup'],
+    'depends': ['base_override', 'tianv_sale', 'analytic', 'sale', 'account_followup', 'account_cancel'],
     'category': 'Service',
     'demo_xml': [],
     'data': [

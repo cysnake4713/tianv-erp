@@ -176,7 +176,7 @@ class ServiceRecord(models.Model):
     start_date = fields.Date('Start Date', required=True)
     end_date = fields.Date('End Date', required=True)
     price = fields.Float('Service Price', (10, 2), required=True)
-    service_id = fields.Many2one('tianv.service.service', 'Service', on_delete='cascade', required=True)
+    service_id = fields.Many2one('tianv.service.service', 'Service', ondelete='cascade', required=True)
     order_id = fields.Many2one('sale.order', 'Order')
 
 
