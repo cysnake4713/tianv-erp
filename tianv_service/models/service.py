@@ -39,14 +39,10 @@ class Service(models.Model):
     importance = fields.Selection(_importance_selection, 'Importance')
     # 账号个数
     account_number = fields.Integer('Account Number')
-    # 服务大小
-    product_size = fields.Integer('Product Size')
     # 服务价格
     product_price = fields.Float('Product Price', (10, 2), track_visibility='onchange')
     # 服务等级
     service_level = fields.Selection(_service_level_selection, 'Service Level')
-    # 产品单位
-    product_unit = fields.Selection(_product_unit_selection, 'Product Unit')
     # 服务状态
     service_status = fields.Selection(_status_selection, 'Service Status', track_visibility='onchange')
     # 唯一标签
@@ -76,14 +72,11 @@ class Service(models.Model):
         self.service_status_function = self.service_status
 
     @api.one
-    @api.onchange('service_level', 'product_size', 'product_unit', 'product_id')
+    @api.onchange('service_level', 'product_id')
     def _onchange_name(self):
         name = [
             dict(self._service_level_selection)[self.service_level] if self.service_level else '',
-            str(self.product_size or 0),
-            dict(self._product_unit_selection)[self.product_unit] if self.product_unit else '',
-            self.product_id.name if self.product_id else '',
-            self.product_id.categ_id.name if self.product_id and self.product_id.categ_id else ''
+            self.product_id.name_get()[0][1] if self.product_id and len(self.product_id.name_get()[0]) > 1 else '',
         ]
         self.name = ''.join(name)
 
@@ -213,7 +206,8 @@ class ServiceRecordWizard(models.TransientModel):
             'user_id': service.manager_id.id,
         }
         order_id = self.env['sale.order'].create(order_info)
-        self.write({'state': 'confirm', 'order_id': order_id.id, 'date': self.end_date})
+        self.write({'state': 'confirm', 'order_id': order_id.id, 'end_date': self.end_date})
+        service.write({'date': self.end_date})
         self.env['tianv.service.service.record'].create({
             'start_date': self.start_date,
             'end_date': self.end_date,

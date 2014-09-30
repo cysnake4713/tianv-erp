@@ -32,13 +32,11 @@ Tianv Service Module
         'data/uom.xml',
         'data/service_cron.xml',
         'security/base_security.xml',
-        'data/product.category.csv',
+        # 'data/product.category.csv',
         'security/ir.model.access.csv',
         #
         'views/service_menu.xml',
         'views/service_view.xml',
-
-
     ],
     'qweb': [
     ],

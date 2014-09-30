@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 8.0rc1\n"
+"Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-09-26 13:22+0000\n"
-"PO-Revision-Date: 2014-09-26 13:22+0000\n"
+"POT-Creation-Date: 2014-09-30 12:18+0000\n"
+"PO-Revision-Date: 2014-09-30 12:18+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -218,7 +218,7 @@ msgstr "未分配服务"
 #. module: tianv_service
 #: view:tianv.service.service:tianv_service.view_service_service_search
 msgid "Contracts that are not assigned to an account manager."
-msgstr "Contracts that are not assigned to an account manager."
+msgstr "服务没有指派负责人"
 
 #. module: tianv_service
 #: field:tianv.service.service,create_uid:0
@@ -279,11 +279,6 @@ msgstr "马上过期"
 #: field:tianv.service.service,message_follower_ids:0
 msgid "Followers"
 msgstr "关注人"
-
-#. module: tianv_service
-#: selection:tianv.service.service,product_unit:0
-msgid "GB"
-msgstr "GB"
 
 #. module: tianv_service
 #: view:tianv.service.service:tianv_service.view_service_service_search
@@ -367,16 +362,6 @@ msgid "Link this service to an analytic account if you need financial management
 msgstr "Link this service to an analytic account if you need financial management on services. It enables you to connect services with budgets, planning, cost and revenue analysis, timesheets on services, etc."
 
 #. module: tianv_service
-#: view:tianv.service.service:tianv_service.view_service_service_search
-msgid "Liquidity"
-msgstr "Liquidity"
-
-#. module: tianv_service
-#: selection:tianv.service.service,product_unit:0
-msgid "MB"
-msgstr "MB"
-
-#. module: tianv_service
 #: field:tianv.service.service,message_ids:0
 msgid "Messages"
 msgstr "消息"
@@ -404,11 +389,6 @@ msgstr "订单"
 
 #. module: tianv_service
 #: view:tianv.service.service:tianv_service.view_service_service_search
-msgid "Others"
-msgstr "其它"
-
-#. module: tianv_service
-#: view:tianv.service.service:tianv_service.view_service_service_search
 msgid "Partner"
 msgstr "甲方"
 
@@ -433,6 +413,7 @@ msgid "Port"
 msgstr "服务端口"
 
 #. module: tianv_service
+#: view:tianv.service.service:tianv_service.view_service_service_search
 #: field:tianv.service.service,product_id:0
 msgid "Product"
 msgstr "产品"
@@ -441,26 +422,6 @@ msgstr "产品"
 #: field:tianv.service.service,product_price:0
 msgid "Product Price"
 msgstr "服务价格"
-
-#. module: tianv_service
-#: field:tianv.service.service,product_size:0
-msgid "Product Size"
-msgstr "服务大小"
-
-#. module: tianv_service
-#: field:tianv.service.service,product_unit:0
-msgid "Product Unit"
-msgstr "产品单位"
-
-#. module: tianv_service
-#: view:tianv.service.service:tianv_service.view_service_service_search
-msgid "Purchase"
-msgstr "采购"
-
-#. module: tianv_service
-#: view:tianv.service.service:tianv_service.view_service_service_search
-msgid "Sale"
-msgstr "销售"
 
 #. module: tianv_service
 #: view:tianv.service.service:tianv_service.view_service_service_search
@@ -585,11 +546,6 @@ msgid "Unread Messages"
 msgstr "未读信息"
 
 #. module: tianv_service
-#: model:product.category,name:tianv_service.rc2012050200025
-msgid "VPS主机"
-msgstr "VPS主机"
-
-#. module: tianv_service
 #: selection:tianv.service.service,importance:0
 msgid "Very Important"
 msgstr "非常重要"
@@ -610,29 +566,9 @@ msgid "专业I型"
 msgstr "专业I型"
 
 #. module: tianv_service
-#: model:product.category,name:tianv_service.rc2012101300009
-msgid "临时任务"
-msgstr "临时任务"
-
-#. module: tianv_service
-#: model:product.category,name:tianv_service.RC10120300137
-msgid "主机托管"
-msgstr "主机托管"
-
-#. module: tianv_service
 #: view:tianv.service.service:tianv_service.view_service_service_all_form
 msgid "产品信息"
 msgstr "产品信息"
-
-#. module: tianv_service
-#: model:product.category,name:tianv_service.prod_cate_00001
-msgid "任务模式"
-msgstr "任务模式"
-
-#. module: tianv_service
-#: model:product.category,name:tianv_service.RC10120300132
-msgid "企业邮局"
-msgstr "企业邮局"
 
 #. module: tianv_service
 #: view:tianv.service.service:tianv_service.view_service_service_all_form
@@ -665,18 +601,12 @@ msgid "在这里填入备注信息"
 msgstr "在这里填入备注信息"
 
 #. module: tianv_service
-#: model:product.category,name:tianv_service.RC10120300127
-msgid "域名注册"
-msgstr "域名注册"
-
-#. module: tianv_service
 #: model:product.uom,name:tianv_service.uom_season
 msgid "季度"
 msgstr "季度"
 
 #. module: tianv_service
 #: model:product.uom,name:tianv_service.uom_year
-#: selection:tianv.service.service,product_unit:0
 msgid "年"
 msgstr "年"
 
@@ -684,16 +614,6 @@ msgstr "年"
 #: view:tianv.service.service:tianv_service.view_service_service_all_form
 msgid "归属信息"
 msgstr "归属信息"
-
-#. module: tianv_service
-#: model:product.category,name:tianv_service.RC10120300179
-msgid "技术咨询"
-msgstr "技术咨询"
-
-#. module: tianv_service
-#: model:product.category,name:tianv_service.RC10120300120
-msgid "日常维护"
-msgstr "日常维护"
 
 #. module: tianv_service
 #: view:tianv.service.service:tianv_service.view_service_service_all_form
@@ -731,11 +651,6 @@ msgstr "服务周期"
 #: view:tianv.service.service:tianv_service.view_service_service_all_form
 msgid "服务情况"
 msgstr "服务情况"
-
-#. module: tianv_service
-#: model:product.category,name:tianv_service.prod_cate_00002
-msgid "服务模式"
-msgstr "服务模式"
 
 #. module: tianv_service
 #: model:res.groups,name:tianv_service.group_service_user
@@ -779,34 +694,4 @@ msgstr "标准I型"
 #: view:tianv.service.service.wizard:tianv_service.view_serivce_wizard_form
 msgid "生成订单"
 msgstr "生成订单"
-
-#. module: tianv_service
-#: model:product.category,name:tianv_service.RC10113000007
-msgid "网站建设"
-msgstr "网站建设"
-
-#. module: tianv_service
-#: model:product.category,name:tianv_service.RC10120300122
-msgid "网络推广"
-msgstr "网络推广"
-
-#. module: tianv_service
-#: model:product.category,name:tianv_service.RC10120300123
-msgid "虚拟主机"
-msgstr "虚拟主机"
-
-#. module: tianv_service
-#: model:product.category,name:tianv_service.RC10120300117
-msgid "设计制作"
-msgstr "设计制作"
-
-#. module: tianv_service
-#: model:product.category,name:tianv_service.RC10120300118
-msgid "软件开发"
-msgstr "软件开发"
-
-#. module: tianv_service
-#: model:product.category,name:tianv_service.RC10120300146
-msgid "软件销售"
-msgstr "软件销售"
 

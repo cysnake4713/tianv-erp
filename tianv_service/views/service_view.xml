@@ -125,9 +125,7 @@
                                 <field name="code"/>
                             </group>
                             <group string="产品信息">
-                                <field name="product_id" domain="[('categ_id', 'child_of', [%(prod_cate_00002)d])]"/>
-                                <field name="product_size"/>
-                                <field name="product_unit"/>
+                                <field name="product_id"/>
                                 <field name="service_level"/>
                                 <field name="importance"/>
                             </group>
@@ -171,7 +169,7 @@
                     <field name="partner_id"/>
                     <field name="user_id"/>
                     <filter string="Expired or consumed"
-                            domain="[('state','in',('open','draft','pending')), '|', '&amp;', ('date', '!=', False), ('date', '&lt;=', time.strftime('%%Y-%%m-%%d')), ('is_overdue_quantity', '=', True)]"
+                            domain="[('state','in',('open','draft','pending')), '&amp;', ('date', '!=', False), ('date', '&lt;=', time.strftime('%%Y-%%m-%%d'))]"
                             help="End date passed or prepaid unit consumed"/>
                     <filter string="Expiring soon"
                             domain="[('date', '!=', False), ('date', '&lt;=', (context_today() + datetime.timedelta(30)).strftime('%%Y-%%m-%%d') )]"
@@ -184,15 +182,11 @@
                             domain="[('manager_id', '=', False)]"/>
                     <separator/>
                     <filter domain="[('manager_id','=',uid)]" string="My"/>
-                    <separator/>
-                    <filter domain="['|', ('type', '=', 'sale'), ('type', '=', 'sale_refund')]" string="Sale" icon="terp-camera_test"/>
-                    <filter domain="['|', ('type', '=', 'purchase'), ('type', '=', 'purchase_refund')]" string="Purchase" icon="terp-purchase"/>
-                    <filter domain="['|', ('type', '=', 'cash'), ('type', '=', 'bank')]" string="Liquidity" icon="terp-dolar"/>
-                    <filter domain="['|', ('type', '=', 'general'), ('type', '=', 'situation')]" string="Others" icon="terp-stock"/>
                     <group expand="0" string="Group By">
                         <filter string="Status" domain="[]" context="{'group_by':'state'}"/>
                         <filter string="Account Manager" domain="[]" context="{'group_by':'manager_id'}"/>
                         <filter string="Partner" domain="[]" context="{'group_by':'partner_id'}"/>
+                        <filter string="Product" domain="[]" context="{'group_by':'product_id'}"/>
                     </group>
                 </search>
             </field>
