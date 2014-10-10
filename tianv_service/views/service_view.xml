@@ -65,13 +65,13 @@
             <field name="model">tianv.service.service</field>
             <field name="arch" type="xml">
                 <tree string="Services" colors="grey:state in ['close','cancelled'];red:state=='pending'">
-                    <field name="partner_id"/>
+                    <field name="partner_id" string="甲方"/>
                     <field name="product_id"/>
-                    <field name="manager_id"/>
-                    <field name="date_start"/>
-                    <field name="date"/>
-                    <field name="service_status"/>
-                    <field name="state"/>
+                    <field name="manager_id" string="负责人"/>
+                    <field name="date_start" string="开始时间"/>
+                    <field name="date" string="到期时间"/>
+                    <field name="service_status" />
+                    <field name="state" string="合同状态"/>
                 </tree>
             </field>
         </record>
@@ -115,14 +115,14 @@
                         </group>
                         <group colspan="2">
                             <group string="归属信息">
-                                <field name="partner_id" domain="[('customer', '=', True)]"/>
-                                <field name="manager_id"/>
+                                <field name="partner_id" domain="[('customer', '=', True)]" string="甲方"/>
+                                <field name="manager_id" string="负责人"/>
 
                             </group>
                             <group string="服务情况">
-                                <field name="date_start" readonly="1"/>
-                                <field name="date" readonly="1"/>
-                                <field name="code"/>
+                                <field name="date_start" readonly="1" string="开始时间"/>
+                                <field name="date" readonly="1" string="到期时间"/>
+                                <field name="code" string="内部编号"/>
                             </group>
                             <group string="产品信息">
                                 <field name="product_id"/>
