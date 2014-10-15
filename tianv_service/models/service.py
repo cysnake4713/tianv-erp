@@ -236,3 +236,23 @@ class ServiceRecordWizard(models.TransientModel):
             'views': [(False, 'form')],
             'target': 'current',
         }
+
+
+class AccountInvoiceInherit(models.Model):
+    _name = 'account.invoice'
+    _inherit = 'account.invoice'
+
+    state = fields.Selection([('draft', 'Draft'),
+                              ('proforma', 'Pro-forma'),
+                              ('proforma2', 'Pro-forma'),
+                              ('open', 'Open'),
+                              ('paid', 'Paid'),
+                              ('cancel', 'Cancelled'),
+                              ('passed', u'已审批'), ], string='Status', index=True, readonly=True, default='draft',
+                             track_visibility='onchange', copy=False,
+    )
+
+    @api.multi
+    def button_passed(self):
+        self.state = 'passed'
+        return True

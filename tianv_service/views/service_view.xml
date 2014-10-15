@@ -120,8 +120,8 @@
 
                             </group>
                             <group string="服务情况">
-                                <field name="date_start" readonly="1" string="开始时间"/>
-                                <field name="date" readonly="1" string="到期时间"/>
+                                <field name="date_start" string="开始时间"/>
+                                <field name="date" string="到期时间"/>
                                 <field name="code" string="内部编号"/>
                             </group>
                             <group string="产品信息">
@@ -140,7 +140,7 @@
                         </group>
                         <notebook>
                             <page string="服务记录">
-                                <field name="record_ids" readonly="1"/>
+                                <field name="record_ids"/>
                             </page>
                             <page string="备注">
                                 <field name="comment" placeholder="在这里填入备注信息" nolabel="1"/>
@@ -197,8 +197,21 @@
             <field name="inherit_id" ref="account.invoice_tree"/>
             <field name="arch" type="xml">
                 <xpath expr="//tree[@string='Invoice']" position="attributes">
-                    <attribute name="colors">blue:state == 'draft';black:state in ('proforma','proforma2',);gray:state == 'cancel';red:state == 'open'</attribute>
+                    <attribute name="colors">blue:state == 'draft';black:state in ('proforma','proforma2',);gray:state == 'cancel';red:state in ('open','paid')</attribute>
                 </xpath>
+            </field>
+        </record>
+        <record id="view_account_invoice_form_inherit" model="ir.ui.view">
+            <field name="name">account.invoice.form.inherit</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="arch" type="xml">
+                <field name="state" position="attributes">
+                    <attribute name="statusbar_visible">draft,open,paid,passed</attribute>
+                </field>
+                <field name="state" position="before">
+                    <button name="button_passed"  string="审批通过" states="paid" groups="account.group_invoice_passer" type="object"/>
+                </field>
             </field>
         </record>
     </data>

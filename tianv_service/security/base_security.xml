@@ -10,6 +10,11 @@
             <field name="category_id" ref="base.module_category_service"/>
             <field name="implied_ids" eval="[(4, ref('group_service_user'))]"/>
         </record>
+        <record model="res.groups" id="account.group_invoice_passer">
+            <field name="name">发票核准</field>
+            <field name="category_id" ref="base.module_category_accounting_and_finance"/>
+        </record>
+
     </data>
 </openerp>
 
