@@ -256,3 +256,8 @@ class AccountInvoiceInherit(models.Model):
     def button_passed(self):
         self.state = 'passed'
         return True
+
+    @api.multi
+    def button_return_passed(self):
+        self.state = 'paid'
+        return True

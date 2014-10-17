@@ -211,6 +211,7 @@
                 </field>
                 <field name="state" position="before">
                     <button name="button_passed"  string="审批通过" states="paid" groups="account.group_invoice_passer" type="object"/>
+                    <button name="button_return_passed"  string="撤销审批" states="passed" groups="account.group_invoice_passer" type="object"/>
                 </field>
             </field>
         </record>
