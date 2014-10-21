@@ -241,6 +241,7 @@ class ServiceRecordWizard(models.TransientModel):
 class AccountInvoiceInherit(models.Model):
     _name = 'account.invoice'
     _inherit = 'account.invoice'
+    _order = "id desc"
 
     state = fields.Selection([('draft', 'Draft'),
                               ('proforma', 'Pro-forma'),
