@@ -83,5 +83,20 @@ Odoo Automatic Email
             <field name="function" eval="'cron_computer_explore'"/>
             <field name="args" eval="'()'" />
         </record>
+
+         <record id="invoice_reminder_email_template" model="email.template">
+            <field name="name">Invoice reminder</field>
+            <field name="email_from">${(object.user_id.email or object.company_id.email or 'noreply@localhost')|safe}</field>
+            <field name="subject">Invoice reminder ${user.company_id.name}</field>
+            <field name="email_to">${object.email|safe}</field>
+            <field name="lang">${object.lang}</field>
+            <field name="model_id" ref="base.model_res_users"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html"><![CDATA[
+<p>
+客户[${ctx['invoice'].partner_id.name}] 的发票 [${ctx['invoice'].number}] 需要登陆系统处理。
+</p>
+            ]]></field>
+        </record>
     </data>
 </openerp>
