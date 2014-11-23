@@ -191,29 +191,5 @@
                 </search>
             </field>
         </record>
-        <record id="view_account_invoice_tree_inherit" model="ir.ui.view">
-            <field name="name">account.invoice.tree.inherit</field>
-            <field name="model">account.invoice</field>
-            <field name="inherit_id" ref="account.invoice_tree"/>
-            <field name="arch" type="xml">
-                <xpath expr="//tree[@string='Invoice']" position="attributes">
-                    <attribute name="colors">blue:state == 'draft';black:state in ('proforma','proforma2',);gray:state == 'cancel';red:state in ('open','paid')</attribute>
-                </xpath>
-            </field>
-        </record>
-        <record id="view_account_invoice_form_inherit" model="ir.ui.view">
-            <field name="name">account.invoice.form.inherit</field>
-            <field name="model">account.invoice</field>
-            <field name="inherit_id" ref="account.invoice_form"/>
-            <field name="arch" type="xml">
-                <field name="state" position="attributes">
-                    <attribute name="statusbar_visible">draft,open,paid,passed</attribute>
-                </field>
-                <field name="state" position="before">
-                    <button name="button_passed"  string="审批通过" states="paid" groups="account.group_invoice_passer" type="object"/>
-                    <button name="button_return_passed"  string="撤销审批" states="passed" groups="account.group_invoice_passer" type="object"/>
-                </field>
-            </field>
-        </record>
     </data>
 </openerp>

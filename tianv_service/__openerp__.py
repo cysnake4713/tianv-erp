@@ -37,6 +37,7 @@ Tianv Service Module
         #
         'views/service_menu.xml',
         'views/service_view.xml',
+        'views/tax_view.xml',
     ],
     'qweb': [
     ],
