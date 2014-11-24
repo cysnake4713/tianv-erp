@@ -91,10 +91,10 @@ Odoo Automatic Email
             <field name="email_to">${object.email|safe}</field>
             <field name="lang">${object.lang}</field>
             <field name="model_id" ref="base.model_res_users"/>
-            <field name="auto_delete" eval="True"/>
+            <field name="auto_delete" eval="False"/>
             <field name="body_html"><![CDATA[
 <p>
-客户[${ctx['invoice'].partner_id.name}] 的发票 [${ctx['invoice'].number}] 需要登陆系统处理。
+Client ${ctx['invoice'].partner_id.name}'s invoice ${ctx['invoice'].number} need process.
 </p>
             ]]></field>
         </record>
