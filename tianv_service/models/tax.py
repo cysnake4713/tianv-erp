@@ -54,9 +54,9 @@ class AccountInvoiceInherit(models.Model):
         group = self.env['ir.model.data'].get_object('account', 'group_invoice_passer')
         ctx = {'invoice': self}
         for user_id in [u.id for u in group.users]:
-            template_id.with_context(ctx).send_mail(user_id, force_send=False)
+            template_id.sudo().with_context(ctx).send_mail(user_id, force_send=False)
 
     @api.multi
     def confirm_paid(self):
         self._approve_notify()
-        return super(AccountInvoiceInherit,self).confirm_paid()
+        return super(AccountInvoiceInherit, self).confirm_paid()
