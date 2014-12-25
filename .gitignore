@@ -28,4 +28,6 @@ pip-log.txt
 *.swp
 .idea
 atlassian-ide-plugin.xml
-base_override/.gitignore
+
+/log
+/data
