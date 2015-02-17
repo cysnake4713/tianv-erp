@@ -1,0 +1,3 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+access_tianv_attendance_machine,access_tianv_attendance_machine,model_tianv_attendance_machine,,1,0,0,0
+access_tianv_attendance_machine_admin,access_tianv_attendance_machine_admin,model_tianv_attendance_machine,tianv_machine.group_attendance_machine_admin,1,1,1,1

@@ -2,7 +2,7 @@
 {
     'name': 'Tianv Attendance Machine Module',
     'version': '0.2',
-    'category': 'tianv',
+    'category': 'attendance',
     'complexity': "easy",
     'description': """
     Tianv Attendance Machine Module
@@ -11,6 +11,9 @@
     'website': 'http://odoosoft.com',
     'depends': ['base', 'hr'],
     'data': [
+        'security/security.xml',
+        'security/ir.model.access.csv',
+
         'views/machine_view.xml',
         'views/menu.xml',
     ],

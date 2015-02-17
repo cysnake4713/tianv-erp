@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<openerp>
+    <data noupdate="0">
+        <record model="res.groups" id="group_attendance_machine_admin">
+            <field name="name">可以修改考勤机记录</field>
+            <field name="category_id" ref="base.module_category_attendance"/>
+        </record>
+    </data>
+</openerp>
+
