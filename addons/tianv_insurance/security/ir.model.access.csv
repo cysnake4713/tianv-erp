@@ -1,0 +1,3 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+access_tianv_social_insurance_type,access_tianv_social_insurance_type,model_tianv_social_insurance_type,,1,0,0,0
+access_tianv_social_insurance_type_admin,access_tianv_social_insurance_type_admin,model_tianv_social_insurance_type,base.group_no_one,1,1,1,1
