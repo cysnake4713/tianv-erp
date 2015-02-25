@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <!-- Inherit Form View to Modify it -->
+        <record id="view_hr_contract_form_inherit" model="ir.ui.view">
+            <field name="name">view.hr.contract.form.insurance.inherit</field>
+            <field name="model">hr.contract</field>
+            <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
+            <field name="arch" type="xml">
+                <field name="type_id" position="after">
+                    <field name="social_insurance"/>
+                </field>
+            </field>
+        </record>
+    </data>
+</openerp>

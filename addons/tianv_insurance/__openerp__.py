@@ -15,6 +15,7 @@ Tianv Social Insurance Module
         'security/ir.model.access.csv',
         #
         'views/insurance_view.xml',
+        'views/hr_contract_view.xml',
         'views/menu.xml',
     ],
     'qweb': [

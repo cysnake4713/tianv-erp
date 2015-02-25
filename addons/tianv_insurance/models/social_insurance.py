@@ -36,6 +36,28 @@ class SocialInsuranceConfig(models.Model):
         'active': True,
     }
 
+    @api.one
+    @api.constrains('contract', 'active')
+    def _check_contract(self):
+        if self.contract and self.search([('id', '!=', self.id), ('contract', '=', self.contract.id), ('active', '=', True)]):
+            raise Warning(_('Contract already have a active social insurance config, please inactive old one or change the contract'))
+
+    @api.multi
+    def name_get(self):
+        """ name_get() -> [(id, name), ...]
+
+        Returns a textual representation for the records in ``self``.
+        By default this is the value of the ``display_name`` field.
+
+        :return: list of pairs ``(id, text_repr)`` for each records
+        :rtype: list(tuple)
+        """
+        result = []
+        for record in self:
+            name = u'总额:%s (个人:%s, 公司:%s) '
+            result.append((record.id, name % (record.total, record.personal_total, record.company_total)))
+        return result
+
 
 class SocialInsuranceType(models.Model):
     _name = 'tianv.social.insurance.type'
