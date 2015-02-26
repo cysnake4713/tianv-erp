@@ -14,7 +14,11 @@ class AttendanceMachine(models.Model):
 
     log_time = fields.Datetime('Log Time')
     log_employee = fields.Many2one('hr.employee', 'Log Employee')
-    code = fields.Char('Identify ID')
+
+    user_id = fields.Integer('Machine User ID')
+    user_true_name = fields.Char('Machine User True Name')
+
+    code = fields.Integer('Identify ID')
 
 
 

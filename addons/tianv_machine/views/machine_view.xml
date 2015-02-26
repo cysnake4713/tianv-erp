@@ -7,6 +7,8 @@
             <field name="arch" type="xml">
                 <tree editable="top">
                     <field name="code"/>
+                    <field name="user_id"/>
+                    <field name="user_true_name"/>
                     <field name="log_employee"/>
                     <field name="log_time"/>
                 </tree>
