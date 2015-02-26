@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data noupdate="1">
+        <record id="parameter_machine_password" model="ir.config_parameter">
+            <field name="key">tianv_machine.password</field>
+            <field name="value">tianv_123456</field>
+        </record>
+    </data>
+</openerp>

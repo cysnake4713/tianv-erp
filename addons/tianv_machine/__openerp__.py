@@ -16,6 +16,8 @@
 
         'views/machine_view.xml',
         'views/menu.xml',
+
+        'data/data.xml',
     ],
     'qweb': [
         'static/src/xml/*.xml',

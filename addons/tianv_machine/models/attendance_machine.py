@@ -4,6 +4,9 @@ __author__ = 'cysnak4713'
 from openerp import tools
 from openerp import models, fields, api
 from openerp.tools.translate import _
+import logging
+
+_logger = logging.getLogger(__name__)
 
 
 class AttendanceMachine(models.Model):
@@ -19,6 +22,23 @@ class AttendanceMachine(models.Model):
     user_true_name = fields.Char('Machine User True Name')
 
     code = fields.Integer('Identify ID')
+
+    def import_data_from_machine(self, cr, uid, datas, context=None):
+        cr.execute('SAVEPOINT import')
+        for data in datas:
+            try:
+                self.create(cr, uid, data, context=context)
+            except Exception, e:
+                _logger.error('Import attendance machine error!', e)
+                break
+        else:
+            cr.execute('RELEASE SAVEPOINT import')
+            self.pool['tianv.attendance.machine.log'].create(cr, uid, {'is_success': True}, context=context)
+            return True
+
+        cr.execute('ROLLBACK TO SAVEPOINT import')
+        self.pool['tianv.attendance.machine.log'].create(cr, uid, {'is_success': False}, context=context)
+        return False
 
 
 class AttendanceImportLog(models.Model):
