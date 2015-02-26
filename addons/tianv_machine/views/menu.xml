@@ -7,11 +7,21 @@
             <field name="res_model">tianv.attendance.machine</field>
             <field name="view_mode">tree</field>
         </record>
+
+        <record id="action_attendance_machine_log" model="ir.actions.act_window">
+            <field name="name">考勤机导入历史记录</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">tianv.attendance.machine.log</field>
+            <field name="view_mode">tree</field>
+        </record>
         <!-- This Menu Item Must have a parent -->
         <menuitem id="menuitem_attendane_machine_root" name="考勤机" parent="hr.menu_hr_root" sequence="40"/>
         <!-- This Menu Item must have a parent and an action -->
-        <menuitem id="menuitem_attendane_machine_info" name="考勤机信息" parent="menuitem_attendane_machine_root"  sequence="10"
-                action="action_attendance_machine"/>
+        <menuitem id="menuitem_attendane_machine_info" name="考勤机信息" parent="menuitem_attendane_machine_root" sequence="10"
+                  action="action_attendance_machine"/>
+        <!-- This Menu Item must have a parent and an action -->
+        <menuitem id="menuitem_attendane_machine_log_info" name="导入记录" parent="menuitem_attendane_machine_root" sequence="20"
+                  action="action_attendance_machine_log" groups="tianv_machine.group_attendance_machine_admin"/>
 
     </data>
 </openerp>

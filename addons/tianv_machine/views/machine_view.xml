@@ -14,5 +14,16 @@
                 </tree>
             </field>
         </record>
+
+        <record id="view_attendance_machine_log_tree" model="ir.ui.view">
+            <field name="name">view.tianv.attendance.machine.log.tree</field>
+            <field name="model">tianv.attendance.machine.log</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="import_datetime"/>
+                    <field name="is_success"/>
+                </tree>
+            </field>
+        </record>
     </data>
 </openerp>

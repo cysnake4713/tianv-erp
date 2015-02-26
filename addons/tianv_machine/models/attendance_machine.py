@@ -21,4 +21,19 @@ class AttendanceMachine(models.Model):
     code = fields.Integer('Identify ID')
 
 
+class AttendanceImportLog(models.Model):
+    _name = 'tianv.attendance.machine.log'
+
+    _rec_name = 'import_datetime'
+    _order = 'import_datetime desc'
+
+    import_datetime = fields.Datetime('Import Datetime')
+    is_success = fields.Boolean('Is Success')
+
+    _defaults = {
+        'import_datetime': lambda *args: fields.Datetime.now(),
+        'is_success': True,
+    }
+
+
 
