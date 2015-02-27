@@ -56,7 +56,7 @@ class AttendanceMachine(models.Model):
         last_import_datetime = self.env['tianv.attendance.machine.log'].search([('is_success', '=', True)], order='import_datetime desc', limit=1)
         last_import_datetime = last_import_datetime[0].import_datetime if last_import_datetime else None
         last_import_datetime = fields.Datetime.to_string(
-            fields.Datetime.context_timestamp(self, fields.Datetime.from_string(last_import_datetime)))
+            fields.Datetime.context_timestamp(self, fields.Datetime.from_string(last_import_datetime))) if last_import_datetime else None
         last_code = self.search([], order='code desc', limit=1)
         last_code = last_code[0].code if last_code else None
         return last_code, last_import_datetime
