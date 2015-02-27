@@ -5,6 +5,7 @@ from openerp import tools
 from openerp import models, fields, api
 from openerp.tools.translate import _
 from openerp import SUPERUSER_ID
+import xmlrpclib
 
 
 # noinspection PyUnresolvedReferences
@@ -26,40 +27,47 @@ class AttendanceMachine(models.Model):
 
     @api.model
     def import_data_from_machine(self, datas):
-        self.env.cr.execute('SAVEPOINT import')
-        employees = {u.name: u.id for u in self.env['hr.employee'].search([])}
-        result = True, ''
-        for data in datas:
-            try:
-                self.match_user(employees, data)
-                self.create(data)
-            except Exception, e:
-                # _logger.error('Import machine record error.')
-                result = False, e.message
-                break
-        else:
-            self.env.cr.execute('RELEASE SAVEPOINT import')
-            self.env['tianv.attendance.machine.log'].create({'is_success': True})
-            return result
+        if self.user_has_groups('tianv_machine.group_attendance_machine_upload'):
+            self.sudo().env.cr.execute('SAVEPOINT import')
+            employees = {u.name: u.id for u in self.sudo().env['hr.employee'].search([])}
+            result = True, ''
+            for data in datas:
+                try:
+                    self.sudo().match_user(employees, data)
+                    self.sudo().create(data)
+                except Exception, e:
+                    # _logger.error('Import machine record error.')
+                    result = False, e.message
+                    break
+            else:
+                self.sudo().env.cr.execute('RELEASE SAVEPOINT import')
+                self.sudo().env['tianv.attendance.machine.log'].create({'is_success': True})
+                return result
 
-        self.env.cr.execute('ROLLBACK TO SAVEPOINT import')
-        self.env['tianv.attendance.machine.log'].create({'is_success': False, 'error_info': result[1]})
-        return result
+            self.sudo().env.cr.execute('ROLLBACK TO SAVEPOINT import')
+            self.sudo().env['tianv.attendance.machine.log'].create({'is_success': False, 'error_info': result[1]})
+            return result
+        else:
+            return False, 'have no privilege!'
+
+    @api.model
+    def get_last_update_info(self):
+        if self.user_has_groups('tianv_machine.group_attendance_machine_upload'):
+            last_import_datetime = self.sudo().env['tianv.attendance.machine.log'].search([('is_success', '=', True)], order='import_datetime desc',
+                                                                                          limit=1)
+            last_import_datetime = last_import_datetime[0].import_datetime if last_import_datetime else None
+            last_import_datetime = fields.Datetime.to_string(
+                fields.Datetime.context_timestamp(self, fields.Datetime.from_string(last_import_datetime))) if last_import_datetime else False
+            last_code = self.sudo().search([], order='code desc', limit=1)
+            last_code = last_code[0].code if last_code else False
+            return last_code, last_import_datetime
+        else:
+            return False, 'have no privilege!'
 
     @api.model
     def match_user(self, employees, data):
         if 'user_true_name' in data and data['user_true_name'] in employees:
             data['log_employee'] = employees[data['user_true_name']]
-
-    @api.model
-    def get_last_update_info(self):
-        last_import_datetime = self.env['tianv.attendance.machine.log'].search([('is_success', '=', True)], order='import_datetime desc', limit=1)
-        last_import_datetime = last_import_datetime[0].import_datetime if last_import_datetime else None
-        last_import_datetime = fields.Datetime.to_string(
-            fields.Datetime.context_timestamp(self, fields.Datetime.from_string(last_import_datetime))) if last_import_datetime else None
-        last_code = self.search([], order='code desc', limit=1)
-        last_code = last_code[0].code if last_code else None
-        return last_code, last_import_datetime
 
 
 class AttendanceImportLog(models.Model):
@@ -76,3 +84,33 @@ class AttendanceImportLog(models.Model):
         'import_datetime': lambda *args: fields.Datetime.now(),
         'is_success': True,
     }
+
+
+if __name__ == '__main__':
+    username = 'machine'  # the user
+    pwd = 'machine'  # the password of the user
+    dbname = 'tianv-erp'  # the database
+    OPENERP_URL = 'localhost:8069'
+
+    sock_common = xmlrpclib.ServerProxy('http://' + OPENERP_URL + '/xmlrpc/common')
+    uid = sock_common.login(dbname, username, pwd)
+    sock = xmlrpclib.ServerProxy('http://' + OPENERP_URL + '/xmlrpc/object')
+
+    print sock.execute(dbname, uid, pwd, 'tianv.attendance.machine', 'get_last_update_info')
+
+    datas = [
+        {
+            "log_time": "2014-02-11 12:22:10",
+            "code": 10,
+            "user_id": 1,
+            "user_true_name": "符为"
+        },
+        {
+            "log_time": "2014-02-12 12:22:10",
+            "code": 11,
+            "user_id": 1,
+            "user_true_name": "符为"
+        }
+    ]
+
+    print sock.execute(dbname, uid, pwd, 'tianv.attendance.machine', 'import_data_from_machine', datas)

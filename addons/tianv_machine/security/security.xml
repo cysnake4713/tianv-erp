@@ -5,6 +5,11 @@
             <field name="name">可以修改考勤机记录</field>
             <field name="category_id" ref="base.module_category_attendance"/>
         </record>
+
+        <record model="res.groups" id="group_attendance_machine_upload">
+            <field name="name">特殊权限:勾选可以上传考勤机数据</field>
+            <field name="category_id" ref="base.module_category_attendance"/>
+        </record>
     </data>
 </openerp>
 
