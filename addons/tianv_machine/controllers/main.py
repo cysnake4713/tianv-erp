@@ -13,3 +13,9 @@ class AttendanceMachineController(http.Controller):
             return result
         else:
             return False, 'password mismatch!'
+
+
+    @http.route('/machine/check_last', type='json', auth='none')
+    def get_last_update_info(self):
+        result = request.registry['tianv.attendance.machine'].get_last_update_info(request.cr, SUPERUSER_ID, request.context)
+        return result
