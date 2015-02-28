@@ -14,14 +14,21 @@
             <field name="res_model">tianv.social.insurance.config</field>
             <field name="view_mode">tree,form</field>
         </record>
-        <!-- This Menu Item Must have a parent -->
+
+        <record id="action_social_insurance_record" model="ir.actions.act_window">
+            <field name="name">社保记录</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">tianv.social.insurance.record</field>
+            <field name="view_mode">tree,form</field>
+        </record>
         <menuitem id="menuitem_social_insurance_type_config" name="社保类型" parent="hr.menu_hr_configuration" sequence="40"
                   action="action_social_insurance_type" groups="base.group_no_one"/>
 
-
         <menuitem id="menuitem_social_insurance_config_root" name="社保" parent="hr.menu_hr_root" sequence="35"/>
 
-        <!-- This Menu Item must have a parent and an action -->
+        <menuitem id="menuitem_social_insurance_record" name="社保记录" parent="menuitem_social_insurance_config_root" sequence="5"
+                action="action_social_insurance_record"/>
+
         <menuitem id="menuitem_social_insurance_config" name="社保设置" parent="menuitem_social_insurance_config_root" sequence="10"
                 action="action_social_insurance_config"/>
 

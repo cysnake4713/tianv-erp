@@ -5,6 +5,14 @@ from openerp import models, fields, api
 from openerp.tools.translate import _
 
 
+class SocialInsuranceType(models.Model):
+    _name = 'tianv.social.insurance.type'
+
+    name = fields.Char('Name', required=True)
+
+    _sql_constraints = [('social_insurance_type_name_unique', 'unique(name)', _('name must be unique !'))]
+
+
 class SocialInsuranceConfig(models.Model):
     _name = 'tianv.social.insurance.config'
     _rec_name = 'computer_code'
@@ -54,17 +62,35 @@ class SocialInsuranceConfig(models.Model):
         """
         result = []
         for record in self:
-            name = u'总额:%s (个人:%s, 公司:%s) '
+            name = u'总额:%s (个人:%s, 公司:%s)'
             result.append((record.id, name % (record.total, record.personal_total, record.company_total)))
         return result
 
 
-class SocialInsuranceType(models.Model):
-    _name = 'tianv.social.insurance.type'
-
-    name = fields.Char('Name', required=True)
-
-    _sql_constraints = [('social_insurance_type_name_unique', 'unique(name)', _('name must be unique !'))]
+    @api.multi
+    def generate_insurance_record(self):
+        if 'period' not in self.env.context:
+            period = self.env['account.period'].search([('date_start', '<=', fields.Datetime.now()), ('date_stop', '>=', fields.Datetime.now())])
+            period = period.id if period else None
+        else:
+            period = self.env.context['period']
+        for config in self:
+            data = {
+                'contract': config.contract.id,
+                'computer_code': config.computer_code,
+                'census_type': config.census_type,
+                'period': period,
+            }
+            record = self.env['tianv.social.insurance.record'].create(data)
+            for line in config.lines:
+                line_data = {
+                    'type': line.type.id,
+                    'company_part': line.company_part,
+                    'personal_part': line.personal_part,
+                    'record': record.id,
+                }
+                record.lines.create(line_data)
+        return True
 
 
 class SocialInsuranceLine(models.Model):
@@ -75,3 +101,29 @@ class SocialInsuranceLine(models.Model):
     company_part = fields.Float('Company Part', (10, 2))
     personal_part = fields.Float('Personal Part', (10, 2))
     config = fields.Many2one('tianv.social.insurance.config', 'Related Config')
+
+
+class SocialInsuranceRecord(models.Model):
+    _name = 'tianv.social.insurance.record'
+    _inherit = 'tianv.social.insurance.config'
+
+    _order = 'period desc, contract desc'
+
+    lines = fields.One2many('tianv.social.insurance.record.line', 'record', 'Record Lines')
+    period = fields.Many2one('account.period', 'Account Period')
+
+    @api.one
+    @api.constrains('contract', 'period', 'active')
+    def _check_contract(self):
+        if self.contract and self.period and \
+                self.search([('id', '!=', self.id), ('contract', '=', self.contract.id), ('period', '=', self.period.id), ('active', '=', True)]):
+            raise Warning(_('A active same period and contract insurance record exist! remove or inactive old one before create'))
+
+
+class SocialInsuranceRecordLine(models.Model):
+    _name = 'tianv.social.insurance.record.line'
+    _inherit = 'tianv.social.insurance.line'
+
+    record = fields.Many2one('tianv.social.insurance.record', 'Related Record')
+
+

@@ -1,21 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
-        <record id="view_social_insurance_type_tree" model="ir.ui.view">
-            <field name="name">view.tianv.social.insurance.type.tree</field>
-            <field name="model">tianv.social.insurance.type</field>
-            <field name="arch" type="xml">
-                <tree editable="top">
-                    <field name="name"/>
-                </tree>
-            </field>
-        </record>
-
-        <record id="view_social_insurance_config_tree" model="ir.ui.view">
-            <field name="name">view.tianv.social.insurance.config.tree</field>
-            <field name="model">tianv.social.insurance.config</field>
+        <record id="view_social_insurance_record_tree" model="ir.ui.view">
+            <field name="name">view.tianv.social.insurance.record.tree</field>
+            <field name="model">tianv.social.insurance.record</field>
             <field name="arch" type="xml">
                 <tree>
+                    <field name="period"/>
                     <field name="contract"/>
                     <field name="computer_code"/>
                     <field name="census_type"/>
@@ -26,16 +17,14 @@
             </field>
         </record>
 
-        <record id="view_social_insurance_config_form" model="ir.ui.view">
-            <field name="name">view.tianv.social.insurance.config.form</field>
-            <field name="model">tianv.social.insurance.config</field>
+        <record id="view_social_insurance_record_form" model="ir.ui.view">
+            <field name="name">view.tianv.social.insurance.record.form</field>
+            <field name="model">tianv.social.insurance.record</field>
             <field name="arch" type="xml">
                 <form>
-                    <header>
-                        <button string="根据此配置生成当月社保记录" name="generate_insurance_record" type="object" groups="tianv_insurance.group_insurance_admin"/>
-                    </header>
                     <sheet>
                         <group>
+                            <field name="period"/>
                             <field name="contract"/>
                             <field name="computer_code"/>
                             <field name="census_type"/>
