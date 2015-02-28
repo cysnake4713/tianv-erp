@@ -22,6 +22,11 @@
             <field name="model">tianv.social.insurance.record</field>
             <field name="arch" type="xml">
                 <form>
+                    <header>
+                        <button string="回写当前数据" name="write_back_info" type="object"
+                                groups="tianv_insurance.group_insurance_admin"
+                                confirm="注意:一经确认,此合同新生成的社保记录会使用此条目数值,请谨慎使用."/>
+                    </header>
                     <sheet>
                         <group>
                             <field name="period"/>

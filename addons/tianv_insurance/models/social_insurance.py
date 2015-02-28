@@ -3,6 +3,7 @@ __author__ = 'cysnak4713'
 from openerp import tools
 from openerp import models, fields, api
 from openerp.tools.translate import _
+from openerp import exceptions
 
 
 class SocialInsuranceType(models.Model):
@@ -118,6 +119,30 @@ class SocialInsuranceRecord(models.Model):
         if self.contract and self.period and \
                 self.search([('id', '!=', self.id), ('contract', '=', self.contract.id), ('period', '=', self.period.id), ('active', '=', True)]):
             raise Warning(_('A active same period and contract insurance record exist! remove or inactive old one before create'))
+
+    @api.multi
+    def write_back_info(self):
+        for record in self:
+            config = self.env['tianv.social.insurance.config'].search([('contract', '=', record.contract.id), ('active', '=', True)])
+            if config:
+                data = {
+                    'contract': record.contract.id,
+                    'computer_code': record.computer_code,
+                    'census_type': record.census_type,
+                }
+                config.write(data)
+                config.lines.unlink()
+                for line in record.lines:
+                    line_data = {
+                        'type': line.type.id,
+                        'company_part': line.company_part,
+                        'personal_part': line.personal_part,
+                        'config': config.id,
+                    }
+                    config.lines.create(line_data)
+            else:
+                raise exceptions.Warning(_("Can't find related insurance config!"))
+        return True
 
 
 class SocialInsuranceRecordLine(models.Model):
