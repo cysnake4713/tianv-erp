@@ -9,7 +9,7 @@ Tianv Social Insurance Module
 """,
     'author': 'Matt Cai',
     'website': 'http://odoosoft.com',
-    'depends': ['base', 'hr', 'hr_contract', 'account'],
+    'depends': ['base', 'hr', 'hr_contract', 'account', 'mail'],
     'data': [
         'security/security.xml',
         'security/ir.model.access.csv',
