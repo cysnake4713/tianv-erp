@@ -25,7 +25,7 @@
     'description': u"""
 Tianv Sales Module
 """,
-    'depends': ['base_override', 'mail'],
+    'depends': ['mail'],
     'category': 'Sales',
     'demo_xml': [],
     'data': [

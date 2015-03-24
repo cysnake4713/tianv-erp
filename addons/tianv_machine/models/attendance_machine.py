@@ -5,7 +5,7 @@ from openerp import tools
 from openerp import models, fields, api
 from openerp.tools.translate import _
 from openerp import SUPERUSER_ID
-import xmlrpclib
+# import xmlrpclib
 
 
 # noinspection PyUnresolvedReferences
@@ -86,31 +86,31 @@ class AttendanceImportLog(models.Model):
     }
 
 
-if __name__ == '__main__':
-    username = 'machine'  # the user
-    pwd = 'machine'  # the password of the user
-    dbname = 'tianv-erp'  # the database
-    OPENERP_URL = 'localhost:8069'
-
-    sock_common = xmlrpclib.ServerProxy('http://' + OPENERP_URL + '/xmlrpc/common')
-    uid = sock_common.login(dbname, username, pwd)
-    sock = xmlrpclib.ServerProxy('http://' + OPENERP_URL + '/xmlrpc/object')
-
-    print sock.execute(dbname, uid, pwd, 'tianv.attendance.machine', 'get_last_update_info')
-
-    datas = [
-        {
-            "log_time": "2014-02-11 12:22:10",
-            "code": 10,
-            "user_id": 1,
-            "user_true_name": "符为"
-        },
-        {
-            "log_time": "2014-02-12 12:22:10",
-            "code": 11,
-            "user_id": 1,
-            "user_true_name": "符为"
-        }
-    ]
-
-    print sock.execute(dbname, uid, pwd, 'tianv.attendance.machine', 'import_data_from_machine', datas)
+    # if __name__ == '__main__':
+    # username = 'machine'  # the user
+    #     pwd = 'machine'  # the password of the user
+    #     dbname = 'tianv-erp'  # the database
+    #     OPENERP_URL = 'localhost:8069'
+    #
+    #     sock_common = xmlrpclib.ServerProxy('http://' + OPENERP_URL + '/xmlrpc/common')
+    #     uid = sock_common.login(dbname, username, pwd)
+    #     sock = xmlrpclib.ServerProxy('http://' + OPENERP_URL + '/xmlrpc/object')
+    #
+    #     print sock.execute(dbname, uid, pwd, 'tianv.attendance.machine', 'get_last_update_info')
+    #
+    #     datas = [
+    #         {
+    #             "log_time": "2014-02-11 12:22:10",
+    #             "code": 10,
+    #             "user_id": 1,
+    #             "user_true_name": "符为"
+    #         },
+    #         {
+    #             "log_time": "2014-02-12 12:22:10",
+    #             "code": 11,
+    #             "user_id": 1,
+    #             "user_true_name": "符为"
+    #         }
+    #     ]
+    #
+    #     print sock.execute(dbname, uid, pwd, 'tianv.attendance.machine', 'import_data_from_machine', datas)

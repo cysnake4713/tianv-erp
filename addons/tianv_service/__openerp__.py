@@ -7,7 +7,7 @@
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
 #
-#    This program is distributed in the hope that it will be useful,
+# This program is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #    GNU General Public License for more details.
@@ -25,7 +25,7 @@
     'description': u"""
 Tianv Service Module
 """,
-    'depends': ['base_override', 'tianv_sale', 'analytic', 'sale', 'account_followup', 'account_cancel'],
+    'depends': ['tianv_sale', 'analytic', 'sale', 'account_followup', 'account_cancel'],
     'category': 'Service',
     'demo_xml': [],
     'data': [
