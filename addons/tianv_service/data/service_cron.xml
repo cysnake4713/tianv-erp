@@ -11,26 +11,26 @@
             <field name="model_id" ref="base.model_res_users"/>
             <field name="auto_delete" eval="True"/>
             <field name="body_html"><![CDATA[
-Hello ${object.name},
+ ${object.name}您好,
 
 % macro account_table(values):
 <table cellspacing="1" border="1" cellpadding="4">
     <tr>
-        <th>Customer</th>
-        <th>services</th>
-        <th>Dates</th>
-        <th>Prepaid Units</th>
-        <th>Contact</th>
+        <th>甲方</th>
+        <th>服务</th>
+        <th>日期</th>
+        <th>预付单元</th>
+        <th>合同</th>
     </tr>
     % for partner, accounts in values:
         % for account in accounts:
         <tr>
             <td>${partner.name}</td>
             <td><a href="${ctx["base_url"]}/#action=${ctx["action_id"]}&id=${account.id}&view_type=form">${account.name}</a></td>
-            <td>${account.date_start} to ${account.date and account.date or '???'}</td>
+            <td>${account.date_start} 至 ${account.date and account.date or '???'}</td>
             <td>
             % if account.quantity_max != 0.0:
-                ${account.remaining_hours}/${account.quantity_max} units
+                ${account.remaining_hours}/${account.quantity_max} 单位
             % endif
             </td>
             <td>${account.partner_id.phone or ''}, ${account.partner_id.email or ''}</td>
@@ -41,33 +41,39 @@ Hello ${object.name},
 % endmacro 
 
 % if "new" in ctx["data"]:
-    <h2>The following services just expired: </h2>
+    <h2>以下的服务刚刚过期:</h2>
     ${account_table(ctx["data"]["new"].iteritems())}
 % endif
 
 % if "old" in ctx["data"]:
-    <h2>The following expired services are still not processed: </h2>
+    <h2>以下的服务仍然没有处理:</h2>
     ${account_table(ctx["data"]["old"].iteritems())}
 % endif
 
 % if "future" in ctx["data"]:
-    <h2>The following services will expire in less than one month: </h2>
+    <h2>以下的服务将在一个月内过期:</h2>
     ${account_table(ctx["data"]["future"].iteritems())}
 % endif
 
 <p>
-    You can check all service to be renewed using the menu:
+    你能通过以下目录查看这些信息:
 </p>
 <ul>
-    <li>Service / Service / Services to Renew</li>
+    <li>服务 / 服务</li>
 </ul>
 <p>
-    Thanks,
+    谢谢,
 </p>
 
 <pre>
--- 
-Odoo Automatic Email
+===========================================
+深圳市天艺网络技术有限公司
+ShenZhen Tianv Network Technology Co.,LTD
+Tel:0086-755-8622 6905
+Fax:0086-755-8622 6925
+Web:http://www.tianv.com
+Mail:tianv@tianv.com
+===========================================
 </pre>
 
             ]]></field>
