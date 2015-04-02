@@ -108,6 +108,10 @@ class Service(models.Model):
     def pause_service(self):
         return self.write({'service_status': 'pause'})
 
+    @api.multi
+    def button_send_notify_mail(self):
+        self.cron_computer_explore()
+
     @api.model
     def cron_computer_explore(self):
         remind = {}

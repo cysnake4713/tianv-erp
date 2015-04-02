@@ -86,6 +86,7 @@
                             <button name="set_close" string="Close Contract" type="object" states="open,pending"/>
                             <button name="set_open" string="Set In Progress" type="object" states="pending,close,cancelled,draft" class="oe_highlight"/>
                             <button name="set_cancel" string="Cancel Contract" type="object" states="open,pending"/>
+                            <button name="button_send_notify_mail" type="object" string="立刻发送邮件通知"/>
                         </div>
                         <field name="state" readonly="1" widget="statusbar"
                                statusbar_visible="open,pending,close" statusbar_colors='{"pending":"red", "template":"blue"}'/>
