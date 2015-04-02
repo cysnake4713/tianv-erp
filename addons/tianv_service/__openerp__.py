@@ -8,8 +8,8 @@
 # (at your option) any later version.
 #
 # This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #    GNU General Public License for more details.
 #
 #    You should have received a copy of the GNU General Public License
@@ -25,10 +25,11 @@
     'description': u"""
 Tianv Service Module
 """,
-    'depends': ['tianv_sale', 'analytic', 'sale', 'account_followup', 'account_cancel', 'email_template'],
+    'depends': ['tianv_sale', 'analytic', 'sale', 'account_followup', 'account_cancel', 'email_template', 'odoosoft_wechat_enterprise'],
     'category': 'Service',
     'demo_xml': [],
     'data': [
+        'data/data.xml',
         'data/uom.xml',
         'data/service_cron.xml',
         'security/base_security.xml',

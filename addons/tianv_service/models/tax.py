@@ -53,6 +53,9 @@ class AccountInvoiceInherit(models.Model):
         template_id = self.env['ir.model.data'].get_object('tianv_service', 'invoice_reminder_email_template')
         group = self.env['ir.model.data'].get_object('account', 'group_invoice_passer')
         ctx = {'invoice': self}
+        self.env['odoosoft.wechat.enterprise.message'].create_message(obj=self, content=u'等待您审批', code='tianv_service.map_tianv_service',
+                                                                      user_ids=[u.id for u in group.users])
+
         for user_id in [u.id for u in group.users]:
             template_id.sudo().with_context(ctx).send_mail(user_id, force_send=False)
 
