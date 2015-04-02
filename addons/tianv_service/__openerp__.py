@@ -25,7 +25,7 @@
     'description': u"""
 Tianv Service Module
 """,
-    'depends': ['tianv_sale', 'analytic', 'sale', 'account_followup', 'account_cancel'],
+    'depends': ['tianv_sale', 'analytic', 'sale', 'account_followup', 'account_cancel', 'email_template'],
     'category': 'Service',
     'demo_xml': [],
     'data': [
@@ -38,6 +38,7 @@ Tianv Service Module
         'views/service_menu.xml',
         'views/service_view.xml',
         'views/tax_view.xml',
+        'views/email_template_view.xml',
     ],
     'qweb': [
     ],

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <!-- Inherit Form View to Modify it -->
+        <record id="email_template_form_inheirt" model="ir.ui.view">
+            <field name="name">view.email.template.form.inherit</field>
+            <field name="model">email.template</field>
+            <field name="inherit_id" ref="email_template.email_template_form"/>
+            <field name="arch" type="xml">
+                <field name="body_html" position="attributes">
+                    <attribute name="widget">code_editor</attribute>
+                    <attribute name="code_type">html</attribute>
+                </field>
+            </field>
+        </record>
+    </data>
+</openerp>
