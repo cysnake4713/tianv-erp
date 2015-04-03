@@ -9,11 +9,12 @@ Tianv Attendance Module
 """,
     'author': 'Matt Cai',
     'website': 'http://odoosoft.com',
-    'depends': ['base', 'hr'],
+    'depends': ['base', 'hr', 'account'],
     'data': [
         'views/menu.xml',
         'views/attendance_config_view.xml',
         'views/attendance_rule_view.xml',
+        'views/attendance_plan_view.xml',
 
     ],
     'qweb': [

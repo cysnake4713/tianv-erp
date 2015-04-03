@@ -19,19 +19,24 @@
             <field name="view_mode">tree,form</field>
         </record>
 
-
-        <menuitem id="menuitem_tianv_attendance_setting" name="考勤设置" parent="hr.menu_hr_configuration" sequence="45" groups="base.group_system"/>
-
-        <menuitem id="menuitem_tianv_attendance_config" name="考勤区间设置" parent="menuitem_tianv_attendance_setting" sequence="5"
-                  action="action_tianv_attendance_config"/>
-
-        <menuitem id="menuitem_tianv_attendance_config_type" name="考勤区间类型设置" parent="menuitem_tianv_attendance_setting" sequence="10"
-                  action="action_tianv_attendance_config_type"/>
+        <record id="action_tianv_attendance_plan" model="ir.actions.act_window">
+            <field name="name">考勤计划</field>
+            <field name="res_model">tianv.hr.attendance.plan</field>
+            <field name="view_mode">tree,form</field>
+        </record>
 
         <menuitem id="menuitem_tianv_attendance_root" name="考勤" parent="hr.menu_hr_root" sequence="37"/>
+        <menuitem id="menuitem_tianv_attendance_plan" name="考勤计划" parent="menuitem_tianv_attendance_root" sequence="5"
+                  action="action_tianv_attendance_plan"/>
 
-
-        <menuitem id="menuitem_tianv_attendance_rule" name="考勤规则" parent="menuitem_tianv_attendance_root" sequence="10"
+        <menuitem id="menuitem_tianv_attendance_setting" name="考勤设置" parent="hr.menu_hr_configuration" sequence="45" groups="base.group_system"/>
+        <menuitem id="menuitem_tianv_attendance_config" name="考勤区间设置" parent="menuitem_tianv_attendance_setting" sequence="5"
+                  action="action_tianv_attendance_config"/>
+        <menuitem id="menuitem_tianv_attendance_config_type" name="考勤区间类型设置" parent="menuitem_tianv_attendance_setting" sequence="10"
+                  action="action_tianv_attendance_config_type"/>
+        <menuitem id="menuitem_tianv_attendance_rule" name="考勤规则" parent="menuitem_tianv_attendance_setting" sequence="15"
                   action="action_tianv_attendance_rule"/>
+
+
     </data>
 </openerp>
