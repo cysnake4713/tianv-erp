@@ -24,7 +24,7 @@
         <menuitem id="menuitem_social_insurance_type_config" name="社保类型" parent="hr.menu_hr_configuration" sequence="40"
                   action="action_social_insurance_type" groups="base.group_no_one"/>
 
-        <menuitem id="menuitem_social_insurance_config_root" name="社保" parent="hr.menu_hr_root" sequence="35"/>
+        <menuitem id="menuitem_social_insurance_config_root" name="社保" parent="hr.menu_hr_root" sequence="40"/>
 
         <menuitem id="menuitem_social_insurance_record" name="社保记录" parent="menuitem_social_insurance_config_root" sequence="5"
                 action="action_social_insurance_record"/>

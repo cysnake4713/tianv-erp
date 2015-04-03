@@ -15,7 +15,7 @@
             <field name="view_mode">tree</field>
         </record>
         <!-- This Menu Item Must have a parent -->
-        <menuitem id="menuitem_attendane_machine_root" name="考勤机" parent="hr.menu_hr_root" sequence="40"/>
+        <menuitem id="menuitem_attendane_machine_root" name="考勤机" parent="hr.menu_hr_root" sequence="43"/>
         <!-- This Menu Item must have a parent and an action -->
         <menuitem id="menuitem_attendane_machine_info" name="考勤机信息" parent="menuitem_attendane_machine_root" sequence="10"
                   action="action_attendance_machine"/>
