@@ -13,6 +13,7 @@ Tianv Attendance Module
     'data': [
         'views/menu.xml',
         'views/attendance_config_view.xml',
+        'views/attendance_rule_view.xml',
 
     ],
     'qweb': [

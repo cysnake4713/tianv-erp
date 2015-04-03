@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record id="view_tianv_attendance_rule_tree" model="ir.ui.view">
+            <field name="name">view.tianv.hr.attendance.rule.tree</field>
+            <field name="model">tianv.hr.attendance.rule</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_tianv_attendance_rule_form" model="ir.ui.view">
+            <field name="name">view.tianv.hr.attendance.rule.form</field>
+            <field name="model">tianv.hr.attendance.rule</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                        <separator string="规则"/>
+                        <field name="lines"/>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_tianv_attendance_rule_line_tree" model="ir.ui.view">
+            <field name="name">view.tianv.hr.attendance.rule.line.tree</field>
+            <field name="model">tianv.hr.attendance.rule.line</field>
+            <field name="arch" type="xml">
+                <tree editable="top">
+                    <field name="type"/>
+                    <field name="is_need_punch_in"/>
+                    <field name="is_need_punch_out"/>
+                </tree>
+            </field>
+        </record>
+
+
+        <record id="view_hr_contract_form_inherit" model="ir.ui.view">
+            <field name="name">view.hr.contract.form.attendance.inherit</field>
+            <field name="model">hr.contract</field>
+            <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
+            <field name="arch" type="xml">
+                <field name="type_id" position="after">
+                    <field name="attendance_rule"/>
+                </field>
+            </field>
+        </record>
+    </data>
+</openerp>
