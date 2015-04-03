@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record id="action_tianv_attendance_config" model="ir.actions.act_window">
+            <field name="name">考勤区间设置</field>
+            <field name="res_model">tianv.hr.attendance.config</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="action_tianv_attendance_config_type" model="ir.actions.act_window">
+            <field name="name">考勤区间类型设置</field>
+            <field name="res_model">tianv.hr.attendance.config.type</field>
+            <field name="view_mode">tree</field>
+        </record>
+
+
+        <menuitem id="menuitem_tianv_attendance_setting" name="考勤设置" parent="hr.menu_hr_configuration" sequence="45" groups="base.group_system"/>
+
+        <menuitem id="menuitem_tianv_attendance_config" name="考勤区间设置" parent="menuitem_tianv_attendance_setting" sequence="5"
+                  action="action_tianv_attendance_config"/>
+
+        <menuitem id="menuitem_tianv_attendance_config_type" name="考勤区间类型设置" parent="menuitem_tianv_attendance_setting" sequence="10"
+                  action="action_tianv_attendance_config_type"/>
+
+        <!--<menuitem id="menuitem_tianv_attendance_root" name="考勤" parent="hr.menu_hr_root" sequence="37"/>-->
+
+        <!---->
+
+        <!--<menuitem id="menuitem_social_insurance_config" name="社保设置" parent="menuitem_social_insurance_config_root" sequence="10"-->
+                  <!--action="action_social_insurance_config"/>-->
+    </data>
+</openerp>
