@@ -8,6 +8,7 @@
                 <tree>
                     <field name="period"/>
                     <field name="contract"/>
+                    <field name="config"/>
                     <field name="computer_code"/>
                     <field name="census_type"/>
                     <field name="personal_total"/>
@@ -31,6 +32,7 @@
                         <group>
                             <field name="period"/>
                             <field name="contract"/>
+                            <field name="config"/>
                             <field name="computer_code"/>
                             <field name="census_type"/>
                             <field name="personal_total"/>

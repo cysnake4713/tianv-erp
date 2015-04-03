@@ -51,6 +51,17 @@
                             </field>
                             <field name="active"/>
                         </group>
+                        <separator string="生成记录"/>
+                        <field name="records">
+                            <tree>
+                                <field name="period"/>
+                                <field name="contract"/>
+                                <field name="census_type"/>
+                                <field name="personal_total"/>
+                                <field name="company_total"/>
+                                <field name="total"/>
+                            </tree>
+                        </field>
                     </sheet>
                     <footer>
                         <div class="oe_chatter">

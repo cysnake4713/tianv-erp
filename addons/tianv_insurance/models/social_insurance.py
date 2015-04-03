@@ -1,22 +1,15 @@
 # coding=utf-8
-__author__ = 'cysnak4713'
+__author__ = 'cysnake4713'
 from openerp import tools
 from openerp import models, fields, api
 from openerp.tools.translate import _
 from openerp import exceptions
 
 
-class SocialInsuranceType(models.Model):
-    _name = 'tianv.social.insurance.type'
-
-    name = fields.Char('Name', required=True)
-
-    _sql_constraints = [('social_insurance_type_name_unique', 'unique(name)', _('name must be unique !'))]
-
-
 class SocialInsuranceConfig(models.Model):
     _name = 'tianv.social.insurance.config'
     _rec_name = 'computer_code'
+    _description = 'Social Insurance Config'
 
     _inherit = 'mail.thread'
 
@@ -28,8 +21,9 @@ class SocialInsuranceConfig(models.Model):
     personal_total = fields.Float('Personal Total', (10, 2), compute='_compute_total')
     company_total = fields.Float('Company Part', (10, 2), compute='_compute_total')
     total = fields.Float('Total', (10, 2), compute='_compute_total')
+    records = fields.One2many('tianv.social.insurance.record', 'config', 'Relative Records')
 
-    active = fields.Boolean('Is Active', track_visibility='onchange')
+    active = fields.Boolean('Is Active', track_visibility='onchange', default=True)
 
     @api.multi
     def _compute_total(self):
@@ -43,9 +37,6 @@ class SocialInsuranceConfig(models.Model):
             config.company_total = company_total
             config.total = config.personal_total + config.company_total
 
-    _defaults = {
-        'active': True,
-    }
 
     @api.one
     @api.constrains('contract', 'active')
@@ -55,14 +46,6 @@ class SocialInsuranceConfig(models.Model):
 
     @api.multi
     def name_get(self):
-        """ name_get() -> [(id, name), ...]
-
-        Returns a textual representation for the records in ``self``.
-        By default this is the value of the ``display_name`` field.
-
-        :return: list of pairs ``(id, text_repr)`` for each records
-        :rtype: list(tuple)
-        """
         result = []
         for record in self:
             name = u'总额:%s (公司:%s|个人:%s)'
@@ -83,6 +66,7 @@ class SocialInsuranceConfig(models.Model):
                 'computer_code': config.computer_code,
                 'census_type': config.census_type,
                 'period': period,
+                'config': self.id,
             }
             record = self.env['tianv.social.insurance.record'].create(data)
             for line in config.lines:
@@ -102,7 +86,7 @@ class SocialInsuranceConfig(models.Model):
             for record in self:
                 names = [("<div>" + l.name_get()[0][1] + "</div>") for l in record.lines]
                 message = u"""
-<span>社保金额变更为</span>
+<span>社保条目变更为</span>
 %s
 """ % (''.join(names))
                 record.message_post(body=message)
@@ -114,16 +98,60 @@ class SocialInsuranceConfig(models.Model):
 
         names = [("<div>" + l.name_get()[0][1] + "</div>") for l in result.lines]
         message = u"""
-<span>社保金额:</span>
+<span>社保条目:</span>
 %s
 """ % (''.join(names))
         result.message_post(body=message)
         return result
 
 
+class SocialInsuranceRecord(models.Model):
+    _name = 'tianv.social.insurance.record'
+    _inherit = 'tianv.social.insurance.config'
+    _description = 'Social Insurance Record'
+
+    _order = 'period desc, contract desc'
+
+    config = fields.Many2one('tianv.social.insurance.config', 'Relative insurance Config')
+    lines = fields.One2many('tianv.social.insurance.record.line', 'record', 'Record Lines')
+    period = fields.Many2one('account.period', 'Account Period')
+
+    @api.one
+    @api.constrains('contract', 'period', 'active')
+    def _check_contract(self):
+        if self.contract and self.period and \
+                self.search([('id', '!=', self.id), ('contract', '=', self.contract.id), ('period', '=', self.period.id), ('active', '=', True)]):
+            raise Warning(_('A active same period and contract insurance record exist! remove or inactive old one before create'))
+
+    @api.multi
+    def write_back_info(self):
+        for record in self:
+            config = self.config
+            if config:
+                data = {
+                    'contract': record.contract.id,
+                    'computer_code': record.computer_code,
+                    'census_type': record.census_type,
+                }
+                config.write(data)
+                config.lines.unlink()
+                for line in record.lines:
+                    line_data = {
+                        'type': line.type.id,
+                        'company_part': line.company_part,
+                        'personal_part': line.personal_part,
+                        'config': config.id,
+                    }
+                    config.lines.create(line_data)
+            else:
+                raise exceptions.Warning(_("Can't find related insurance config!"))
+        return True
+
+
 class SocialInsuranceLine(models.Model):
     _name = 'tianv.social.insurance.line'
     _rec_name = 'type'
+    _description = 'Social Insurance Line'
 
     type = fields.Many2one('tianv.social.insurance.type', 'Insurance Type', required=True)
     company_part = fields.Float('Company Part', (10, 2))
@@ -147,47 +175,6 @@ class SocialInsuranceLine(models.Model):
         return result
 
 
-class SocialInsuranceRecord(models.Model):
-    _name = 'tianv.social.insurance.record'
-    _inherit = 'tianv.social.insurance.config'
-
-    _order = 'period desc, contract desc'
-
-    lines = fields.One2many('tianv.social.insurance.record.line', 'record', 'Record Lines')
-    period = fields.Many2one('account.period', 'Account Period')
-
-    @api.one
-    @api.constrains('contract', 'period', 'active')
-    def _check_contract(self):
-        if self.contract and self.period and \
-                self.search([('id', '!=', self.id), ('contract', '=', self.contract.id), ('period', '=', self.period.id), ('active', '=', True)]):
-            raise Warning(_('A active same period and contract insurance record exist! remove or inactive old one before create'))
-
-    @api.multi
-    def write_back_info(self):
-        for record in self:
-            config = self.env['tianv.social.insurance.config'].search([('contract', '=', record.contract.id), ('active', '=', True)])
-            if config:
-                data = {
-                    'contract': record.contract.id,
-                    'computer_code': record.computer_code,
-                    'census_type': record.census_type,
-                }
-                config.write(data)
-                config.lines.unlink()
-                for line in record.lines:
-                    line_data = {
-                        'type': line.type.id,
-                        'company_part': line.company_part,
-                        'personal_part': line.personal_part,
-                        'config': config.id,
-                    }
-                    config.lines.create(line_data)
-            else:
-                raise exceptions.Warning(_("Can't find related insurance config!"))
-        return True
-
-
 class SocialInsuranceRecordLine(models.Model):
     _name = 'tianv.social.insurance.record.line'
     _inherit = 'tianv.social.insurance.line'
@@ -195,3 +182,9 @@ class SocialInsuranceRecordLine(models.Model):
     record = fields.Many2one('tianv.social.insurance.record', 'Related Record')
 
 
+class SocialInsuranceType(models.Model):
+    _name = 'tianv.social.insurance.type'
+
+    name = fields.Char('Name', required=True)
+
+    _sql_constraints = [('social_insurance_type_name_unique', 'unique(name)', _('name must be unique !'))]
