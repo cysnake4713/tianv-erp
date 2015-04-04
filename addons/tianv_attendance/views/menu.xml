@@ -25,7 +25,15 @@
             <field name="view_mode">tree,form</field>
         </record>
 
+        <record id="action_tianv_attendance_record" model="ir.actions.act_window">
+            <field name="name">考勤记录</field>
+            <field name="res_model">tianv.hr.attendance.record</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
         <menuitem id="menuitem_tianv_attendance_root" name="考勤" parent="hr.menu_hr_root" sequence="37"/>
+        <menuitem id="menuitem_tianv_attendance_record" name="考勤记录" parent="menuitem_tianv_attendance_root" sequence="4"
+                  action="action_tianv_attendance_record"/>
         <menuitem id="menuitem_tianv_attendance_plan" name="考勤计划" parent="menuitem_tianv_attendance_root" sequence="5"
                   action="action_tianv_attendance_plan"/>
 

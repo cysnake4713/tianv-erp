@@ -51,7 +51,7 @@ class AttendancePlan(models.Model):
             for i in range((date_stop - date_start).days + 1):
                 current_date = date_start + timedelta(days=i)
                 if current_date.isoweekday() not in [6, 7]:
-                    hour = 8
+                    hour = 7.5
                 else:
                     hour = 0
                 value = {'plan': plan.id, 'plan_date': fields.Date.to_string(current_date), 'hour': hour}
@@ -93,6 +93,6 @@ class AttendancePlanLine(models.Model):
         date_start = fields.Date.from_string(self.plan.period.date_start)
         date_stop = fields.Date.from_string(self.plan.period.date_stop)
 
-        if not date_start < plan_date < date_stop:
+        if not date_start <= plan_date <= date_stop:
             raise exceptions.Warning(_('Plan Date must between plan period'))
 

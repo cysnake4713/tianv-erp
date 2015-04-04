@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record id="view_tianv_hr_attendance_record_tree" model="ir.ui.view">
+            <field name="name">view.tianv.hr.attendance.record.tree</field>
+            <field name="model">tianv.hr.attendance.record</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="employee"/>
+                    <field name="period"/>
+                    <field name="legal_hour"/>
+                    <field name="actual_hour"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_tianv_hr_attendance_record_form" model="ir.ui.view">
+            <field name="name">view.tianv.hr.attendance.record.form</field>
+            <field name="model">tianv.hr.attendance.record</field>
+            <field name="priority">16</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="button_generate_record" type="object" string="生成考勤记录" class="oe_highlight"
+                                confirm="生成考勤记录会清除原有记录!"/>
+                        <button name="button_clean" type="object" string="清除" confirm="会清除所有记录!"/>
+                    </header>
+                    <sheet>
+                        <group col="4">
+                            <field name="employee"/>
+                            <field name="contract" domain="[('employee_id','=',employee)]"/>
+                            <field name="period"/>
+                        </group>
+                        <group>
+                            <field name="legal_hour"/>
+                            <field name="actual_hour"/>
+                        </group>
+                        <separator string="考勤记录"/>
+                        <field name="lines"/>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_tianv_hr_attendance_record_line_tree" model="ir.ui.view">
+            <field name="name">view.tianv.hr.attendance.record.line.tree</field>
+            <field name="model">tianv.hr.attendance.record.line</field>
+            <field name="arch" type="xml">
+                <tree editable="bottom" colors="red:record_hour&lt;plan_hour">
+                    <field name="plan_date"/>
+                    <field name="plan_date_week"/>
+                    <field name="plan_hour"/>
+                    <field name="record_hour"/>
+                    <field name="tags" widget="many2many_tags"/>
+                    <field name="comment"/>
+                </tree>
+            </field>
+        </record>
+    </data>
+</openerp>

@@ -19,10 +19,12 @@
             <field name="priority">16</field>
             <field name="arch" type="xml">
                 <form>
+                    <header>
+                        <button name="button_generate_plan" type="object" string="生成计划" confirm="会清除已有计划,请注意!" class="oe_highlight"/>
+                    </header>
                     <sheet>
                         <group col="3">
                             <field name="period"/>
-                            <button name="button_generate_plan" type="object" string="生成计划" confirm="会清除已有计划,请注意!"/>
                         </group>
                         <group>
                             <field name="legal_hour"/>
@@ -39,7 +41,7 @@
             <field name="name">view.tianv.hr.attendance.plan.line.tree</field>
             <field name="model">tianv.hr.attendance.plan.line</field>
             <field name="arch" type="xml">
-                <tree editable="bottom" colors="green:plan_date_week in (5,6);red:hour&lt;8">
+                <tree editable="bottom" colors="green:plan_date_week in (5,6);red:hour&lt;7.5">
                     <field name="plan_date"/>
                     <field name="plan_date_week"/>
                     <field name="hour"/>

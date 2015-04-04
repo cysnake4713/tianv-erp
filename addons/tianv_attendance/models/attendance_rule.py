@@ -29,6 +29,6 @@ class AttendanceRuleLine(models.Model):
 class HrContractInherit(models.Model):
     _inherit = 'hr.contract'
 
-    attendance_rule = fields.Many2one('tianv.hr.attendance.rule', 'Attendance Rule')
+    attendance_rule = fields.Many2one('tianv.hr.attendance.rule', 'Attendance Rule', required=True)
 
 

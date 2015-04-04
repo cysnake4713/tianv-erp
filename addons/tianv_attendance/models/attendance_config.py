@@ -19,7 +19,6 @@ class AttendanceConfig(models.Model):
 
     lines = fields.One2many('tianv.hr.attendance.config.line', 'config', 'Config Lines')
 
-
     @api.multi
     def name_get(self):
         result = []

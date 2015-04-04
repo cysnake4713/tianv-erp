@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record id="attendance_type_late" model="tianv.hr.attendance.record.type">
+            <field name="name">迟到</field>
+        </record>
+
+        <record id="attendance_type_early" model="tianv.hr.attendance.record.type">
+            <field name="name">早退</field>
+        </record>
+
+        <record id="attendance_type_absent" model="tianv.hr.attendance.record.type">
+            <field name="name">旷工</field>
+        </record>
+
+        <record id="attendance_type_error" model="tianv.hr.attendance.record.type">
+            <field name="name">打卡异常</field>
+        </record>
+    </data>
+</openerp>
