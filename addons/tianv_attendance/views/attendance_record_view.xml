@@ -55,6 +55,7 @@
                     <field name="tags" widget="many2many_tags" readonly="1"/>
                     <field name="adjust_tags" widget="many2many_tags"/>
                     <field name="comment"/>
+                    <button icon="gtk-find" help="考勤机记录" name="button_get_machine_record" type="object"/>
                 </tree>
             </field>
         </record>

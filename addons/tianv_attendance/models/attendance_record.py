@@ -240,6 +240,12 @@ class AttendanceRecordLine(models.Model):
             return fields.Datetime.to_string(context_timestamp.astimezone(utc))
         return fields.Datetime.to_string(timestamp)
 
+    @api.multi
+    def button_get_machine_record(self):
+        res = self.env['ir.actions.act_window'].for_xml_id('tianv_machine', 'action_attendance_machine')
+        res['domain'] = [('log_time', '>=', self._utc_datetime(self.plan_date, 0)), ('log_time', '<=', self._utc_datetime(self.plan_date, 0, 1))]
+        return res
+
 
 class AttendanceRecordType(models.Model):
     _name = 'tianv.hr.attendance.record.type'
