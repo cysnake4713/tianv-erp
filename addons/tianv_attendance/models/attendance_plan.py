@@ -50,11 +50,12 @@ class AttendancePlan(models.Model):
             date_stop = fields.Date.from_string(plan.period.date_stop)
             for i in range((date_stop - date_start).days + 1):
                 current_date = date_start + timedelta(days=i)
+                config_types = False
                 if current_date.isoweekday() not in [6, 7]:
-                    hour = 7.5
-                else:
-                    hour = 0
-                value = {'plan': plan.id, 'plan_date': fields.Date.to_string(current_date), 'hour': hour}
+                    config_types = [(6, 0, [self.env.ref('tianv_attendance.attendance_config_type_morning').id,
+                                            self.env.ref('tianv_attendance.attendance_config_type_afternoon').id])]
+
+                value = {'plan': plan.id, 'plan_date': fields.Date.to_string(current_date), 'config_types': config_types}
                 self.env['tianv.hr.attendance.plan.line'].create(value)
         return True
 
@@ -74,7 +75,9 @@ class AttendancePlanLine(models.Model):
                                        (4, u'星期五'),
                                        (5, u'星期六'),
                                        (6, u'星期日'), ], 'Week', readonly=True, compute='_compute_week')
-    hour = fields.Float('Hour')
+    config_types = fields.Many2many('tianv.hr.attendance.config.type', 'attendance_plan_config_type_rel', 'plan_line_id', 'type_id', 'Need Work Type')
+
+    hour = fields.Float('Hour', compute='_compute_hour')
     comment = fields.Char('Comment')
 
     _sql_constraints = [
@@ -85,6 +88,14 @@ class AttendancePlanLine(models.Model):
     def _compute_week(self):
         for line in self:
             line.plan_date_week = fields.Date.from_string(line.plan_date).isoweekday() - 1
+
+    @api.multi
+    def _compute_hour(self):
+        for line in self:
+            hour = 0.0
+            for config_type in line.config_types:
+                hour += self.env['tianv.hr.attendance.config'].get_type_work_time(line.plan_date, config_type)
+            line.hour = hour
 
     @api.one
     @api.constrains('plan_date', 'plan')

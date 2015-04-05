@@ -11,6 +11,7 @@ Tianv Attendance Module
     'website': 'http://odoosoft.com',
     'depends': ['base', 'hr', 'account', 'tianv_machine'],
     'data': [
+        'data/data.xml',
         'views/menu.xml',
         'views/attendance_config_view.xml',
         'views/attendance_rule_view.xml',

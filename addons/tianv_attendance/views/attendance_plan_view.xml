@@ -44,6 +44,7 @@
                 <tree editable="bottom" colors="green:plan_date_week in (5,6);red:hour&lt;7.5">
                     <field name="plan_date"/>
                     <field name="plan_date_week"/>
+                    <field name="config_types" widget="many2many_tags"/>
                     <field name="hour"/>
                     <field name="comment"/>
                 </tree>

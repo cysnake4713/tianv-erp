@@ -16,5 +16,22 @@
         <record id="attendance_type_error" model="tianv.hr.attendance.record.type">
             <field name="name">打卡异常</field>
         </record>
+
+
+        <record id="attendance_config_type_morning" model="tianv.hr.attendance.config.type">
+            <field name="name">上午</field>
+        </record>
+
+        <record id="attendance_config_type_afternoon" model="tianv.hr.attendance.config.type">
+            <field name="name">下午</field>
+        </record>
+
+        <record id="attendance_config_type_night" model="tianv.hr.attendance.config.type">
+            <field name="name">晚上</field>
+        </record>
+
+        <record id="attendance_config_type_early" model="tianv.hr.attendance.config.type">
+            <field name="name">凌晨</field>
+        </record>
     </data>
 </openerp>
