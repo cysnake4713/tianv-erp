@@ -35,9 +35,9 @@
                             <field name="legal_hour"/>
                             <field name="actual_hour"/>
                         </group>
-                        <separator string="考勤记录"/>
-                        <field name="lines"/>
                     </sheet>
+                    <separator string="考勤记录"/>
+                    <field name="lines"/>
                 </form>
             </field>
         </record>
