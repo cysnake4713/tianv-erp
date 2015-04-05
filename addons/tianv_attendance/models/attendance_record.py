@@ -25,8 +25,8 @@ class AttendanceRecord(models.Model):
     _rec_name = 'employee'
     _description = 'Attendance Record'
 
-    employee = fields.Many2one('hr.employee', 'Employee', required=True)
     contract = fields.Many2one('hr.contract', 'Contract', required=True)
+    employee = fields.Many2one('hr.employee', 'Employee', readonly=True, compute='_compute_info')
     period = fields.Many2one('account.period', 'Plan Period', required=True)
 
     legal_hour = fields.Float('Legal Total Hours', digits=(12, 1), readonly=True, compute='_compute_info')
@@ -58,11 +58,7 @@ class AttendanceRecord(models.Model):
             record.absent_time = len(record.lines.filtered(lambda line: absent_tag in line.adjust_tags))
             record.leave_time = len(record.lines.filtered(lambda line: leave_tag in line.adjust_tags))
             record.actual_hour = sum([l.adjust_hour for l in record.lines])
-
-    @api.onchange('employee')
-    def _onchange_employee(self):
-        if self.employee:
-            self.contract = self.employee.contract_id
+            record.employee = record.contract.employee_id
 
     @api.multi
     def button_generate_record(self):
@@ -194,7 +190,8 @@ class AttendanceRecordLine(models.Model):
             config_end_time = self._utc_datetime(target_date, config_line.end_time, 1 if config_line.is_cross_day else 0)
             # compute punch in
             punch_in_machine = machine_obj.search(
-                [('log_time', '>=', self._utc_datetime(target_date, config_line.punch_begin_time)),
+                [('log_employee', '=', self.record.employee.id),
+                 ('log_time', '>=', self._utc_datetime(target_date, config_line.punch_begin_time)),
                  ('log_time', '<=', config_end_time)],
                 order='log_time',
                 limit=1)
@@ -202,7 +199,8 @@ class AttendanceRecordLine(models.Model):
                 punch_in_time = punch_in_machine.log_time
             # compute punch out
             punch_out_machine = machine_obj.search(
-                [('log_time', '>=', config_start_time),
+                [('log_employee', '=', self.record.employee.id),
+                 ('log_time', '>=', config_start_time),
                  ('log_time', '<=', self._utc_datetime(target_date, config_line.punch_end_time, 1 if config_line.is_cross_day else 0))],
                 order='log_time desc',
                 limit=1)

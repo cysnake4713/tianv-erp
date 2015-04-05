@@ -21,14 +21,14 @@
             <field name="arch" type="xml">
                 <form>
                     <header>
-                        <button name="button_generate_record" type="object" string="生成考勤记录" class="oe_highlight"
+                        <button name="button_generate_record" type="object" string="重新生成考勤记录" class="oe_highlight"
                                 confirm="生成考勤记录会清除原有记录!"/>
                         <button name="button_clean" type="object" string="清除" confirm="会清除所有记录!"/>
                     </header>
                     <sheet>
                         <group col="4">
+                            <field name="contract"/>
                             <field name="employee"/>
-                            <field name="contract" domain="[('employee_id','=',employee)]"/>
                             <field name="period"/>
                         </group>
                         <group>

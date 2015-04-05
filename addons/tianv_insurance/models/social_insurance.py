@@ -52,7 +52,6 @@ class SocialInsuranceConfig(models.Model):
             result.append((record.id, name % (record.total, record.company_total, record.personal_total)))
         return result
 
-
     @api.multi
     def generate_insurance_record(self):
         if 'period' not in self.env.context:
