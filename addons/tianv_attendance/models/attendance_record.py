@@ -44,7 +44,7 @@ class AttendanceRecord(models.Model):
                 date_start = fields.Date.from_string(record.period.date_start)
                 date_stop = fields.Date.from_string(record.period.date_stop)
                 record.legal_hour = get_workdays(date_start, date_stop) * 8
-            record.actual_hour = sum([l.record_hour for l in record.lines])
+            record.actual_hour = sum([l.adjust_hour for l in record.lines])
 
     @api.onchange('employee')
     def _onchange_employee(self):
@@ -88,10 +88,12 @@ class AttendanceRecordLine(models.Model):
                                        (5, u'星期六'),
                                        (6, u'星期日'), ], 'Week', readonly=True, compute='_compute_plan')
 
-    plan_hour = fields.Float('Plan Hour', compute='_compute_plan', readonly=True)
-    record_hour = fields.Float('Record Hour')
-
+    plan_hour = fields.Float('Plan Hour', digits=(12, 1), compute='_compute_plan', readonly=True)
+    record_hour = fields.Float('Record Hour', digits=(12, 1))
     tags = fields.Many2many('tianv.hr.attendance.record.type', 'attendance_record_tag_rel', 'record_id', 'tag_id', 'Tags')
+
+    adjust_hour = fields.Float('Adjust Hour', digits=(12, 1), )
+    adjust_tags = fields.Many2many('tianv.hr.attendance.record.type', 'attendance_record_adjust_tag_rel', 'record_id', 'tag_id', 'Adjust Tags')
     comment = fields.Char('Comment')
 
     _sql_constraints = [
@@ -209,6 +211,8 @@ class AttendanceRecordLine(models.Model):
         values = {
             'record_hour': record_hour,
             'tags': [(6, 0, tag_ids)],
+            'adjust_hour': record_hour,
+            'adjust_tags': [(6, 0, tag_ids)],
         }
         self.write(values)
 

@@ -77,7 +77,7 @@ class AttendancePlanLine(models.Model):
                                        (6, u'星期日'), ], 'Week', readonly=True, compute='_compute_week')
     config_types = fields.Many2many('tianv.hr.attendance.config.type', 'attendance_plan_config_type_rel', 'plan_line_id', 'type_id', 'Need Work Type')
 
-    hour = fields.Float('Hour', compute='_compute_hour')
+    hour = fields.Float('Hour', compute='_compute_hour', digits=(12, 1))
     comment = fields.Char('Comment')
 
     _sql_constraints = [

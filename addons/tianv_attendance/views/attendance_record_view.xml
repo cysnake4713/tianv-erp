@@ -46,12 +46,14 @@
             <field name="name">view.tianv.hr.attendance.record.line.tree</field>
             <field name="model">tianv.hr.attendance.record.line</field>
             <field name="arch" type="xml">
-                <tree editable="bottom" colors="red:record_hour&lt;plan_hour">
+                <tree editable="bottom" colors="red:adjust_hour&lt;plan_hour">
                     <field name="plan_date"/>
                     <field name="plan_date_week"/>
                     <field name="plan_hour"/>
-                    <field name="record_hour"/>
-                    <field name="tags" widget="many2many_tags"/>
+                    <field name="record_hour" readonly="1"/>
+                    <field name="adjust_hour"/>
+                    <field name="tags" widget="many2many_tags" readonly="1"/>
+                    <field name="adjust_tags" widget="many2many_tags"/>
                     <field name="comment"/>
                 </tree>
             </field>
