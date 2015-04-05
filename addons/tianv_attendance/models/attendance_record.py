@@ -1,9 +1,8 @@
 # coding=utf-8
 __author__ = 'cysnake4713'
 
-# coding=utf-8
-from openerp import tools
-from openerp.tools import DEFAULT_SERVER_DATE_FORMAT
+from openerp import tools, exceptions
+from openerp.tools import DEFAULT_SERVER_DATE_FORMAT, DEFAULT_SERVER_DATETIME_FORMAT
 from openerp import models, fields, api
 from openerp.tools.translate import _
 from dateutil import rrule
@@ -109,6 +108,56 @@ class AttendanceRecordLine(models.Model):
 
     @api.one
     def process_employee_attendance(self):
+        absent_tag = self.env.ref('tianv_attendance.attendance_type_absent').id
+        late_tag = self.env.ref('tianv_attendance.attendance_type_late').id
+        early_tag = self.env.ref('tianv_attendance.attendance_type_early').id
+        error_tag = self.env.ref('tianv_attendance.attendance_type_error').id
+
+        normal = lambda p_in, p_out, c_start, c_end, conf: ((c_end - c_start).seconds / 3600.0, [])
+        absent = lambda p_in, p_out, c_start, c_end, conf: (0, [absent_tag])
+        early = lambda p_in, p_out, c_start, c_end, conf: (
+            (p_out - c_start).seconds / 3600.0, [early_tag] if c_end > p_out and (c_end - p_out).seconds / 60.0 > conf.allow_early_minute else [])
+        late = lambda p_in, p_out, c_start, c_end, conf: (
+            (c_end - p_in).seconds / 3600.0, [late_tag] if p_in > c_start and (p_in - c_start).seconds / 60.0 > conf.allow_late_minute else [])
+        error = lambda p_in, p_out, c_start, c_end, conf: (0, [error_tag])
+        early_late = lambda p_in, p_out, c_start, c_end, conf: \
+            (0, [error_tag]) if p_in == p_out else (
+                (p_out - p_in).seconds / 3600.0,
+                [early_tag] if c_end > p_out and (c_end - p_out).seconds / 60.0 > conf.allow_early_minute else [] +
+                [late_tag] if p_in > c_start and (p_in - c_start).seconds / 60.0 > conf.allow_late_minute else []
+            )
+        # 真值表
+        true_table = {
+            (False, False, False, False): normal,  # 1
+            (False, False, False, True): normal,  # 2
+            (False, False, True, False): normal,  # 3
+            (False, False, True, True): normal,  # 4
+
+            (False, True, False, False): absent,  # 5
+            (False, True, False, True): early,  # 6
+            (False, True, True, False): absent,  # 7
+            (False, True, True, True): early,  # 8
+
+            (True, False, False, False): absent,  # 9
+            (True, False, False, True): absent,  # 10
+            (True, False, True, False): late,  # 11
+            (True, False, True, True): late,  # 12
+
+            (True, True, False, False): absent,  # 13
+            (True, True, False, True): absent,  # 14
+            (True, True, True, False): error,  # 15 maybe normal?
+            (True, True, True, True): early_late,  # 16
+        }
+
+        def process(need_punch_in, need_punch_out, punch_in, punch_out, config_start_t, config_end_t, current_config):
+            key = (need_punch_in, need_punch_out, True if punch_in else False, True if punch_out else False)
+            t_punch_in_time = datetime.datetime.strptime(punch_in, DEFAULT_SERVER_DATETIME_FORMAT) if punch_in else None
+            t_punch_out_time = datetime.datetime.strptime(punch_out, DEFAULT_SERVER_DATETIME_FORMAT) if punch_out else None
+            t_config_start_time = datetime.datetime.strptime(config_start_t, DEFAULT_SERVER_DATETIME_FORMAT) if config_start_t else None
+            t_config_end_time = datetime.datetime.strptime(config_end_t, DEFAULT_SERVER_DATETIME_FORMAT) if config_end_t else None
+            return true_table[key](t_punch_in_time, t_punch_out_time, t_config_start_time, t_config_end_time, current_config)
+
+        plan = self.plan_line
         rule = self.record.contract.attendance_rule
         target_date = self.plan_date
         config = self.env['tianv.hr.attendance.config'].sudo().search(
@@ -119,71 +168,44 @@ class AttendanceRecordLine(models.Model):
         record_hour = 0.0
         tag_ids = []
 
-        for rule_line in rule.lines:
-            config_line = config.lines.filtered(lambda obj: obj.type.id == rule_line.type.id)
-            if not config_line:
-                continue
+        for config_type in plan.config_types:
+            rule_line = rule.lines.filtered(lambda l: l.type.id == config_type.id)
+            config_line = config.lines.filtered(lambda l: l.type.id == config_type.id)
+            if not config_line or not rule_line:
+                raise exceptions.Warning(_('Fail to get type related config or rule '))
+
+            punch_in_time = None
+            punch_out_time = None
+            config_start_time = self._utc_datetime(target_date, config_line.start_time)
+            config_end_time = self._utc_datetime(target_date, config_line.end_time, 1 if config_line.is_cross_day else 0)
             # compute punch in
-            start_time = None
-            config_start_time = self._utc_timestamp(target_date, config_line.start_time)
-            if rule_line.is_need_punch_in:
-                punch_in_machine = machine_obj.search([('log_time', '>=', self._utc_timestamp(target_date, config_line.start_punch_begin_time)),
-                                                       ('log_time', '<=', self._utc_timestamp(target_date, config_line.start_punch_end_time))],
-                                                      order='log_time',
-                                                      limit=1)
-                if punch_in_machine:
-                    start_time = punch_in_machine.log_time
-            else:
-                start_time = config_start_time
-
-            # compute punch in
-            end_time = None
-            config_end_time = self._utc_timestamp(target_date, config_line.end_time, 1 if config_line.start_time > config_line.end_time else 0)
-            if rule_line.is_need_punch_out:
-                punch_out_machine = machine_obj.search([('log_time', '>=', self._utc_timestamp(target_date, config_line.end_punch_begin_time)),
-                                                        ('log_time', '<=', self._utc_timestamp(target_date, config_line.end_punch_end_time,
-                                                                                               1 if config_line.end_punch_begin_time > config_line.end_punch_end_time else 0))],
-                                                       order='log_time desc',
-                                                       limit=1)
-                if punch_out_machine:
-                    end_time = punch_out_machine.log_time
-            else:
-                end_time = config_end_time
-
-            # 如果两个时间都没有,说明旷工
-            if start_time is None and end_time is None:
-                tag_ids += [self.env.ref('tianv_attendance.attendance_type_absent').id]
-            elif start_time is None:
-                # 如果只有签出时间,没有签入时间,二而且不需要签出打卡,说明旷工
-                if not rule_line.is_need_punch_out:
-                    tag_ids += [self.env.ref('tianv_attendance.attendance_type_absent').id]
-                # 否则算打卡异常
-                else:
-                    tag_ids += [self.env.ref('tianv_attendance.attendance_type_error').id]
-            elif end_time is None:
-                # 如果只有签入时间,没有签出时间,二而且不需要签入打卡,说明旷工
-                if not rule_line.is_need_punch_in:
-                    tag_ids += [self.env.ref('tianv_attendance.attendance_type_absent').id]
-                # 否则算打卡异常
-                else:
-                    tag_ids += [self.env.ref('tianv_attendance.attendance_type_error').id]
-
-            elif start_time < end_time:
-                record_hour += (end_time - start_time).seconds / 3600.0
-                # 如果如果超过允许迟到分钟数
-                if abs((start_time - config_start_time).seconds / 60) > config_line.allow_late_minute:
-                    tag_ids += [self.env.ref('tianv_attendance.attendance_type_late').id]
-                if abs((end_time - config_end_time).seconds / 60) > config_line.allow_early_minute:
-                    tag_ids += [self.env.ref('tianv_attendance.attendance_type_early').id]
-
-            elif start_time == end_time:
-                tag_ids += [self.env.ref('tianv_attendance.attendance_type_error').id]
-            elif start_time > end_time:
-                tag_ids += [self.env.ref('tianv_attendance.attendance_type_error').id]
+            punch_in_machine = machine_obj.search(
+                [('log_time', '>=', self._utc_datetime(target_date, config_line.punch_begin_time)),
+                 ('log_time', '<=', config_end_time)],
+                order='log_time',
+                limit=1)
+            if punch_in_machine:
+                punch_in_time = punch_in_machine.log_time
+            # compute punch out
+            punch_out_machine = machine_obj.search(
+                [('log_time', '>=', config_start_time),
+                 ('log_time', '<=', self._utc_datetime(target_date, config_line.punch_end_time, 1 if config_line.is_cross_day else 0))],
+                order='log_time desc',
+                limit=1)
+            if punch_out_machine:
+                punch_out_time = punch_out_machine.log_time
+            # compute values
+            (hour, tags) = process(rule_line.is_need_punch_in,
+                                   rule_line.is_need_punch_out,
+                                   punch_in_time,
+                                   punch_out_time,
+                                   config_start_time,
+                                   config_end_time,
+                                   config_line)
+            tag_ids += tags
+            record_hour += hour
 
         tag_ids = list(set(tag_ids))
-        if record_hour > self.plan_hour:
-            record_hour = self.plan_hour
         values = {
             'record_hour': record_hour,
             'tags': [(6, 0, tag_ids)],
@@ -191,7 +213,7 @@ class AttendanceRecordLine(models.Model):
         self.write(values)
 
     @api.model
-    def _utc_timestamp(self, date, time, timedelta=0):
+    def _utc_datetime(self, date, time, timedelta=0):
         """Returns the given timestamp converted to the client's timezone.
            This method is *not* meant for use as a _defaults initializer,
            because datetime fields are automatically converted upon
@@ -211,8 +233,8 @@ class AttendanceRecordLine(models.Model):
             utc = pytz.timezone('UTC')
             context_tz = pytz.timezone(tz_name)
             context_timestamp = context_tz.localize(timestamp, is_dst=False)  # UTC = no DST
-            return context_timestamp.astimezone(utc)
-        return timestamp
+            return fields.Datetime.to_string(context_timestamp.astimezone(utc))
+        return fields.Datetime.to_string(timestamp)
 
 
 class AttendanceRecordType(models.Model):

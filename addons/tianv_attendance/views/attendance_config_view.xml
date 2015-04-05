@@ -42,12 +42,11 @@
                     <field name="type"/>
                     <field name="start_time" widget="float_time"/>
                     <field name="end_time" widget="float_time"/>
+                    <field name="is_cross_day"/>
                     <field name="allow_late_minute"/>
                     <field name="allow_early_minute"/>
-                    <field name="start_punch_begin_time" widget="float_time"/>
-                    <field name="start_punch_end_time" widget="float_time"/>
-                    <field name="end_punch_begin_time" widget="float_time"/>
-                    <field name="end_punch_end_time" widget="float_time"/>
+                    <field name="punch_begin_time" widget="float_time"/>
+                    <field name="punch_end_time" widget="float_time"/>
                     <field name="work_time" readonly="1"/>
                 </tree>
             </field>

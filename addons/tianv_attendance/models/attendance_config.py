@@ -56,10 +56,11 @@ class AttendanceConfigLine(models.Model):
     end_time = fields.Float('End Time', required=True)
     allow_late_minute = fields.Integer('Allow Late Minute', required=True)
     allow_early_minute = fields.Integer('Allow Early Minute', required=True)
-    start_punch_begin_time = fields.Float('Start Punch Begin Time', required=True)
-    start_punch_end_time = fields.Float('Start Punch End Time', required=True)
-    end_punch_begin_time = fields.Float('End Punch Begin Time', required=True)
-    end_punch_end_time = fields.Float('End Punch End Time', required=True)
+
+    punch_begin_time = fields.Float('Punch Begin Time', required=True)
+    punch_end_time = fields.Float('End Punch End Time', required=True)
+
+    is_cross_day = fields.Boolean('Is Cross Day')
 
     work_time = fields.Float('Work Time(h)', digits=(12, 1), compute='_compute_work_time')
 
