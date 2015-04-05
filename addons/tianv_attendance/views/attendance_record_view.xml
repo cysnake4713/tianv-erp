@@ -32,8 +32,16 @@
                             <field name="period"/>
                         </group>
                         <group>
-                            <field name="legal_hour"/>
-                            <field name="actual_hour"/>
+                            <group>
+                                <field name="legal_hour"/>
+                                <field name="actual_hour"/>
+                            </group>
+                            <group>
+                                <field name="late_time"/>
+                                <field name="early_time"/>
+                                <field name="leave_time"/>
+                                <field name="absent_time"/>
+                            </group>
                         </group>
                     </sheet>
                     <separator string="考勤记录"/>

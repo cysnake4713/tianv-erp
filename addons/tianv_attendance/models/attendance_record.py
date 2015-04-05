@@ -29,8 +29,12 @@ class AttendanceRecord(models.Model):
     contract = fields.Many2one('hr.contract', 'Contract', required=True)
     period = fields.Many2one('account.period', 'Plan Period', required=True)
 
-    legal_hour = fields.Float('Legal Total Hours', digits=(12, 1), readonly=True, compute='_compute_hours')
-    actual_hour = fields.Float('Actual Total Hours', digits=(12, 1), readonly=True, compute='_compute_hours')
+    legal_hour = fields.Float('Legal Total Hours', digits=(12, 1), readonly=True, compute='_compute_info')
+    actual_hour = fields.Float('Actual Total Hours', digits=(12, 1), readonly=True, compute='_compute_info')
+    late_time = fields.Integer('Late Time', readonly=True, compute='_compute_info')
+    early_time = fields.Integer('Early Time', readonly=True, compute='_compute_info')
+    absent_time = fields.Integer('Absent Time', readonly=True, compute='_compute_info')
+    leave_time = fields.Integer('Leave Time', readonly=True, compute='_compute_info')
     lines = fields.One2many('tianv.hr.attendance.record.line', 'record', 'Lines')
 
     _sql_constraints = [
@@ -38,12 +42,21 @@ class AttendanceRecord(models.Model):
     ]
 
     @api.multi
-    def _compute_hours(self):
+    def _compute_info(self):
+        absent_tag = self.env.ref('tianv_attendance.attendance_type_absent')
+        late_tag = self.env.ref('tianv_attendance.attendance_type_late')
+        early_tag = self.env.ref('tianv_attendance.attendance_type_early')
+        leave_tag = self.env.ref('tianv_attendance.attendance_type_leave')
         for record in self:
             if record.period:
                 date_start = fields.Date.from_string(record.period.date_start)
                 date_stop = fields.Date.from_string(record.period.date_stop)
                 record.legal_hour = get_workdays(date_start, date_stop) * 8
+
+            record.late_time = len(record.lines.filtered(lambda line: late_tag in line.adjust_tags))
+            record.early_time = len(record.lines.filtered(lambda line: early_tag in line.adjust_tags))
+            record.absent_time = len(record.lines.filtered(lambda line: absent_tag in line.adjust_tags))
+            record.leave_time = len(record.lines.filtered(lambda line: leave_tag in line.adjust_tags))
             record.actual_hour = sum([l.adjust_hour for l in record.lines])
 
     @api.onchange('employee')
@@ -114,6 +127,7 @@ class AttendanceRecordLine(models.Model):
         late_tag = self.env.ref('tianv_attendance.attendance_type_late').id
         early_tag = self.env.ref('tianv_attendance.attendance_type_early').id
         error_tag = self.env.ref('tianv_attendance.attendance_type_error').id
+        leave_tag = self.env.ref('tianv_attendance.attendance_type_leave').id
 
         normal = lambda p_in, p_out, c_start, c_end, conf: ((c_end - c_start).seconds / 3600.0, [])
         absent = lambda p_in, p_out, c_start, c_end, conf: (0, [absent_tag])
@@ -124,9 +138,7 @@ class AttendanceRecordLine(models.Model):
         error = lambda p_in, p_out, c_start, c_end, conf: (0, [error_tag])
         early_late = lambda p_in, p_out, c_start, c_end, conf: \
             (0, [error_tag]) if p_in == p_out else (
-                (p_out - p_in).seconds / 3600.0,
-                [early_tag] if c_end > p_out and (c_end - p_out).seconds / 60.0 > conf.allow_early_minute else [] +
-                [late_tag] if p_in > c_start and (p_in - c_start).seconds / 60.0 > conf.allow_late_minute else []
+                (p_out - p_in).seconds / 3600.0, late(p_in, p_out, c_start, c_end, conf)[1] + early(p_in, p_out, c_start, c_end, conf)[1]
             )
         # 真值表
         true_table = {
@@ -196,14 +208,23 @@ class AttendanceRecordLine(models.Model):
                 limit=1)
             if punch_out_machine:
                 punch_out_time = punch_out_machine.log_time
-            # compute values
-            (hour, tags) = process(rule_line.is_need_punch_in,
-                                   rule_line.is_need_punch_out,
-                                   punch_in_time,
-                                   punch_out_time,
-                                   config_start_time,
-                                   config_end_time,
-                                   config_line)
+            # if is leave
+            leave_info = self.env['hr.holidays'].search([
+                ('employee_id', '=', self.record.employee.id),
+                ('date_from', '<=', config_start_time),
+                ('date_to', '>=', config_end_time),
+                ('state', '=', 'validate')])
+            if leave_info:
+                (hour, tags) = (0, [leave_tag])
+            else:
+                # compute values
+                (hour, tags) = process(rule_line.is_need_punch_in,
+                                       rule_line.is_need_punch_out,
+                                       punch_in_time,
+                                       punch_out_time,
+                                       config_start_time,
+                                       config_end_time,
+                                       config_line)
             tag_ids += tags
             record_hour += hour
 

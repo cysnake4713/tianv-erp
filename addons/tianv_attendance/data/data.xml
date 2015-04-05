@@ -17,6 +17,9 @@
             <field name="name">打卡异常</field>
         </record>
 
+        <record id="attendance_type_leave" model="tianv.hr.attendance.record.type">
+            <field name="name">请假</field>
+        </record>
 
         <record id="attendance_config_type_morning" model="tianv.hr.attendance.config.type">
             <field name="name">上午</field>
