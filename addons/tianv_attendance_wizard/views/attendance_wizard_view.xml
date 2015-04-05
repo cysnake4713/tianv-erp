@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record id="view_tianv_attendance_wizard_form" model="ir.ui.view">
+            <field name="name">view.tianv.hr.attendance.wizard.form</field>
+            <field name="model">tianv.hr.attendance.wizard</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="button_period_to_social" type="object" string="确认" class="oe_highlight" states="period_select"/>
+
+                        <button name="button_generate_social" type="object" string="生成社保信息" class="oe_highlight" states="generate_social"/>
+                        <button name="button_social_to_attendance" type="object" string="确定" states="generate_social"/>
+
+                        <button name="button_generate_attendance" type="object" string="生成考勤信息" class="oe_highlight" states="generate_attendance"/>
+                        <button name="button_attendance_payroll" type="object" string="确定" states="generate_attendance"/>
+
+                        <field name="state" widget="statusbar" readonly="1"/>
+                    </header>
+                    <sheet>
+                        <group string="选择会计周期和人员">
+                            <field name="period" domain="[('state','=','draft')]"/>
+                            <field name="contracts" widget="many2many_tags"/>
+                        </group>
+                        <notebook>
+                            <page string="生成工资信息">
+
+                            </page>
+                            <page string="生成考勤记录">
+                                <field name="relative_attendances"/>
+                            </page>
+                            <page string="生成社保记录">
+                                <field name="relative_social"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+    </data>
+</openerp>
