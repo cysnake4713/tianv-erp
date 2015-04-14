@@ -1,13 +1,14 @@
 # coding=utf-8
 __author__ = 'cysnak4713'
-
+import json
 from openerp import tools
 from openerp import models, fields, api
 from openerp.tools.translate import _
 from openerp import SUPERUSER_ID
 # import xmlrpclib
+import logging
 
-
+_logger = logging.getLogger(__name__)
 # noinspection PyUnresolvedReferences
 class AttendanceMachine(models.Model):
     _name = 'tianv.attendance.machine'
@@ -26,7 +27,8 @@ class AttendanceMachine(models.Model):
     _sql_constraints = [('attendance_machine_code_unique', 'unique(code)', _('code must be unique !'))]
 
     @api.model
-    def import_data_from_machine(self, datas):
+    def import_data_from_machine(self, json_datas):
+        datas = json.loads(json_datas)
         if self.user_has_groups('tianv_machine.group_attendance_machine_upload'):
             self.sudo().env.cr.execute('SAVEPOINT import')
             employees = {u.name: u.id for u in self.sudo().env['hr.employee'].search([])}
