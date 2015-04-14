@@ -33,13 +33,15 @@ class AttendanceMachine(models.Model):
             self.sudo().env.cr.execute('SAVEPOINT import')
             employees = {u.name: u.id for u in self.sudo().env['hr.employee'].search([])}
             result = True
+            error_string = ''
             for data in datas:
                 try:
                     self.sudo().match_user(employees, data)
                     self.sudo().create(data)
-                except Exception:
-                    # _logger.error('Import machine record error.')
+                except Exception, e:
+                    _logger.error('Import machine record error.', e)
                     result = False
+                    error_string = str(e)
                     break
             else:
                 self.sudo().env.cr.execute('RELEASE SAVEPOINT import')
@@ -47,7 +49,7 @@ class AttendanceMachine(models.Model):
                 return result
 
             self.sudo().env.cr.execute('ROLLBACK TO SAVEPOINT import')
-            self.sudo().env['tianv.attendance.machine.log'].create({'is_success': False})
+            self.sudo().env['tianv.attendance.machine.log'].create({'is_success': False}, error_string)
             return result
         else:
             return False
@@ -91,7 +93,7 @@ class AttendanceImportLog(models.Model):
     # if __name__ == '__main__':
     # username = 'machine'  # the user
     # pwd = 'machine'  # the password of the user
-    #     dbname = 'tianv-erp'  # the database
+    # dbname = 'tianv-erp'  # the database
     #     OPENERP_URL = 'localhost:8069'
     #
     #     sock_common = xmlrpclib.ServerProxy('http://' + OPENERP_URL + '/xmlrpc/common')
