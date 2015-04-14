@@ -37,7 +37,7 @@ class AttendanceMachine(models.Model):
                 try:
                     self.sudo().match_user(employees, data)
                     self.sudo().create(data)
-                except Exception, e:
+                except Exception:
                     # _logger.error('Import machine record error.')
                     result = False
                     break
@@ -47,7 +47,7 @@ class AttendanceMachine(models.Model):
                 return result
 
             self.sudo().env.cr.execute('ROLLBACK TO SAVEPOINT import')
-            self.sudo().env['tianv.attendance.machine.log'].create({'is_success': False, 'error_info': result[1]})
+            self.sudo().env['tianv.attendance.machine.log'].create({'is_success': False})
             return result
         else:
             return False
@@ -90,7 +90,7 @@ class AttendanceImportLog(models.Model):
 
     # if __name__ == '__main__':
     # username = 'machine'  # the user
-    #     pwd = 'machine'  # the password of the user
+    # pwd = 'machine'  # the password of the user
     #     dbname = 'tianv-erp'  # the database
     #     OPENERP_URL = 'localhost:8069'
     #
