@@ -36,7 +36,7 @@ class AttendanceConfig(models.Model):
 
     @api.model
     def get_type_work_time(self, current_date, config_type):
-        config = self.search([('start_date', '<=', current_date), ('end_date', '>=', current_date)]).ensure_one()
+        config = self.search([('start_date', '<=', current_date), ('end_date', '>=', current_date)])
         line = config.lines.filtered(lambda l: l.type.id == config_type.id)
         if line:
             return line.work_time

@@ -30,14 +30,14 @@ class AttendanceMachine(models.Model):
         if self.user_has_groups('tianv_machine.group_attendance_machine_upload'):
             self.sudo().env.cr.execute('SAVEPOINT import')
             employees = {u.name: u.id for u in self.sudo().env['hr.employee'].search([])}
-            result = True, ''
+            result = True
             for data in datas:
                 try:
                     self.sudo().match_user(employees, data)
                     self.sudo().create(data)
                 except Exception, e:
                     # _logger.error('Import machine record error.')
-                    result = False, e.message
+                    result = False
                     break
             else:
                 self.sudo().env.cr.execute('RELEASE SAVEPOINT import')
@@ -48,7 +48,7 @@ class AttendanceMachine(models.Model):
             self.sudo().env['tianv.attendance.machine.log'].create({'is_success': False, 'error_info': result[1]})
             return result
         else:
-            return False, 'have no privilege!'
+            return False
 
     @api.model
     def get_last_update_info(self):
@@ -62,7 +62,7 @@ class AttendanceMachine(models.Model):
             last_code = last_code[0].code if last_code else False
             return last_code, last_import_datetime
         else:
-            return False, 'have no privilege!'
+            return False
 
     @api.model
     def match_user(self, employees, data):
