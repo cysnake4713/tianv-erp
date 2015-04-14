@@ -39,7 +39,7 @@ class AttendanceMachine(models.Model):
                     self.sudo().match_user(employees, data)
                     self.sudo().create(data)
                 except Exception, e:
-                    _logger.error('Import machine record error.', e)
+                    # _logger.error('Import machine record error.', e)
                     result = False
                     error_string = str(e)
                     break
