@@ -11,6 +11,7 @@
                     <field name="user_true_name"/>
                     <field name="log_employee"/>
                     <field name="log_time"/>
+                    <button name="button_match_all_employee" type="object" string="匹配记录" groups="tianv_machine.group_attendance_machine_admin"/>
                 </tree>
             </field>
         </record>

@@ -5,6 +5,7 @@ from openerp import tools
 from openerp import models, fields, api
 from openerp.tools.translate import _
 from openerp import SUPERUSER_ID
+from datetime import timedelta
 # import xmlrpclib
 import logging
 
@@ -26,6 +27,14 @@ class AttendanceMachine(models.Model):
 
     _sql_constraints = [('attendance_machine_code_unique', 'unique(code)', _('code must be unique !'))]
 
+    @api.multi
+    def button_match_all_employee(self):
+        employees = {u.name: u.id for u in self.sudo().env['hr.employee'].search([])}
+        records = self.env['tianv.attendance.machine'].search([])
+        for machine_record in records:
+            if machine_record.user_true_name in employees:
+                machine_record.log_employee = employees[machine_record.user_true_name]
+
     @api.model
     def import_data_from_machine(self, json_datas):
         datas = json.loads(json_datas)
@@ -35,6 +44,8 @@ class AttendanceMachine(models.Model):
             result = True
             error_string = ''
             for data in datas:
+                if 'log_time' in data:
+                    data['log_time'] = fields.Datetime.to_string(fields.Datetime.from_string(data['log_time']) - timedelta(hours=8))
                 try:
                     self.sudo().match_user(employees, data)
                     self.sudo().create(data)
@@ -94,11 +105,11 @@ class AttendanceImportLog(models.Model):
     # username = 'machine'  # the user
     # pwd = 'machine'  # the password of the user
     # dbname = 'tianv-erp'  # the database
-    #     OPENERP_URL = 'localhost:8069'
+    # OPENERP_URL = 'localhost:8069'
     #
-    #     sock_common = xmlrpclib.ServerProxy('http://' + OPENERP_URL + '/xmlrpc/common')
-    #     uid = sock_common.login(dbname, username, pwd)
-    #     sock = xmlrpclib.ServerProxy('http://' + OPENERP_URL + '/xmlrpc/object')
+    # sock_common = xmlrpclib.ServerProxy('http://' + OPENERP_URL + '/xmlrpc/common')
+    # uid = sock_common.login(dbname, username, pwd)
+    # sock = xmlrpclib.ServerProxy('http://' + OPENERP_URL + '/xmlrpc/object')
     #
     #     print sock.execute(dbname, uid, pwd, 'tianv.attendance.machine', 'get_last_update_info')
     #
