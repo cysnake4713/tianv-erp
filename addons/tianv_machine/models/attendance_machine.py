@@ -60,7 +60,7 @@ class AttendanceMachine(models.Model):
                 return result
 
             self.sudo().env.cr.execute('ROLLBACK TO SAVEPOINT import')
-            self.sudo().env['tianv.attendance.machine.log'].create({'is_success': False}, error_string)
+            self.sudo().env['tianv.attendance.machine.log'].create({'is_success': False, 'error_info': error_string})
             return result
         else:
             return False
@@ -111,7 +111,7 @@ class AttendanceImportLog(models.Model):
     # uid = sock_common.login(dbname, username, pwd)
     # sock = xmlrpclib.ServerProxy('http://' + OPENERP_URL + '/xmlrpc/object')
     #
-    #     print sock.execute(dbname, uid, pwd, 'tianv.attendance.machine', 'get_last_update_info')
+    # print sock.execute(dbname, uid, pwd, 'tianv.attendance.machine', 'get_last_update_info')
     #
     #     datas = [
     #         {
