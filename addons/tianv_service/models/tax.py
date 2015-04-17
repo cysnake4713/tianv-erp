@@ -18,7 +18,7 @@ class AccountInvoiceInherit(models.Model):
                               ('cancel', 'Cancelled'),
                               ('passed', u'已审批'), ], string='Status', index=True, readonly=True, default='draft',
                              track_visibility='onchange', copy=False,
-    )
+                             )
 
     @api.multi
     def button_passed(self):
@@ -54,7 +54,8 @@ class AccountInvoiceInherit(models.Model):
         group = self.env['ir.model.data'].get_object('account', 'group_invoice_passer')
         ctx = {'invoice': self}
         self.env['odoosoft.wechat.enterprise.message'].create_message(obj=self, content=u'等待您审批', code='tianv_service.map_tianv_service',
-                                                                      user_ids=[u.id for u in group.users])
+                                                                      user_ids=[u.id for u in group.users], type='news',
+                                                                      template=self.env.ref('tianv_service.message_template_invoice').id)
 
         for user_id in [u.id for u in group.users]:
             template_id.sudo().with_context(ctx).send_mail(user_id, force_send=False)

@@ -1,8 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openerp>
-    <data>
+    <data noupdate="1">
         <record id="map_tianv_service" model="odoosoft.wechat.enterprise.map">
             <field name="code">tianv_service.map_tianv_service</field>
+        </record>
+
+        <record id="message_template_invoice" model="odoosoft.wechat.enterprise.message.template">
+            <field name="name">微信发票审批提醒</field>
+            <field name="title">发票审批提醒</field>
+            <field name="content">
+客户名称:  ${object.partner_id.name}
+编号:  ${object.number}
+发票日期:  ${object.date_invoice}
+            </field>
         </record>
     </data>
 </openerp>
