@@ -31,6 +31,11 @@ class AttendanceMachine(models.Model):
             if machine_record.user_true_name in employees:
                 machine_record.log_employee = employees[machine_record.user_true_name]
 
+    @api.multi
+    def button_remove_all_record(self):
+        self.env['tianv.attendance.machine'].search([]).unlink()
+        return True
+
     @api.model
     def import_data_from_machine(self, json_datas):
         datas = json.loads(json_datas)
@@ -110,7 +115,7 @@ class AttendanceImportLog(models.Model):
     # print sock.execute(dbname, uid, pwd, 'tianv.attendance.machine', 'get_last_update_info')
     #
     # datas = [
-    #         {
+    # {
     #             "log_time": "2014-02-11 12:22:10",
     #             "code": 10,
     #             "user_id": 1,

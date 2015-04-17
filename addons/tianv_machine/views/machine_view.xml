@@ -11,6 +11,8 @@
                     <field name="log_employee"/>
                     <field name="log_time"/>
                     <button name="button_match_all_employee" type="object" string="匹配记录" groups="tianv_machine.group_attendance_machine_admin"/>
+                    <button name="button_remove_all_record" type="object" string="删除所有记录" groups="tianv_machine.group_attendance_machine_admin"
+                            confirm="确定删除所有记录？删除的记录不能被恢复"/>
                 </tree>
             </field>
         </record>
