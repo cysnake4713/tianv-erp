@@ -6,8 +6,7 @@
             <field name="model">tianv.attendance.machine</field>
             <field name="arch" type="xml">
                 <tree editable="top">
-                    <field name="code"/>
-                    <field name="user_id"/>
+                    <field name="id" readonly="1"/>
                     <field name="user_true_name"/>
                     <field name="log_employee"/>
                     <field name="log_time"/>

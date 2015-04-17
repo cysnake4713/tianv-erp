@@ -5,5 +5,16 @@
             <field name="key">tianv_machine.password</field>
             <field name="value">tianv_123456</field>
         </record>
+
+        <record id="sequence_machine_code" model="ir.sequence.type">
+            <field name="name">machine Code</field>
+            <field name="code">machine.code</field>
+        </record>
+        <record id="sequence_machine_code_seq" model="ir.sequence">
+            <field name="name">machine Code sequence</field>
+            <field name="code">machine.code</field>
+            <field eval="1" name="number_next"/>
+            <field eval="1" name="number_increment"/>
+        </record>
     </data>
 </openerp>

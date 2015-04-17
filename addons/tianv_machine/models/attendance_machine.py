@@ -15,17 +15,13 @@ class AttendanceMachine(models.Model):
     _name = 'tianv.attendance.machine'
     _rec_name = 'log_time'
 
-    _order = 'log_time desc, code desc, id desc'
+    _order = 'log_time desc,  id desc'
 
     log_time = fields.Datetime('Log Time', required=True)
     log_employee = fields.Many2one('hr.employee', 'Log Employee')
 
-    user_id = fields.Integer('Machine User ID', required=True)
+    user_id = fields.Integer('Machine User ID')
     user_true_name = fields.Char('Machine User True Name', required=True)
-
-    code = fields.Integer('Identify ID', required=True, )
-
-    _sql_constraints = [('attendance_machine_code_unique', 'unique(code)', _('code must be unique !'))]
 
     @api.multi
     def button_match_all_employee(self):
@@ -73,8 +69,8 @@ class AttendanceMachine(models.Model):
             last_import_datetime = last_import_datetime[0].import_datetime if last_import_datetime else None
             last_import_datetime = fields.Datetime.to_string(
                 fields.Datetime.context_timestamp(self, fields.Datetime.from_string(last_import_datetime))) if last_import_datetime else False
-            last_code = self.sudo().search([], order='code desc', limit=1)
-            last_code = last_code[0].code if last_code else False
+            last_code = self.sudo().search([], order='id desc', limit=1)
+            last_code = last_code[0].id if last_code else False
             return last_code, last_import_datetime
         else:
             return False
@@ -113,7 +109,7 @@ class AttendanceImportLog(models.Model):
     #
     # print sock.execute(dbname, uid, pwd, 'tianv.attendance.machine', 'get_last_update_info')
     #
-    #     datas = [
+    # datas = [
     #         {
     #             "log_time": "2014-02-11 12:22:10",
     #             "code": 10,
