@@ -190,7 +190,7 @@ class AttendanceRecordLine(models.Model):
             config_end_time = self._utc_datetime(target_date, config_line.end_time, 1 if config_line.is_cross_day else 0)
             # compute punch in
             punch_in_machine = machine_obj.search(
-                [('log_employee', '=', self.record.employee.id),
+                [('log_employeelog_employee', '=', self.record.employee.id),
                  ('log_time', '>=', self._utc_datetime(target_date, config_line.punch_begin_time)),
                  ('log_time', '<=', config_end_time)],
                 order='log_time',
@@ -262,7 +262,9 @@ class AttendanceRecordLine(models.Model):
     @api.multi
     def button_get_machine_record(self):
         res = self.env['ir.actions.act_window'].for_xml_id('tianv_machine', 'action_attendance_machine')
-        res['domain'] = [('log_time', '>=', self._utc_datetime(self.plan_date, 0)), ('log_time', '<=', self._utc_datetime(self.plan_date, 0, 1))]
+        res['domain'] = [('log_time', '>=', self._utc_datetime(self.plan_date, 0)),
+                         ('log_time', '<=', self._utc_datetime(self.plan_date, 0, 1)),
+                         ('log_employee', '=', self.record.employee.id)]
         return res
 
 
