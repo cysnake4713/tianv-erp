@@ -54,8 +54,11 @@ class AttendancePlan(models.Model):
                 if current_date.isoweekday() not in [6, 7]:
                     config_types = [(6, 0, [self.env.ref('tianv_attendance.attendance_config_type_morning').id,
                                             self.env.ref('tianv_attendance.attendance_config_type_afternoon').id])]
-
-                value = {'plan': plan.id, 'plan_date': fields.Date.to_string(current_date), 'config_types': config_types}
+                    comment = u'正常上班'
+                else:
+                    comment = u'周末休息'
+                value = {'plan': plan.id, 'plan_date': fields.Date.to_string(current_date), 'config_types': config_types,
+                         'comment': comment}
                 self.env['tianv.hr.attendance.plan.line'].create(value)
         return True
 

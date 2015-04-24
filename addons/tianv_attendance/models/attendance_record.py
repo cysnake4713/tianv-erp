@@ -23,6 +23,7 @@ def get_workdays(start, end, holidays=0, days_off=None):
 class AttendanceRecord(models.Model):
     _name = 'tianv.hr.attendance.record'
     _rec_name = 'employee'
+    _order = 'period desc'
     _description = 'Attendance Record'
 
     contract = fields.Many2one('hr.contract', 'Contract', required=True)
@@ -104,6 +105,7 @@ class AttendanceRecordLine(models.Model):
     adjust_hour = fields.Float('Adjust Hour', digits=(12, 1), )
     adjust_tags = fields.Many2many('tianv.hr.attendance.record.type', 'attendance_record_adjust_tag_rel', 'record_id', 'tag_id', 'Adjust Tags')
     comment = fields.Char('Comment')
+    plan_comment = fields.Char('Plan Comment', compute='_compute_plan', readonly=True)
 
     _sql_constraints = [
         ('plan_record_uniq', 'unique(record,plan)', 'The plan must be unique per record!'),
@@ -116,6 +118,7 @@ class AttendanceRecordLine(models.Model):
                 record.plan_date = record.plan_line.plan_date
                 record.plan_date_week = record.plan_line.plan_date_week
                 record.plan_hour = record.plan_line.hour
+                record.plan_comment = record.plan_line.comment
 
     @api.one
     def process_employee_attendance(self):
