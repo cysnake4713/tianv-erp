@@ -193,7 +193,7 @@ class AttendanceRecordLine(models.Model):
             config_end_time = self._utc_datetime(target_date, config_line.end_time, 1 if config_line.is_cross_day else 0)
             # compute punch in
             punch_in_machine = machine_obj.search(
-                [('log_employeelog_employee', '=', self.record.employee.id),
+                [('log_employee', '=', self.record.employee.id),
                  ('log_time', '>=', self._utc_datetime(target_date, config_line.punch_begin_time)),
                  ('log_time', '<=', config_end_time)],
                 order='log_time',
