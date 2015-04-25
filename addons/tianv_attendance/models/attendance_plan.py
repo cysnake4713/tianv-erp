@@ -21,6 +21,7 @@ def get_workdays(start, end, holidays=0, days_off=None):
 class AttendancePlan(models.Model):
     _name = 'tianv.hr.attendance.plan'
     _rec_name = 'period'
+    _order = 'period desc'
     _description = 'Attendance Plan'
 
     period = fields.Many2one('account.period', 'Plan Period', required=True)
