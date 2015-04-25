@@ -32,10 +32,13 @@ class AttendanceRecord(models.Model):
 
     legal_hour = fields.Float('Legal Total Hours', digits=(12, 1), readonly=True, compute='_compute_info')
     actual_hour = fields.Float('Actual Total Hours', digits=(12, 1), readonly=True, compute='_compute_info')
+    plan_hour = fields.Float('Plan Total Hours', digits=(12, 1), readonly=True, compute='_compute_info')
+
     late_time = fields.Integer('Late Time', readonly=True, compute='_compute_info')
     early_time = fields.Integer('Early Time', readonly=True, compute='_compute_info')
-    absent_time = fields.Integer('Absent Time', readonly=True, compute='_compute_info')
-    leave_time = fields.Integer('Leave Time', readonly=True, compute='_compute_info')
+    absent_time = fields.Float('Absent Date', readonly=True, digits=(12, 1), compute='_compute_info')
+    leave_time = fields.Float('Leave Date', readonly=True, digits=(12, 1), compute='_compute_info')
+
     lines = fields.One2many('tianv.hr.attendance.record.line', 'record', 'Lines')
 
     _sql_constraints = [
@@ -56,9 +59,10 @@ class AttendanceRecord(models.Model):
 
             record.late_time = len(record.lines.filtered(lambda line: late_tag in line.adjust_tags))
             record.early_time = len(record.lines.filtered(lambda line: early_tag in line.adjust_tags))
-            record.absent_time = len(record.lines.filtered(lambda line: absent_tag in line.adjust_tags))
-            record.leave_time = len(record.lines.filtered(lambda line: leave_tag in line.adjust_tags))
+            record.absent_time = sum([l.plan_hour - l.adjust_hour for l in record.lines.filtered(lambda line: absent_tag in line.adjust_tags)])
+            record.leave_time = sum([l.plan_hour - l.adjust_hour for l in record.lines.filtered(lambda line: leave_tag in line.adjust_tags)])
             record.actual_hour = sum([l.adjust_hour for l in record.lines])
+            record.plan_hour = sum([l.plan_hour for l in record.lines])
             record.employee = record.contract.employee_id
 
     @api.multi
