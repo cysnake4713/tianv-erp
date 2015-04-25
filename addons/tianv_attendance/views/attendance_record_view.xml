@@ -37,7 +37,7 @@
                                 <field name="plan_hour"/>
                                 <field name="actual_hour"/>
                             </group>
-          Time                  <group>
+                            <group>
                                 <field name="late_time"/>
                                 <field name="early_time"/>
                                 <field name="leave_time"/>
