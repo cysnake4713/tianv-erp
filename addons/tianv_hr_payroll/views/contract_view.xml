@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record id="view_hr_contract_form_payroll_inherit" model="ir.ui.view">
+            <field name="name">view.hr.contract.form.inherit.payroll</field>
+            <field name="model">hr.contract</field>
+            <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
+            <field name="arch" type="xml">
+                <field name="wage" position="after">
+                    <field name="job"/>
+                    <field name="skill"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="view_hr_contract_job_tree" model="ir.ui.view">
+            <field name="name">view.hr.contract.job.tree</field>
+            <field name="model">hr.contract.job</field>
+            <field name="arch" type="xml">
+                <tree editable="top">
+                    <field name="name"/>
+                    <field name="coefficient"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_hr_contract_skill_tree" model="ir.ui.view">
+            <field name="name">view.hr.contract.skill.tree</field>
+            <field name="model">hr.contract.skill</field>
+            <field name="arch" type="xml">
+                <tree editable="top">
+                    <field name="name"/>
+                    <field name="coefficient"/>
+                </tree>
+            </field>
+        </record>
+    </data>
+</openerp>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <!-- Inherit Form View to Modify it -->
+        <record id="view_hr_employee_form_inherit" model="ir.ui.view">
+            <field name="name">view.hr.employee.form.payroll.inherit</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="priority">16</field>
+            <field name="arch" type="xml">
+
+                <xpath expr="//page[@string='HR Settings']" position="inside">
+                    <group string="参加工作时间">
+                        <field name="work_start_date"/>
+                    </group>
+                </xpath>
+
+            </field>
+        </record>
+    </data>
+</openerp>

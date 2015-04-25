@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record id="BASIC" model="hr.salary.rule.category">
+            <field name="name">基本工资</field>
+            <field name="code">JIBEN</field>
+        </record>
+
+        <record id="tianv_payroll_rule_origin_salary" model="hr.salary.rule">
+            <field name="name">初始工资</field>
+            <field name="code">WAGE</field>
+            <field name="sequence">10</field>
+            <field name="category_id" ref="tianv_hr_payroll.BASIC"/>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = contract.wage</field>
+        </record>
+        <record id="tianv_payroll_rule_work_age_salary" model="hr.salary.rule">
+            <field name="name">工龄工资</field>
+            <field name="code">AGE_SALARY</field>
+            <field name="sequence">12</field>
+            <field name="category_id" ref="tianv_hr_payroll.BASIC"/>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = employee.compute_worked_month(payslip.date_to) * 10</field>
+        </record>
+        <record id="tianv_payroll_rule_work_job_salary" model="hr.salary.rule">
+            <field name="name">岗位工资</field>
+            <field name="code">JOB_SALARY</field>
+            <field name="sequence">14</field>
+            <field name="category_id" ref="tianv_hr_payroll.BASIC"/>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = contract.job.coefficient * 100</field>
+        </record>
+        <record id="tianv_payroll_rule_work_skill_salary" model="hr.salary.rule">
+            <field name="name">技能工资</field>
+            <field name="code">SKILL_SALARY</field>
+            <field name="sequence">16</field>
+            <field name="category_id" ref="tianv_hr_payroll.BASIC"/>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = contract.skill.coefficient * 100</field>
+        </record>
+
+        <record id="tianv_payroll_salary_structure_root" model="hr.payroll.structure">
+            <field name="code">TIANV_SALARY</field>
+            <field name="name">天艺网络工资结构</field>
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+        <record id="tianv_payroll_salary_structure_base" model="hr.payroll.structure">
+            <field name="code">TIANV_BASE</field>
+            <field name="name">天艺网络基本工资</field>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="rule_ids"
+                   eval="[(6, 0, [ref('tianv_hr_payroll.tianv_payroll_rule_work_skill_salary'), ref('tianv_hr_payroll.tianv_payroll_rule_origin_salary'), ref('tianv_hr_payroll.tianv_payroll_rule_work_age_salary'), ref('tianv_hr_payroll.tianv_payroll_rule_work_job_salary')])]"/>
+            <field name="parent_id" ref="tianv_payroll_salary_structure_root"/>
+        </record>
+
+    </data>
+</openerp>

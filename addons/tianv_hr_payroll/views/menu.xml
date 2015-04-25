@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record id="action_hr_contract_job" model="ir.actions.act_window">
+            <field name="name">岗位</field>
+            <field name="res_model">hr.contract.job</field>
+            <field name="view_mode">tree</field>
+        </record>
+
+        <record id="action_hr_contract_skill" model="ir.actions.act_window">
+            <field name="name">技能</field>
+            <field name="res_model">hr.contract.skill</field>
+            <field name="view_mode">tree</field>
+        </record>
+
+        <menuitem id="menuitem_hr_contract_job" name="岗位" parent="hr_contract.next_id_56" sequence="10" groups="base.group_no_one"
+                  action="action_hr_contract_job"/>
+        <menuitem id="menuitem_hr_contract_skill" name="技能" parent="hr_contract.next_id_56" sequence="12" groups="base.group_no_one"
+                  action="action_hr_contract_skill"/>
+    </data>
+</openerp>
