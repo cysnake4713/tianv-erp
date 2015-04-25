@@ -33,7 +33,6 @@ class AttendanceConfig(models.Model):
         if self.end_date < self.start_date:
             raise Warning(_('End Date must after Start Date'))
 
-
     @api.model
     def get_type_work_time(self, current_date, config_type):
         config = self.search([('start_date', '<=', current_date), ('end_date', '>=', current_date)])

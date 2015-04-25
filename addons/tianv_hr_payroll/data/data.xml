@@ -3,7 +3,19 @@
     <data>
         <record id="BASIC" model="hr.salary.rule.category">
             <field name="name">基本工资</field>
-            <field name="code">JIBEN</field>
+            <field name="code">BASIC</field>
+        </record>
+        <record id="BASIC_DAILY" model="hr.salary.rule.category">
+            <field name="name">每日工资</field>
+            <field name="code">BASIC_DAILY</field>
+        </record>
+        <record id="INSURANCE" model="hr.salary.rule.category">
+            <field name="name">社保</field>
+            <field name="code">INSURANCE</field>
+        </record>
+        <record id="ATTENDANCE" model="hr.salary.rule.category">
+            <field name="name">考勤</field>
+            <field name="code">ATTENDANCE</field>
         </record>
 
         <record id="tianv_payroll_rule_origin_salary" model="hr.salary.rule">
@@ -39,6 +51,68 @@
             <field name="amount_python_compute">result = contract.skill.coefficient * 100</field>
         </record>
 
+        <record id="tianv_payroll_rule_work_daily" model="hr.salary.rule">
+            <field name="name">每日工资</field>
+            <field name="code">SKILL_DAILY</field>
+            <field name="sequence">17</field>
+            <field name="category_id" ref="tianv_hr_payroll.BASIC_DAILY"/>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">
+legal_hour = contract.get_attendance_record_by_date(payslip.date_from, payslip.date_to).legal_hour
+result = (categories.BASIC / legal_hour) * 8
+            </field>
+        </record>
+
+        <record id="tianv_payroll_rule_insurance_company" model="hr.salary.rule">
+            <field name="name">单位交保</field>
+            <field name="code">INSURANCE_COMPANY</field>
+            <field name="sequence">18</field>
+            <field name="category_id" ref="tianv_hr_payroll.INSURANCE"/>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = contract.get_insurance_record_by_date(payslip.date_from, payslip.date_to).company_total
+            </field>
+        </record>
+        <record id="tianv_payroll_rule_insurance_employee" model="hr.salary.rule">
+            <field name="name">个人交保</field>
+            <field name="code">INSURANCE_EMPLOYEE</field>
+            <field name="sequence">20</field>
+            <field name="category_id" ref="tianv_hr_payroll.INSURANCE"/>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = contract.get_insurance_record_by_date(payslip.date_from, payslip.date_to).personal_total
+            </field>
+        </record>
+
+        <record id="tianv_payroll_rule_attendance_late" model="hr.salary.rule">
+            <field name="name">迟到扣款</field>
+            <field name="code">ATTENDANCE_LATE</field>
+            <field name="sequence">22</field>
+            <field name="category_id" ref="tianv_hr_payroll.ATTENDANCE"/>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">
+allow_late_time = 3
+late_time = contract.get_attendance_record_by_date(payslip.date_from, payslip.date_to).late_time
+if late_time &lt;= allow_late_time:
+    result = late_time * 10
+else:
+    result =(20 + categories.BASIC_DAILY / 4) * (late_time - allow_late_time) + 10 * allow_late_time
+            </field>
+        </record>
+        <record id="tianv_payroll_rule_attendance_early" model="hr.salary.rule">
+            <field name="name">早退扣款</field>
+            <field name="code">ATTENDANCE_EARLY</field>
+            <field name="sequence">24</field>
+            <field name="category_id" ref="tianv_hr_payroll.ATTENDANCE"/>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">
+allow_early_time = 3
+early_time = contract.get_attendance_record_by_date(payslip.date_from, payslip.date_to).early_time
+if early_time &lt;= allow_early_time:
+    result = early_time * 10
+else:
+    result =(20 + categories.BASIC_DAILY / 4) * (early_time - allow_early_time) + 10 * allow_early_time
+            </field>
+        </record>
+
         <record id="tianv_payroll_salary_structure_root" model="hr.payroll.structure">
             <field name="code">TIANV_SALARY</field>
             <field name="name">天艺网络工资结构</field>
@@ -49,8 +123,24 @@
             <field name="name">天艺网络基本工资</field>
             <field name="company_id" ref="base.main_company"/>
             <field name="rule_ids"
-                   eval="[(6, 0, [ref('tianv_hr_payroll.tianv_payroll_rule_work_skill_salary'), ref('tianv_hr_payroll.tianv_payroll_rule_origin_salary'), ref('tianv_hr_payroll.tianv_payroll_rule_work_age_salary'), ref('tianv_hr_payroll.tianv_payroll_rule_work_job_salary')])]"/>
+                   eval="[(6, 0, [ref('tianv_hr_payroll.tianv_payroll_rule_work_daily'), ref('tianv_hr_payroll.tianv_payroll_rule_work_skill_salary'), ref('tianv_hr_payroll.tianv_payroll_rule_origin_salary'), ref('tianv_hr_payroll.tianv_payroll_rule_work_age_salary'), ref('tianv_hr_payroll.tianv_payroll_rule_work_job_salary')])]"/>
             <field name="parent_id" ref="tianv_payroll_salary_structure_root"/>
+        </record>
+        <record id="tianv_payroll_salary_structure_insurance" model="hr.payroll.structure">
+            <field name="code">TIANV_INSURANCE</field>
+            <field name="name">天艺网络社保缴费</field>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="rule_ids"
+                   eval="[(6, 0, [ref('tianv_hr_payroll.tianv_payroll_rule_insurance_company'), ref('tianv_hr_payroll.tianv_payroll_rule_insurance_employee')])]"/>
+            <field name="parent_id" ref="tianv_payroll_salary_structure_base"/>
+        </record>
+        <record id="tianv_payroll_salary_structure_attendance" model="hr.payroll.structure">
+            <field name="code">TIANV_ATTENDANCE</field>
+            <field name="name">天艺网络考勤扣款</field>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="rule_ids"
+            eval="[(6, 0, [ref('tianv_hr_payroll.tianv_payroll_rule_attendance_early'), ref('tianv_hr_payroll.tianv_payroll_rule_attendance_late')])]"/>
+            <field name="parent_id" ref="tianv_payroll_salary_structure_insurance"/>
         </record>
 
     </data>
