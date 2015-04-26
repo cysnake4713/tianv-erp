@@ -17,6 +17,10 @@
             <field name="name">考勤</field>
             <field name="code">ATTENDANCE</field>
         </record>
+        <record id="BONUS" model="hr.salary.rule.category">
+            <field name="name">奖金</field>
+            <field name="code">BONUS</field>
+        </record>
 
         <record id="tianv_payroll_rule_origin_salary" model="hr.salary.rule">
             <field name="name">初始工资</field>
@@ -184,18 +188,52 @@ result = -result
             </field>
         </record>
 
-        <record id="tianv_payroll_salary_structure_root" model="hr.payroll.structure">
-            <field name="code">TIANV_SALARY</field>
-            <field name="name">天艺网络工资结构</field>
-            <field name="company_id" ref="base.main_company"/>
+        <record id="tianv_payroll_rule_bonus_extra_work" model="hr.salary.rule">
+            <field name="name">加班工资</field>
+            <field name="code">EXTRA_WORK</field>
+            <field name="sequence">35</field>
+            <field name="category_id" ref="tianv_hr_payroll.BONUS"/>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">
+attendance_record = contract.get_attendance_record_by_date(payslip.date_from, payslip.date_to)
+limit_hour = attendance_record.legal_hour / 8 * 8.8# 加班小时封顶系数,超过本系数的算三倍工资
+#actual_hour = attendance_record.actual_hour
+#plan_hour = attendance_record.plan_hour
+if actual_hour > limit_hour:
+    result = (actual_hour - limit_hour) * categories.BASIC_HOUR * 2
+else:
+    result = 0.0
+            </field>
         </record>
+        <record id="tianv_payroll_rule_bonus_full_work" model="hr.salary.rule">
+            <field name="name">全勤奖</field>
+            <field name="code">FULL_WORK</field>
+            <field name="sequence">37</field>
+            <field name="category_id" ref="tianv_hr_payroll.BONUS"/>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">
+attendance_record = contract.get_attendance_record_by_date(payslip.date_from, payslip.date_to)
+late_time = attendance_record.late_time
+early_time = attendance_record.early_time
+absent_time = attendance_record.absent_time
+leave_time = attendance_record.leave_time
+sick_time = attendance_record.sick_time
+actual_hour = attendance_record.actual_hour
+plan_hour = attendance_record.plan_hour
+if late_time == 0 and early_time == 0 and absent_time == 0 and leave_time == 0 and sick_time == 0 and actual_hour > plan_hour:
+    result = categories.BASIC * 3
+else:
+    result = 0.0
+            </field>
+        </record>
+
         <record id="tianv_payroll_salary_structure_base" model="hr.payroll.structure">
             <field name="code">TIANV_BASE</field>
             <field name="name">天艺网络基本工资</field>
             <field name="company_id" ref="base.main_company"/>
             <field name="rule_ids"
                    eval="[(6, 0, [ref('tianv_hr_payroll.tianv_payroll_rule_work_daily'), ref('tianv_hr_payroll.tianv_payroll_rule_work_skill_salary'), ref('tianv_hr_payroll.tianv_payroll_rule_origin_salary'), ref('tianv_hr_payroll.tianv_payroll_rule_work_age_salary'), ref('tianv_hr_payroll.tianv_payroll_rule_work_job_salary')])]"/>
-            <field name="parent_id" ref="tianv_payroll_salary_structure_root"/>
+            <field name="parent_id" eval="False"/>
         </record>
         <record id="tianv_payroll_salary_structure_insurance" model="hr.payroll.structure">
             <field name="code">TIANV_INSURANCE</field>
@@ -213,6 +251,19 @@ result = -result
             eval="[(6, 0, [ref('tianv_hr_payroll.tianv_payroll_rule_attendance_absent'), ref('tianv_hr_payroll.tianv_payroll_rule_attendance_sick'), ref('tianv_hr_payroll.tianv_payroll_rule_attendance_leave'), ref('tianv_hr_payroll.tianv_payroll_rule_attendance_time'), ref('tianv_hr_payroll.tianv_payroll_rule_attendance_early'), ref('tianv_hr_payroll.tianv_payroll_rule_attendance_late')])]"/>
             <field name="parent_id" ref="tianv_payroll_salary_structure_insurance"/>
         </record>
-
+        <record id="tianv_payroll_salary_structure_bonus" model="hr.payroll.structure">
+            <field name="code">TIANV_BONUS</field>
+            <field name="name">天艺网络奖金</field>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="rule_ids"
+            eval="[(6, 0, [ref('tianv_hr_payroll.tianv_payroll_rule_bonus_full_work'), ref('tianv_hr_payroll.tianv_payroll_rule_bonus_extra_work')])]"/>
+            <field name="parent_id" ref="tianv_payroll_salary_structure_attendance"/>
+        </record>
+        <record id="tianv_payroll_salary_structure_root" model="hr.payroll.structure">
+            <field name="code">TIANV_SALARY</field>
+            <field name="name">天艺网络工资结构</field>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="parent_id" ref="tianv_payroll_salary_structure_bonus"/>
+        </record>
     </data>
 </openerp>
