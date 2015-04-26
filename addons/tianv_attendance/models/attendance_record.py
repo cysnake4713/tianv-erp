@@ -213,7 +213,7 @@ class AttendanceRecordLine(models.Model):
                 limit=1)
             if punch_out_machine:
                 punch_out_time = punch_out_machine.log_time
-            # if is leave
+            # TODO: 添加leave type 在里面 if is leave
             leave_info = self.env['hr.holidays'].search([
                 ('employee_id', '=', self.record.employee.id),
                 ('date_from', '<=', config_start_time),

@@ -5,9 +5,9 @@
             <field name="name">基本工资</field>
             <field name="code">BASIC</field>
         </record>
-        <record id="BASIC_DAILY" model="hr.salary.rule.category">
-            <field name="name">每日工资</field>
-            <field name="code">BASIC_DAILY</field>
+        <record id="BASIC_HOUR" model="hr.salary.rule.category">
+            <field name="name">小时工资</field>
+            <field name="code">BASIC_HOUR</field>
         </record>
         <record id="INSURANCE" model="hr.salary.rule.category">
             <field name="name">社保</field>
@@ -52,14 +52,14 @@
         </record>
 
         <record id="tianv_payroll_rule_work_daily" model="hr.salary.rule">
-            <field name="name">每日工资</field>
-            <field name="code">SKILL_DAILY</field>
+            <field name="name">小时工资</field>
+            <field name="code">BASIC_HOUR</field>
             <field name="sequence">17</field>
-            <field name="category_id" ref="tianv_hr_payroll.BASIC_DAILY"/>
+            <field name="category_id" ref="tianv_hr_payroll.BASIC_HOUR"/>
             <field name="amount_select">code</field>
             <field name="amount_python_compute">
-legal_hour = contract.get_attendance_record_by_date(payslip.date_from, payslip.date_to).legal_hour
-result = (categories.BASIC / legal_hour) * 8
+plan_hour = contract.get_attendance_record_by_date(payslip.date_from, payslip.date_to).plan_hour
+result = categories.BASIC / plan_hour
             </field>
         </record>
 
@@ -89,12 +89,12 @@ result = (categories.BASIC / legal_hour) * 8
             <field name="category_id" ref="tianv_hr_payroll.ATTENDANCE"/>
             <field name="amount_select">code</field>
             <field name="amount_python_compute">
-allow_late_time = 3
+allow_late_time = 3 # 允许迟到次数
 late_time = contract.get_attendance_record_by_date(payslip.date_from, payslip.date_to).late_time
 if late_time &lt;= allow_late_time:
     result = late_time * 10
 else:
-    result =(20 + categories.BASIC_DAILY / 4) * (late_time - allow_late_time) + 10 * allow_late_time
+    result =(20 + categories.BASIC_HOUR * 2) * (late_time - allow_late_time) + 10 * allow_late_time
             </field>
         </record>
         <record id="tianv_payroll_rule_attendance_early" model="hr.salary.rule">
@@ -104,12 +104,26 @@ else:
             <field name="category_id" ref="tianv_hr_payroll.ATTENDANCE"/>
             <field name="amount_select">code</field>
             <field name="amount_python_compute">
-allow_early_time = 3
+allow_early_time = 3 # 允许早退次数
 early_time = contract.get_attendance_record_by_date(payslip.date_from, payslip.date_to).early_time
 if early_time &lt;= allow_early_time:
     result = early_time * 10
 else:
-    result =(20 + categories.BASIC_DAILY / 4) * (early_time - allow_early_time) + 10 * allow_early_time
+    result =(20 + categories.BASIC_HOUR * 2) * (early_time - allow_early_time) + 10 * allow_early_time
+            </field>
+        </record>
+        <record id="tianv_payroll_rule_attendance_time" model="hr.salary.rule">
+            <field name="name">时间扣款</field>
+            <field name="code">ATTENDANCE_EARLY</field>
+            <field name="sequence">30</field>
+            <field name="category_id" ref="tianv_hr_payroll.ATTENDANCE"/>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">
+attendance_record = contract.get_attendance_record_by_date(payslip.date_from, payslip.date_to)
+if attendance_record.actual_hour &lt; attendance_record.plan_hour:
+    result = (attendance_record.plan_hour - attendance_record.actual_hour) * categories.BASIC_HOUR
+else:
+    result = 0.0
             </field>
         </record>
 
@@ -139,7 +153,7 @@ else:
             <field name="name">天艺网络考勤扣款</field>
             <field name="company_id" ref="base.main_company"/>
             <field name="rule_ids"
-            eval="[(6, 0, [ref('tianv_hr_payroll.tianv_payroll_rule_attendance_early'), ref('tianv_hr_payroll.tianv_payroll_rule_attendance_late')])]"/>
+            eval="[(6, 0, [ref('tianv_hr_payroll.tianv_payroll_rule_attendance_time'), ref('tianv_hr_payroll.tianv_payroll_rule_attendance_early'), ref('tianv_hr_payroll.tianv_payroll_rule_attendance_late')])]"/>
             <field name="parent_id" ref="tianv_payroll_salary_structure_insurance"/>
         </record>
 
