@@ -40,8 +40,9 @@
                             <group>
                                 <field name="late_time"/>
                                 <field name="early_time"/>
-                                <field name="leave_time"/>
                                 <field name="absent_time"/>
+                                <field name="leave_time"/>
+                                <field name="sick_time"/>
                             </group>
                         </group>
                     </sheet>

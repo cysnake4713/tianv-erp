@@ -36,8 +36,9 @@ class AttendanceRecord(models.Model):
 
     late_time = fields.Integer('Late Time', readonly=True, compute='_compute_info')
     early_time = fields.Integer('Early Time', readonly=True, compute='_compute_info')
-    absent_time = fields.Float('Absent Date', readonly=True, digits=(12, 1), compute='_compute_info')
-    leave_time = fields.Float('Leave Date', readonly=True, digits=(12, 1), compute='_compute_info')
+    absent_time = fields.Float('Absent Hour', readonly=True, digits=(12, 1), compute='_compute_info')
+    leave_time = fields.Float('Personal Leave Hour', readonly=True, digits=(12, 1), compute='_compute_info')
+    sick_time = fields.Float('Sick Leave Hour', readonly=True, digits=(12, 1), compute='_compute_info')
 
     lines = fields.One2many('tianv.hr.attendance.record.line', 'record', 'Lines')
 
@@ -51,6 +52,7 @@ class AttendanceRecord(models.Model):
         late_tag = self.env.ref('tianv_attendance.attendance_type_late')
         early_tag = self.env.ref('tianv_attendance.attendance_type_early')
         leave_tag = self.env.ref('tianv_attendance.attendance_type_leave')
+        sick_tag = self.env.ref('tianv_attendance.attendance_type_sick')
         for record in self:
             if record.period:
                 date_start = fields.Date.from_string(record.period.date_start)
@@ -61,6 +63,7 @@ class AttendanceRecord(models.Model):
             record.early_time = len(record.lines.filtered(lambda line: early_tag in line.adjust_tags))
             record.absent_time = sum([l.plan_hour - l.adjust_hour for l in record.lines.filtered(lambda line: absent_tag in line.adjust_tags)])
             record.leave_time = sum([l.plan_hour - l.adjust_hour for l in record.lines.filtered(lambda line: leave_tag in line.adjust_tags)])
+            record.sick_time = sum([l.plan_hour - l.adjust_hour for l in record.lines.filtered(lambda line: sick_tag in line.adjust_tags)])
             record.actual_hour = sum([l.adjust_hour for l in record.lines])
             record.plan_hour = sum([l.plan_hour for l in record.lines])
             record.employee = record.contract.employee_id
@@ -131,6 +134,10 @@ class AttendanceRecordLine(models.Model):
         early_tag = self.env.ref('tianv_attendance.attendance_type_early').id
         error_tag = self.env.ref('tianv_attendance.attendance_type_error').id
         leave_tag = self.env.ref('tianv_attendance.attendance_type_leave').id
+        sick_tag = self.env.ref('tianv_attendance.attendance_type_sick').id
+
+        leave_holiday = self.env.ref('tianv_attendance.holiday_status_personal').id
+        sick_holiday = self.env.ref('tianv_attendance.holiday_status_sick').id
 
         normal = lambda p_in, p_out, c_start, c_end, conf: ((c_end - c_start).seconds / 3600.0, [])
         absent = lambda p_in, p_out, c_start, c_end, conf: (0, [absent_tag])
@@ -213,23 +220,33 @@ class AttendanceRecordLine(models.Model):
                 limit=1)
             if punch_out_machine:
                 punch_out_time = punch_out_machine.log_time
-            # TODO: 添加leave type 在里面 if is leave
-            leave_info = self.env['hr.holidays'].search([
+
+            (hour, tags) = process(rule_line.is_need_punch_in,
+                                   rule_line.is_need_punch_out,
+                                   punch_in_time,
+                                   punch_out_time,
+                                   config_start_time,
+                                   config_end_time,
+                                   config_line)
+
+            # if is leave
+            if self.env['hr.holidays'].search([
                 ('employee_id', '=', self.record.employee.id),
                 ('date_from', '<=', config_start_time),
                 ('date_to', '>=', config_end_time),
-                ('state', '=', 'validate')])
-            if leave_info:
-                (hour, tags) = (0, [leave_tag])
-            else:
-                # compute values
-                (hour, tags) = process(rule_line.is_need_punch_in,
-                                       rule_line.is_need_punch_out,
-                                       punch_in_time,
-                                       punch_out_time,
-                                       config_start_time,
-                                       config_end_time,
-                                       config_line)
+                ('state', '=', 'validate'),
+                ('holiday_status_id', '=', leave_holiday)]):
+                (hour, tags) = (hour, [leave_tag])
+            # if is sick
+            elif self.env['hr.holidays'].search([
+                ('employee_id', '=', self.record.employee.id),
+                ('date_from', '<=', config_start_time),
+                ('date_to', '>=', config_end_time),
+                ('state', '=', 'validate'),
+                ('holiday_status_id', '=', sick_holiday)]):
+
+                (hour, tags) = (hour, [sick_tag])
+
             tag_ids += tags
             record_hour += hour
 

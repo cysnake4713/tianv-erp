@@ -4,37 +4,44 @@
         <record id="attendance_type_late" model="tianv.hr.attendance.record.type">
             <field name="name">迟到</field>
         </record>
-
         <record id="attendance_type_early" model="tianv.hr.attendance.record.type">
             <field name="name">早退</field>
         </record>
-
         <record id="attendance_type_absent" model="tianv.hr.attendance.record.type">
             <field name="name">旷工</field>
         </record>
-
         <record id="attendance_type_error" model="tianv.hr.attendance.record.type">
             <field name="name">打卡异常</field>
         </record>
-
         <record id="attendance_type_leave" model="tianv.hr.attendance.record.type">
-            <field name="name">请假</field>
+            <field name="name">事假</field>
+        </record>
+        <record id="attendance_type_sick" model="tianv.hr.attendance.record.type">
+            <field name="name">病假</field>
         </record>
 
         <record id="attendance_config_type_morning" model="tianv.hr.attendance.config.type">
             <field name="name">上午</field>
         </record>
-
         <record id="attendance_config_type_afternoon" model="tianv.hr.attendance.config.type">
             <field name="name">下午</field>
         </record>
-
         <record id="attendance_config_type_night" model="tianv.hr.attendance.config.type">
             <field name="name">晚上</field>
         </record>
-
         <record id="attendance_config_type_early" model="tianv.hr.attendance.config.type">
             <field name="name">凌晨</field>
+        </record>
+        <!-- leave -->
+        <record id="holiday_status_sick" model="hr.holidays.status">
+            <field name="name">病假</field>
+            <field name="limit">True</field>
+            <field name="color_name">red</field>
+        </record>
+        <record id="holiday_status_personal" model="hr.holidays.status">
+            <field name="name">事假</field>
+            <field name="limit">True</field>
+            <field name="color_name">brown</field>
         </record>
     </data>
 </openerp>
