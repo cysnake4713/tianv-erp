@@ -94,7 +94,8 @@ late_time = contract.get_attendance_record_by_date(payslip.date_from, payslip.da
 if late_time &lt;= allow_late_time:
     result = late_time * 10
 else:
-    result =(20 + categories.BASIC_HOUR * 2) * (late_time - allow_late_time) + 10 * allow_late_time
+    result = (20 + categories.BASIC_HOUR * 2) * (late_time - allow_late_time) + 10 * allow_late_time
+result = -result
             </field>
         </record>
         <record id="tianv_payroll_rule_attendance_early" model="hr.salary.rule">
@@ -109,12 +110,67 @@ early_time = contract.get_attendance_record_by_date(payslip.date_from, payslip.d
 if early_time &lt;= allow_early_time:
     result = early_time * 10
 else:
-    result =(20 + categories.BASIC_HOUR * 2) * (early_time - allow_early_time) + 10 * allow_early_time
+    result = (20 + categories.BASIC_HOUR * 2) * (early_time - allow_early_time) + 10 * allow_early_time
+result = -result
+            </field>
+        </record>
+        <record id="tianv_payroll_rule_attendance_leave" model="hr.salary.rule">
+            <field name="name">事假扣款</field>
+            <field name="code">ATTENDANCE_LEAVE</field>
+            <field name="sequence">26</field>
+            <field name="category_id" ref="tianv_hr_payroll.ATTENDANCE"/>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">
+coefficient = 2 # 事假范围内系数
+extra_coefficient = 4 # 事假超额系数
+allow_hour = 24 # 允许事假小时数
+actual_hour = contract.get_attendance_record_by_date(payslip.date_from, payslip.date_to).leave_time
+if actual_hour &lt;= allow_hour:
+    result = categories.BASIC_HOUR * actual_hour * coefficient
+else:
+    result = categories.BASIC_HOUR * ((actual_hour - allow_hour) * extra_coefficient + allow_hour * coefficient)
+result = -result
+            </field>
+        </record>
+        <record id="tianv_payroll_rule_attendance_sick" model="hr.salary.rule">
+            <field name="name">病假扣款</field>
+            <field name="code">ATTENDANCE_SICK</field>
+            <field name="sequence">28</field>
+            <field name="category_id" ref="tianv_hr_payroll.ATTENDANCE"/>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">
+coefficient = 2 # 病假范围内系数
+extra_coefficient = 4 # 病假超额系数
+allow_hour = 24 # 允许病假小时数
+actual_hour = contract.get_attendance_record_by_date(payslip.date_from, payslip.date_to).sick_time
+if actual_hour &lt;= allow_hour:
+    result = categories.BASIC_HOUR * actual_hour * coefficient
+else:
+    result = categories.BASIC_HOUR * ((actual_hour - allow_hour) * extra_coefficient + allow_hour * coefficient)
+result = -result
+            </field>
+        </record>
+<record id="tianv_payroll_rule_attendance_absent" model="hr.salary.rule">
+            <field name="name">旷工扣款</field>
+            <field name="code">ATTENDANCE_ABSENT</field>
+            <field name="sequence">29</field>
+            <field name="category_id" ref="tianv_hr_payroll.ATTENDANCE"/>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">
+coefficient = 2 # 旷工范围内系数
+extra_coefficient = 4 # 旷工超额系数
+allow_hour = 24 # 允许旷工小时数
+actual_hour = contract.get_attendance_record_by_date(payslip.date_from, payslip.date_to).absent_time
+if actual_hour &lt;= allow_hour:
+    result = categories.BASIC_HOUR * actual_hour * coefficient
+else:
+    result = categories.BASIC_HOUR * ((actual_hour - allow_hour) * extra_coefficient + allow_hour * coefficient)
+result = -result
             </field>
         </record>
         <record id="tianv_payroll_rule_attendance_time" model="hr.salary.rule">
             <field name="name">时间扣款</field>
-            <field name="code">ATTENDANCE_EARLY</field>
+            <field name="code">ATTENDANCE_TIME</field>
             <field name="sequence">30</field>
             <field name="category_id" ref="tianv_hr_payroll.ATTENDANCE"/>
             <field name="amount_select">code</field>
@@ -124,6 +180,7 @@ if attendance_record.actual_hour &lt; attendance_record.plan_hour:
     result = (attendance_record.plan_hour - attendance_record.actual_hour) * categories.BASIC_HOUR
 else:
     result = 0.0
+result = -result
             </field>
         </record>
 
@@ -153,7 +210,7 @@ else:
             <field name="name">天艺网络考勤扣款</field>
             <field name="company_id" ref="base.main_company"/>
             <field name="rule_ids"
-            eval="[(6, 0, [ref('tianv_hr_payroll.tianv_payroll_rule_attendance_time'), ref('tianv_hr_payroll.tianv_payroll_rule_attendance_early'), ref('tianv_hr_payroll.tianv_payroll_rule_attendance_late')])]"/>
+            eval="[(6, 0, [ref('tianv_hr_payroll.tianv_payroll_rule_attendance_absent'), ref('tianv_hr_payroll.tianv_payroll_rule_attendance_sick'), ref('tianv_hr_payroll.tianv_payroll_rule_attendance_leave'), ref('tianv_hr_payroll.tianv_payroll_rule_attendance_time'), ref('tianv_hr_payroll.tianv_payroll_rule_attendance_early'), ref('tianv_hr_payroll.tianv_payroll_rule_attendance_late')])]"/>
             <field name="parent_id" ref="tianv_payroll_salary_structure_insurance"/>
         </record>
 
