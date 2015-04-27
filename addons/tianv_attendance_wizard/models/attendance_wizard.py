@@ -43,6 +43,7 @@ class AttendanceWizard(models.TransientModel):
 
     @api.multi
     def button_period_to_social(self):
+        self.button_get_contract()
         self.relative_social = self.env['tianv.social.insurance.record'].search(
             [('period', '=', self.period.id), ('contract', 'in', [e.id for e in self.contracts])])
         self.state = 'generate_social'
@@ -57,6 +58,7 @@ class AttendanceWizard(models.TransientModel):
 
     @api.multi
     def button_social_to_attendance(self):
+        self.button_generate_social()
         self.relative_attendances = self.env['tianv.hr.attendance.record'].search(
             [('period', '=', self.period.id), ('contract', 'in', [e.id for e in self.contracts])])
         self.state = 'generate_attendance'
@@ -72,6 +74,7 @@ class AttendanceWizard(models.TransientModel):
 
     @api.multi
     def button_attendance_to_payroll(self):
+        self.button_generate_attendance()
         self.relative_payslips = self.env['hr.payslip'].search([('date_from', '<=', self.period.date_start),
                                                                 ('date_to', '>=', self.period.date_stop),
                                                                 ('contract_id', 'in', [c.id for c in self.contracts]), ])
@@ -96,11 +99,12 @@ class AttendanceWizard(models.TransientModel):
 
     @api.multi
     def button_payroll_to_done(self):
+        self.button_generate_payroll()
         self.state = 'done'
 
     @api.multi
-    def button_payroll_verify(self):
-        self.relative_payslips.signal_workflow('hr_verify_sheet')
+    def button_payroll_send(self):
+        pass        # self.relative_payslips.signal_workflow('hr_verify_sheet')
 
     @api.multi
     def button_reverse(self):

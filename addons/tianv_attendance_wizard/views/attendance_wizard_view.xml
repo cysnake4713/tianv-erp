@@ -7,25 +7,21 @@
             <field name="arch" type="xml">
                 <form>
                     <header>
-                        <button name="button_get_contract" type="object" string="获取相关合同" states="period_select"/>
                         <button name="button_period_to_social" type="object" string="下一步" class="oe_highlight" states="period_select"/>
 
-                        <button name="button_generate_social" type="object" string="生成社保信息" states="generate_social"/>
                         <button name="button_social_to_attendance" type="object" string="下一步" class="oe_highlight" states="generate_social"/>
                         <button name="button_reverse" type="object" string="上一步" states="generate_social"
                                 context="{'state': 'period_select'}"/>
 
-                        <button name="button_generate_attendance" type="object" string="生成考勤信息" states="generate_attendance"/>
                         <button name="button_attendance_to_payroll" type="object" string="下一步" class="oe_highlight" states="generate_attendance"/>
                         <button name="button_reverse" type="object" string="上一步" states="generate_attendance"
                                 context="{'state': 'generate_social'}"/>
 
-                        <button name="button_generate_payroll" type="object" string="生成工资条" states="generate_payroll"/>
                         <button name="button_payroll_to_done" type="object" string="下一步" class="oe_highlight" states="generate_payroll"/>
                         <button name="button_reverse" type="object" string="上一步" states="generate_payroll"
                                 context="{'state': 'generate_attendance'}"/>
 
-                        <button name="button_payroll_verify" type="object" string="工资条生效" class="oe_highlight" states="done"/>
+                        <button name="button_payroll_send" type="object" string="发送工资条记录" class="oe_highlight" states="done"/>
 
                         <field name="state" widget="statusbar" readonly="1"/>
                     </header>
