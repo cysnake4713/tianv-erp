@@ -44,12 +44,13 @@ class AttendanceWizard(models.TransientModel):
     @api.multi
     def button_period_to_social(self):
         self.button_get_contract()
-        self.relative_social = self.env['tianv.social.insurance.record'].search(
-            [('period', '=', self.period.id), ('contract', 'in', [e.id for e in self.contracts])])
+        self.button_generate_social()
         self.state = 'generate_social'
 
     @api.multi
     def button_generate_social(self):
+        self.relative_social = self.env['tianv.social.insurance.record'].search(
+            [('period', '=', self.period.id), ('contract', 'in', [e.id for e in self.contracts])])
         need_process_contracts = self.contracts.filtered(lambda contract: contract not in [s.contract for s in self.relative_social])
         social_config = self.env['tianv.social.insurance.config'].search([('contract', 'in', [c.id for c in need_process_contracts])])
         social_config.with_context(period=self.period.id).generate_insurance_record()
@@ -58,13 +59,13 @@ class AttendanceWizard(models.TransientModel):
 
     @api.multi
     def button_social_to_attendance(self):
-        self.button_generate_social()
-        self.relative_attendances = self.env['tianv.hr.attendance.record'].search(
-            [('period', '=', self.period.id), ('contract', 'in', [e.id for e in self.contracts])])
+        self.button_generate_attendance()
         self.state = 'generate_attendance'
 
     @api.multi
     def button_generate_attendance(self):
+        self.relative_attendances = self.env['tianv.hr.attendance.record'].search(
+            [('period', '=', self.period.id), ('contract', 'in', [e.id for e in self.contracts])])
         need_process_contracts = self.contracts.filtered(lambda c: c not in [s.contract for s in self.relative_attendances])
         for contract in need_process_contracts:
             new_attendance_record = self.env['tianv.hr.attendance.record'].create({'contract': contract.id, 'period': self.period.id})
@@ -74,14 +75,14 @@ class AttendanceWizard(models.TransientModel):
 
     @api.multi
     def button_attendance_to_payroll(self):
-        self.button_generate_attendance()
-        self.relative_payslips = self.env['hr.payslip'].search([('date_from', '<=', self.period.date_start),
-                                                                ('date_to', '>=', self.period.date_stop),
-                                                                ('contract_id', 'in', [c.id for c in self.contracts]), ])
+        self.button_generate_payroll()
         self.state = 'generate_payroll'
 
     @api.multi
     def button_generate_payroll(self):
+        self.relative_payslips = self.env['hr.payslip'].search([('date_from', '<=', self.period.date_start),
+                                                                ('date_to', '>=', self.period.date_stop),
+                                                                ('contract_id', 'in', [c.id for c in self.contracts]), ])
         need_process_contracts = self.contracts.filtered(lambda ct: ct not in [s.contract_id for s in self.relative_payslips])
         for contract in need_process_contracts:
             self.env['hr.payslip'].create({
@@ -90,21 +91,18 @@ class AttendanceWizard(models.TransientModel):
                 'contract_id': contract.id,
                 'struct_id': contract.struct_id.id,
                 'date_from': self.period.date_start,
-                'date_to': self.period.date_stop,
-            })
+                'date_to': self.period.date_stop, }).compute_sheet()
         self.relative_payslips = self.env['hr.payslip'].search([('date_from', '<=', self.period.date_start),
                                                                 ('date_to', '>=', self.period.date_stop),
                                                                 ('contract_id', 'in', [c.id for c in self.contracts]), ])
-        self.relative_payslips.compute_sheet()
 
     @api.multi
     def button_payroll_to_done(self):
-        self.button_generate_payroll()
         self.state = 'done'
 
     @api.multi
     def button_payroll_send(self):
-        pass        # self.relative_payslips.signal_workflow('hr_verify_sheet')
+        pass  # self.relative_payslips.signal_workflow('hr_verify_sheet')
 
     @api.multi
     def button_reverse(self):
