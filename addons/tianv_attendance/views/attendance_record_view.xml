@@ -9,6 +9,7 @@
                     <field name="employee"/>
                     <field name="period"/>
                     <field name="legal_hour"/>
+                    <field name="min_hour"/>
                     <field name="actual_hour"/>
                 </tree>
             </field>
@@ -30,9 +31,12 @@
                             <field name="contract"/>
                             <field name="employee"/>
                             <field name="period"/>
+                            <field name="plan" readonly="1"/>
                         </group>
                         <group>
                             <group>
+                                <field name="holiday_date"/>
+                                <field name="min_hour"/>
                                 <field name="legal_hour"/>
                                 <field name="plan_hour"/>
                                 <field name="actual_hour"/>

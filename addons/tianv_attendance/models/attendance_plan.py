@@ -27,6 +27,8 @@ class AttendancePlan(models.Model):
     period = fields.Many2one('account.period', 'Plan Period', required=True)
 
     legal_hour = fields.Float('Legal Total Hours', digits=(12, 1), readonly=True, compute='_compute_hours')
+    min_hour = fields.Float('Min Total Hour', digits=(12, 1), readonly=True, compute='_compute_hours')
+    holiday_date = fields.Float('Holiday Days', digits=(12, 1))
     actual_hour = fields.Float('Actual Total Hours', digits=(12, 1), readonly=True, compute='_compute_hours')
     lines = fields.One2many('tianv.hr.attendance.plan.line', 'plan', 'Lines')
 
@@ -40,7 +42,8 @@ class AttendancePlan(models.Model):
             if plan.period:
                 date_start = fields.Date.from_string(plan.period.date_start)
                 date_stop = fields.Date.from_string(plan.period.date_stop)
-                plan.legal_hour = get_workdays(date_start, date_stop) * 8
+                plan.legal_hour = get_workdays(date_start, date_stop, holidays=plan.holiday_date) * 8.8
+                plan.min_hour = get_workdays(date_start, date_stop, holidays=plan.holiday_date) * 8
             plan.actual_hour = sum([l.hour for l in plan.lines])
 
     @api.multi

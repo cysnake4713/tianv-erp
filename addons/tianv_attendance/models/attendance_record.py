@@ -31,6 +31,8 @@ class AttendanceRecord(models.Model):
     period = fields.Many2one('account.period', 'Plan Period', required=True)
 
     legal_hour = fields.Float('Legal Total Hours', digits=(12, 1), readonly=True, compute='_compute_info')
+    min_hour = fields.Float('Min Total Hours', digits=(12, 1), readonly=True, compute='_compute_info')
+    holiday_date = fields.Float('Holiday Days', digits=(12, 1), readonly=True, compute='_compute_info')
     actual_hour = fields.Float('Actual Total Hours', digits=(12, 1), readonly=True, compute='_compute_info')
     plan_hour = fields.Float('Plan Total Hours', digits=(12, 1), readonly=True, compute='_compute_info')
 
@@ -39,6 +41,7 @@ class AttendanceRecord(models.Model):
     absent_time = fields.Float('Absent Hour', readonly=True, digits=(12, 1), compute='_compute_info')
     leave_time = fields.Float('Personal Leave Hour', readonly=True, digits=(12, 1), compute='_compute_info')
     sick_time = fields.Float('Sick Leave Hour', readonly=True, digits=(12, 1), compute='_compute_info')
+    plan = fields.Many2one('tianv.hr.attendance.plan', 'Related Plan')
 
     lines = fields.One2many('tianv.hr.attendance.record.line', 'record', 'Lines')
 
@@ -54,11 +57,9 @@ class AttendanceRecord(models.Model):
         leave_tag = self.env.ref('tianv_attendance.attendance_type_leave')
         sick_tag = self.env.ref('tianv_attendance.attendance_type_sick')
         for record in self:
-            if record.period:
-                date_start = fields.Date.from_string(record.period.date_start)
-                date_stop = fields.Date.from_string(record.period.date_stop)
-                record.legal_hour = get_workdays(date_start, date_stop) * 8
-
+            record.legal_hour = record.plan.legal_hour
+            record.min_hour = record.plan.min_hour
+            record.holiday_date = record.plan.holiday_date
             record.late_time = len(record.lines.filtered(lambda line: late_tag in line.adjust_tags))
             record.early_time = len(record.lines.filtered(lambda line: early_tag in line.adjust_tags))
             record.absent_time = sum([l.plan_hour - l.adjust_hour for l in record.lines.filtered(lambda line: absent_tag in line.adjust_tags)])
@@ -76,6 +77,7 @@ class AttendanceRecord(models.Model):
             # generate
             try:
                 plan = self.env['tianv.hr.attendance.plan'].search([('period', '=', record.period.id)]).ensure_one()
+                record.plan = plan
             except Exception:
                 exceptions.Warning(_('Have no relative Attendance Plan or have Multi!'))
             for plan_line in plan.lines:

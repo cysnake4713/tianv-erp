@@ -7,8 +7,10 @@
             <field name="arch" type="xml">
                 <tree>
                     <field name="period"/>
+                    <field name="min_hour"/>
                     <field name="legal_hour"/>
                     <field name="actual_hour"/>
+                    <field name="holiday_date"/>
                 </tree>
             </field>
         </record>
@@ -27,6 +29,8 @@
                             <field name="period"/>
                         </group>
                         <group>
+                            <field name="holiday_date"/>
+                            <field name="min_hour"/>
                             <field name="legal_hour"/>
                             <field name="actual_hour"/>
                         </group>
