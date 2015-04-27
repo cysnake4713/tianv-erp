@@ -21,6 +21,10 @@
             <field name="name">奖金</field>
             <field name="code">BONUS</field>
         </record>
+        <record id="RESULT" model="hr.salary.rule.category">
+            <field name="name">综合</field>
+            <field name="code">RESULT</field>
+        </record>
 
         <record id="tianv_payroll_rule_origin_salary" model="hr.salary.rule">
             <field name="name">初始工资</field>
@@ -227,6 +231,37 @@ else:
             </field>
         </record>
 
+        <record id="tianv_payroll_rule_total_all" model="hr.salary.rule">
+            <field name="name">工资支出</field>
+            <field name="code">ALL_TOTAL</field>
+            <field name="sequence">50</field>
+            <field name="category_id" ref="tianv_hr_payroll.RESULT"/>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">
+result = categories.BASIC + categories.INSURANCE + categories.BONUS
+            </field>
+        </record>
+        <record id="tianv_payroll_rule_total_actual" model="hr.salary.rule">
+            <field name="name">实发工资</field>
+            <field name="code">ACTUAL_TOTAL</field>
+            <field name="sequence">52</field>
+            <field name="category_id" ref="tianv_hr_payroll.RESULT"/>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">
+result = ALL_TOTAL - INSURANCE_COMPANY
+            </field>
+        </record>
+        <record id="tianv_payroll_rule_total_cash" model="hr.salary.rule">
+            <field name="name">现金工资</field>
+            <field name="code">CASH_TOTAL</field>
+            <field name="sequence">54</field>
+            <field name="category_id" ref="tianv_hr_payroll.RESULT"/>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">
+result = ACTUAL_TOTAL + categories.ATTENDANCE
+            </field>
+        </record>
+
         <record id="tianv_payroll_salary_structure_base" model="hr.payroll.structure">
             <field name="code">TIANV_BASE</field>
             <field name="name">天艺网络基本工资</field>
@@ -263,6 +298,8 @@ else:
             <field name="code">TIANV_SALARY</field>
             <field name="name">天艺网络工资结构</field>
             <field name="company_id" ref="base.main_company"/>
+            <field name="rule_ids"
+                   eval="[(6,0,[ref('tianv_hr_payroll.tianv_payroll_rule_total_cash'), ref('tianv_hr_payroll.tianv_payroll_rule_total_actual'), ref('tianv_hr_payroll.tianv_payroll_rule_total_all')])]"/>
             <field name="parent_id" ref="tianv_payroll_salary_structure_bonus"/>
         </record>
     </data>
