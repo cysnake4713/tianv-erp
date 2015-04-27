@@ -140,9 +140,13 @@ class AttendanceRecordLine(models.Model):
         error_tag = self.env.ref('tianv_attendance.attendance_type_error').id
         leave_tag = self.env.ref('tianv_attendance.attendance_type_leave').id
         sick_tag = self.env.ref('tianv_attendance.attendance_type_sick').id
+        year_tag = self.env.ref('tianv_attendance.attendance_type_year').id
+        out_tag = self.env.ref('tianv_attendance.attendance_type_out').id
 
         leave_holiday = self.env.ref('tianv_attendance.holiday_status_personal').id
         sick_holiday = self.env.ref('tianv_attendance.holiday_status_sick').id
+        year_holiday = self.env.ref('tianv_attendance.holiday_status_year').id
+        out_holiday = self.env.ref('tianv_attendance.holiday_status_out').id
 
         normal = lambda p_in, p_out, c_start, c_end, conf: ((c_end - c_start).seconds / 3600.0, [])
         absent = lambda p_in, p_out, c_start, c_end, conf: (0, [absent_tag])
@@ -251,6 +255,23 @@ class AttendanceRecordLine(models.Model):
                 ('holiday_status_id', '=', sick_holiday)]):
 
                 (hour, tags) = (hour, [sick_tag])
+            elif self.env['hr.holidays'].search([
+                ('employee_id', '=', self.record.employee.id),
+                ('date_from', '<=', config_start_time),
+                ('date_to', '>=', config_end_time),
+                ('state', '=', 'validate'),
+                ('holiday_status_id', '=', year_holiday)]):
+                (hour, tags) = (normal(None, None, datetime.datetime.strptime(config_start_time, DEFAULT_SERVER_DATETIME_FORMAT),
+                                       datetime.datetime.strptime(config_end_time, DEFAULT_SERVER_DATETIME_FORMAT), None)[0], [year_tag])
+
+            elif self.env['hr.holidays'].search([
+                ('employee_id', '=', self.record.employee.id),
+                ('date_from', '<=', config_start_time),
+                ('date_to', '>=', config_end_time),
+                ('state', '=', 'validate'),
+                ('holiday_status_id', '=', out_holiday)]):
+                (hour, tags) = (normal(None, None, datetime.datetime.strptime(config_start_time, DEFAULT_SERVER_DATETIME_FORMAT),
+                                       datetime.datetime.strptime(config_end_time, DEFAULT_SERVER_DATETIME_FORMAT), None)[0], [out_tag])
 
             tag_ids += tags
             record_hour += hour

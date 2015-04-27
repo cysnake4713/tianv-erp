@@ -19,6 +19,12 @@
         <record id="attendance_type_sick" model="tianv.hr.attendance.record.type">
             <field name="name">病假</field>
         </record>
+        <record id="attendance_type_year" model="tianv.hr.attendance.record.type">
+            <field name="name">年假</field>
+        </record>
+        <record id="attendance_type_out" model="tianv.hr.attendance.record.type">
+            <field name="name">外勤</field>
+        </record>
 
         <record id="attendance_config_type_morning" model="tianv.hr.attendance.config.type">
             <field name="name">上午</field>
@@ -43,5 +49,16 @@
             <field name="limit">True</field>
             <field name="color_name">brown</field>
         </record>
+        <record id="holiday_status_year" model="hr.holidays.status">
+            <field name="name">年假</field>
+            <field name="limit" eval="False"/>
+            <field name="color_name">blue</field>
+        </record>
+        <record id="holiday_status_out" model="hr.holidays.status">
+            <field name="name">外勤</field>
+            <field name="limit">True</field>
+            <field name="color_name">blue</field>
+        </record>
+
     </data>
 </openerp>
