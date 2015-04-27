@@ -25,6 +25,9 @@
         <record id="attendance_type_out" model="tianv.hr.attendance.record.type">
             <field name="name">外勤</field>
         </record>
+        <record id="attendance_type_no" model="tianv.hr.attendance.record.type">
+            <field name="name">缺职</field>
+        </record>
 
         <record id="attendance_config_type_morning" model="tianv.hr.attendance.config.type">
             <field name="name">上午</field>
@@ -56,6 +59,11 @@
         </record>
         <record id="holiday_status_out" model="hr.holidays.status">
             <field name="name">外勤</field>
+            <field name="limit">True</field>
+            <field name="color_name">blue</field>
+        </record>
+        <record id="holiday_status_no" model="hr.holidays.status">
+            <field name="name">缺职</field>
             <field name="limit">True</field>
             <field name="color_name">blue</field>
         </record>

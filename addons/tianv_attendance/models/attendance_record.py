@@ -41,6 +41,7 @@ class AttendanceRecord(models.Model):
     absent_time = fields.Float('Absent Hour', readonly=True, digits=(12, 1), compute='_compute_info')
     leave_time = fields.Float('Personal Leave Hour', readonly=True, digits=(12, 1), compute='_compute_info')
     sick_time = fields.Float('Sick Leave Hour', readonly=True, digits=(12, 1), compute='_compute_info')
+    no_time = fields.Float('No Work Hour', readonly=True, digits=(12, 1), compute='_compute_info')
     plan = fields.Many2one('tianv.hr.attendance.plan', 'Related Plan')
 
     lines = fields.One2many('tianv.hr.attendance.record.line', 'record', 'Lines')
@@ -56,15 +57,19 @@ class AttendanceRecord(models.Model):
         early_tag = self.env.ref('tianv_attendance.attendance_type_early')
         leave_tag = self.env.ref('tianv_attendance.attendance_type_leave')
         sick_tag = self.env.ref('tianv_attendance.attendance_type_sick')
+        no_tag = self.env.ref('tianv_attendance.attendance_type_no')
         for record in self:
             record.legal_hour = record.plan.legal_hour
             record.min_hour = record.plan.min_hour
             record.holiday_date = record.plan.holiday_date
+
             record.late_time = len(record.lines.filtered(lambda line: late_tag in line.adjust_tags))
             record.early_time = len(record.lines.filtered(lambda line: early_tag in line.adjust_tags))
             record.absent_time = sum([l.plan_hour - l.adjust_hour for l in record.lines.filtered(lambda line: absent_tag in line.adjust_tags)])
             record.leave_time = sum([l.plan_hour - l.adjust_hour for l in record.lines.filtered(lambda line: leave_tag in line.adjust_tags)])
             record.sick_time = sum([l.plan_hour - l.adjust_hour for l in record.lines.filtered(lambda line: sick_tag in line.adjust_tags)])
+            record.no_time = sum([l.adjust_hour for l in record.lines.filtered(lambda line: no_tag in line.adjust_tags)])
+
             record.actual_hour = sum([l.adjust_hour for l in record.lines])
             record.plan_hour = sum([l.plan_hour for l in record.lines])
             record.employee = record.contract.employee_id
@@ -142,11 +147,13 @@ class AttendanceRecordLine(models.Model):
         sick_tag = self.env.ref('tianv_attendance.attendance_type_sick').id
         year_tag = self.env.ref('tianv_attendance.attendance_type_year').id
         out_tag = self.env.ref('tianv_attendance.attendance_type_out').id
+        no_tag = self.env.ref('tianv_attendance.attendance_type_no').id
 
         leave_holiday = self.env.ref('tianv_attendance.holiday_status_personal').id
         sick_holiday = self.env.ref('tianv_attendance.holiday_status_sick').id
         year_holiday = self.env.ref('tianv_attendance.holiday_status_year').id
         out_holiday = self.env.ref('tianv_attendance.holiday_status_out').id
+        no_holiday = self.env.ref('tianv_attendance.holiday_status_no').id
 
         normal = lambda p_in, p_out, c_start, c_end, conf: ((c_end - c_start).seconds / 3600.0, [])
         absent = lambda p_in, p_out, c_start, c_end, conf: (0, [absent_tag])
@@ -253,8 +260,8 @@ class AttendanceRecordLine(models.Model):
                 ('date_to', '>=', config_end_time),
                 ('state', '=', 'validate'),
                 ('holiday_status_id', '=', sick_holiday)]):
-
                 (hour, tags) = (hour, [sick_tag])
+            # if is year holiday
             elif self.env['hr.holidays'].search([
                 ('employee_id', '=', self.record.employee.id),
                 ('date_from', '<=', config_start_time),
@@ -263,7 +270,7 @@ class AttendanceRecordLine(models.Model):
                 ('holiday_status_id', '=', year_holiday)]):
                 (hour, tags) = (normal(None, None, datetime.datetime.strptime(config_start_time, DEFAULT_SERVER_DATETIME_FORMAT),
                                        datetime.datetime.strptime(config_end_time, DEFAULT_SERVER_DATETIME_FORMAT), None)[0], [year_tag])
-
+            # if is out source
             elif self.env['hr.holidays'].search([
                 ('employee_id', '=', self.record.employee.id),
                 ('date_from', '<=', config_start_time),
@@ -272,6 +279,15 @@ class AttendanceRecordLine(models.Model):
                 ('holiday_status_id', '=', out_holiday)]):
                 (hour, tags) = (normal(None, None, datetime.datetime.strptime(config_start_time, DEFAULT_SERVER_DATETIME_FORMAT),
                                        datetime.datetime.strptime(config_end_time, DEFAULT_SERVER_DATETIME_FORMAT), None)[0], [out_tag])
+            # if is no work
+            elif self.env['hr.holidays'].search([
+                ('employee_id', '=', self.record.employee.id),
+                ('date_from', '<=', config_start_time),
+                ('date_to', '>=', config_end_time),
+                ('state', '=', 'validate'),
+                ('holiday_status_id', '=', no_holiday)]):
+                (hour, tags) = (normal(None, None, datetime.datetime.strptime(config_start_time, DEFAULT_SERVER_DATETIME_FORMAT),
+                                       datetime.datetime.strptime(config_end_time, DEFAULT_SERVER_DATETIME_FORMAT), None)[0], [no_tag])
 
             tag_ids += tags
             record_hour += hour

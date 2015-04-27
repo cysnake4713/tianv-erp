@@ -47,6 +47,7 @@
                                 <field name="absent_time"/>
                                 <field name="leave_time"/>
                                 <field name="sick_time"/>
+                                <field name="no_time"/>
                             </group>
                         </group>
                     </sheet>
