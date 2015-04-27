@@ -158,7 +158,7 @@ else:
 result = -result
             </field>
         </record>
-<record id="tianv_payroll_rule_attendance_absent" model="hr.salary.rule">
+        <record id="tianv_payroll_rule_attendance_absent" model="hr.salary.rule">
             <field name="name">旷工扣款</field>
             <field name="code">ATTENDANCE_ABSENT</field>
             <field name="sequence">29</field>
@@ -176,19 +176,46 @@ else:
 result = -result
             </field>
         </record>
-        <record id="tianv_payroll_rule_attendance_time" model="hr.salary.rule">
-            <field name="name">时间扣款</field>
-            <field name="code">ATTENDANCE_TIME</field>
+        <record id="tianv_payroll_rule_attendance_no_work" model="hr.salary.rule">
+            <field name="name">缺职扣款</field>
+            <field name="code">ATTENDANCE_NO_WORK</field>
             <field name="sequence">30</field>
             <field name="category_id" ref="tianv_hr_payroll.ATTENDANCE"/>
             <field name="amount_select">code</field>
             <field name="amount_python_compute">
-attendance_record = contract.get_attendance_record_by_date(payslip.date_from, payslip.date_to)
-if attendance_record.actual_hour &lt; attendance_record.plan_hour:
-    result = (attendance_record.plan_hour - attendance_record.actual_hour) * categories.BASIC_HOUR
+no_time = contract.get_attendance_record_by_date(payslip.date_from, payslip.date_to).no_time
+if no_time:
+    result = categories.BASIC_HOUR * no_time
 else:
     result = 0.0
 result = -result
+            </field>
+        </record>
+        <record id="tianv_payroll_rule_attendance_time" model="hr.salary.rule">
+            <field name="name">时间扣款</field>
+            <field name="code">ATTENDANCE_TIME</field>
+            <field name="sequence">31</field>
+            <field name="category_id" ref="tianv_hr_payroll.ATTENDANCE"/>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">
+attendance_record = contract.get_attendance_record_by_date(payslip.date_from, payslip.date_to)
+P = plan_hour = attendance_record.plan_hour
+M = min_hour = attendance_record.min_hour
+L = legal_hour = attendance_record.legal_hour
+A = actual_hour = attendance_record.actual_hour
+
+if A &lt; P &lt; M &lt; L:
+    result = categories.BASIC_HOUR * (P - A) * 3
+elif A &lt; M &lt; P &lt; L:
+    result = categories.BASIC_HOUR * ((P - M) + (M - A) * 3)
+elif A &lt; M &lt; L &lt; P:
+    result = categories.BASIC_HOUR * ((L - M) + (M - A) * 3)
+elif M &lt; A &lt; P &lt; L:
+    result = categories.BASIC_HOUR * (P - A)
+elif M &lt; A &lt; L &lt; P:
+    result = categories.BASIC_HOUR * (L - A)
+else:
+    result = 0.0
             </field>
         </record>
 
@@ -200,11 +227,21 @@ result = -result
             <field name="amount_select">code</field>
             <field name="amount_python_compute">
 attendance_record = contract.get_attendance_record_by_date(payslip.date_from, payslip.date_to)
-limit_hour = attendance_record.legal_hour / 8 * 8.8# 加班小时封顶系数,超过本系数的算三倍工资
-#actual_hour = attendance_record.actual_hour
-#plan_hour = attendance_record.plan_hour
-if actual_hour > limit_hour:
-    result = (actual_hour - limit_hour) * categories.BASIC_HOUR * 2
+P = plan_hour = attendance_record.plan_hour
+M = min_hour = attendance_record.min_hour
+L = legal_hour = attendance_record.legal_hour
+A = actual_hour = attendance_record.actual_hour
+
+if P &lt; M &lt; A &lt; L:
+    result = categories.BASIC_HOUR * (A - M)
+elif M &lt; P &lt; A &lt; L:
+    result = categories.BASIC_HOUR * (A - P)
+elif P &lt; M &lt; L &lt; A:
+    result = categories.BASIC_HOUR * ((L - M) + (A - L) * 3)
+elif M &lt; P &lt; L &lt; A:
+    result = categories.BASIC_HOUR * ((L - P) + (A - L) * 3)
+elif M &lt; L &lt; P &lt; A:
+    result = categories.BASIC_HOUR * (A - P) * 3
 else:
     result = 0.0
             </field>
@@ -224,7 +261,7 @@ leave_time = attendance_record.leave_time
 sick_time = attendance_record.sick_time
 actual_hour = attendance_record.actual_hour
 plan_hour = attendance_record.plan_hour
-if late_time == 0 and early_time == 0 and absent_time == 0 and leave_time == 0 and sick_time == 0 and actual_hour > plan_hour:
+if late_time == 0 and early_time == 0 and absent_time == 0 and leave_time == 0 and sick_time == 0 and actual_hour >= plan_hour and attendance_record.no_time &lt;= 0.0:
     result = categories.BASIC_HOUR * 3 * 8
 else:
     result = 0.0
@@ -237,7 +274,7 @@ else:
             <field name="category_id" ref="tianv_hr_payroll.RESULT"/>
             <field name="amount_select">code</field>
             <field name="amount_python_compute">
-result = categories.BASIC + categories.INSURANCE + categories.BONUS + categories.BASIC_HOUR * 3 * 8
+result = categories.BASIC + categories.INSURANCE + EXTRA_WORK + categories.BASIC_HOUR * 3 * 8
             </field>
         </record>
         <record id="tianv_payroll_rule_total_all" model="hr.salary.rule">
@@ -292,7 +329,7 @@ result = ACTUAL_TOTAL - INSURANCE_EMPLOYEE
             <field name="name">天艺网络考勤扣款</field>
             <field name="company_id" ref="base.main_company"/>
             <field name="rule_ids"
-            eval="[(6, 0, [ref('tianv_hr_payroll.tianv_payroll_rule_attendance_absent'), ref('tianv_hr_payroll.tianv_payroll_rule_attendance_sick'), ref('tianv_hr_payroll.tianv_payroll_rule_attendance_leave'), ref('tianv_hr_payroll.tianv_payroll_rule_attendance_time'), ref('tianv_hr_payroll.tianv_payroll_rule_attendance_early'), ref('tianv_hr_payroll.tianv_payroll_rule_attendance_late')])]"/>
+            eval="[(6, 0, [ref('tianv_hr_payroll.tianv_payroll_rule_attendance_no_work'), ref('tianv_hr_payroll.tianv_payroll_rule_attendance_absent'), ref('tianv_hr_payroll.tianv_payroll_rule_attendance_sick'), ref('tianv_hr_payroll.tianv_payroll_rule_attendance_leave'), ref('tianv_hr_payroll.tianv_payroll_rule_attendance_time'), ref('tianv_hr_payroll.tianv_payroll_rule_attendance_early'), ref('tianv_hr_payroll.tianv_payroll_rule_attendance_late')])]"/>
             <field name="parent_id" ref="tianv_payroll_salary_structure_insurance"/>
         </record>
         <record id="tianv_payroll_salary_structure_bonus" model="hr.payroll.structure">
