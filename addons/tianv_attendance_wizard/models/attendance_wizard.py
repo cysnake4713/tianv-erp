@@ -101,3 +101,7 @@ class AttendanceWizard(models.TransientModel):
     @api.multi
     def button_payroll_verify(self):
         self.relative_payslips.signal_workflow('hr_verify_sheet')
+
+    @api.multi
+    def button_reverse(self):
+        self.state = self.env.context['state']
