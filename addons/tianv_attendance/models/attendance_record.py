@@ -74,7 +74,10 @@ class AttendanceRecord(models.Model):
             # clean
             record.lines.unlink()
             # generate
-            plan = self.env['tianv.hr.attendance.plan'].search([('period', '=', record.period.id)]).ensure_one()
+            try:
+                plan = self.env['tianv.hr.attendance.plan'].search([('period', '=', record.period.id)]).ensure_one()
+            except Exception:
+                exceptions.Warning(_('Have no relative Attendance Plan or have Multi!'))
             for plan_line in plan.lines:
                 value = {
                     'plan_line': plan_line.id,

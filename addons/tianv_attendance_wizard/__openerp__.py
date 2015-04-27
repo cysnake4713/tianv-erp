@@ -8,7 +8,7 @@
 Tianv Attendance Wizard""",
     'author': 'Matt Cai',
     'website': 'http://odoosoft.com',
-    'depends': ['base', 'tianv_attendance', 'tianv_insurance'],
+    'depends': ['base', 'tianv_attendance', 'tianv_insurance', 'tianv_hr_payroll', 'hr_payroll'],
     'data': [
         'views/menu.xml',
         'views/attendance_wizard_view.xml',
