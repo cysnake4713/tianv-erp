@@ -100,9 +100,9 @@ result = categories.BASIC / plan_hour
 allow_late_time = 3 # 允许迟到次数
 late_time = contract.get_attendance_record_by_date(payslip.date_from, payslip.date_to).late_time
 if late_time &lt;= allow_late_time:
-    result = late_time * 10
+    result = late_time * 0
 else:
-    result = (20 + categories.BASIC_HOUR * 2) * (late_time - allow_late_time) + 10 * allow_late_time
+    result = (10 + categories.BASIC_HOUR * 2) * (late_time - allow_late_time) + 0 * allow_late_time
 result = -result
             </field>
         </record>
@@ -116,9 +116,9 @@ result = -result
 allow_early_time = 3 # 允许早退次数
 early_time = contract.get_attendance_record_by_date(payslip.date_from, payslip.date_to).early_time
 if early_time &lt;= allow_early_time:
-    result = early_time * 10
+    result = early_time * 0
 else:
-    result = (20 + categories.BASIC_HOUR * 2) * (early_time - allow_early_time) + 10 * allow_early_time
+    result = (10 + categories.BASIC_HOUR * 2) * (early_time - allow_early_time) + 0 * allow_early_time
 result = -result
             </field>
         </record>
@@ -129,9 +129,9 @@ result = -result
             <field name="category_id" ref="tianv_hr_payroll.ATTENDANCE"/>
             <field name="amount_select">code</field>
             <field name="amount_python_compute">
-coefficient = 2 # 事假范围内系数
-extra_coefficient = 4 # 事假超额系数
-allow_hour = 24 # 允许事假小时数
+coefficient = 1.0 # 事假范围内系数
+extra_coefficient = 1.5 # 事假超额系数
+allow_hour = 16 # 允许事假小时数
 actual_hour = contract.get_attendance_record_by_date(payslip.date_from, payslip.date_to).leave_time
 if actual_hour &lt;= allow_hour:
     result = categories.BASIC_HOUR * actual_hour * coefficient
@@ -147,8 +147,8 @@ result = -result
             <field name="category_id" ref="tianv_hr_payroll.ATTENDANCE"/>
             <field name="amount_select">code</field>
             <field name="amount_python_compute">
-coefficient = 2 # 病假范围内系数
-extra_coefficient = 4 # 病假超额系数
+coefficient = 0 # 病假范围内系数
+extra_coefficient = 0.5 # 病假超额系数
 allow_hour = 24 # 允许病假小时数
 actual_hour = contract.get_attendance_record_by_date(payslip.date_from, payslip.date_to).sick_time
 if actual_hour &lt;= allow_hour:
@@ -165,8 +165,8 @@ result = -result
             <field name="category_id" ref="tianv_hr_payroll.ATTENDANCE"/>
             <field name="amount_select">code</field>
             <field name="amount_python_compute">
-coefficient = 2 # 旷工范围内系数
-extra_coefficient = 4 # 旷工超额系数
+coefficient = 3 # 旷工范围内系数
+extra_coefficient = 5 # 旷工超额系数
 allow_hour = 24 # 允许旷工小时数
 actual_hour = contract.get_attendance_record_by_date(payslip.date_from, payslip.date_to).absent_time
 if actual_hour &lt;= allow_hour:
@@ -225,12 +225,21 @@ sick_time = attendance_record.sick_time
 actual_hour = attendance_record.actual_hour
 plan_hour = attendance_record.plan_hour
 if late_time == 0 and early_time == 0 and absent_time == 0 and leave_time == 0 and sick_time == 0 and actual_hour > plan_hour:
-    result = categories.BASIC * 3
+    result = categories.BASIC_HOUR * 3 * 8
 else:
     result = 0.0
             </field>
         </record>
-
+        <record id="tianv_payroll_rule_total_theory" model="hr.salary.rule">
+            <field name="name">参考工资</field>
+            <field name="code">THEORY_TOTAL</field>
+            <field name="sequence">49</field>
+            <field name="category_id" ref="tianv_hr_payroll.RESULT"/>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">
+result = categories.BASIC + categories.INSURANCE + categories.BONUS + categories.BASIC_HOUR * 3 * 8
+            </field>
+        </record>
         <record id="tianv_payroll_rule_total_all" model="hr.salary.rule">
             <field name="name">工资支出</field>
             <field name="code">ALL_TOTAL</field>
@@ -238,7 +247,7 @@ else:
             <field name="category_id" ref="tianv_hr_payroll.RESULT"/>
             <field name="amount_select">code</field>
             <field name="amount_python_compute">
-result = categories.BASIC + categories.INSURANCE + categories.BONUS
+result = categories.BASIC + categories.INSURANCE + categories.BONUS +  categories.ATTENDANCE
             </field>
         </record>
         <record id="tianv_payroll_rule_total_actual" model="hr.salary.rule">
@@ -258,7 +267,7 @@ result = ALL_TOTAL - INSURANCE_COMPANY
             <field name="category_id" ref="tianv_hr_payroll.RESULT"/>
             <field name="amount_select">code</field>
             <field name="amount_python_compute">
-result = ACTUAL_TOTAL + categories.ATTENDANCE
+result = ACTUAL_TOTAL - INSURANCE_EMPLOYEE
             </field>
         </record>
 
@@ -299,7 +308,7 @@ result = ACTUAL_TOTAL + categories.ATTENDANCE
             <field name="name">天艺网络工资结构</field>
             <field name="company_id" ref="base.main_company"/>
             <field name="rule_ids"
-                   eval="[(6,0,[ref('tianv_hr_payroll.tianv_payroll_rule_total_cash'), ref('tianv_hr_payroll.tianv_payroll_rule_total_actual'), ref('tianv_hr_payroll.tianv_payroll_rule_total_all')])]"/>
+                   eval="[(6,0,[ref('tianv_hr_payroll.tianv_payroll_rule_total_theory'), ref('tianv_hr_payroll.tianv_payroll_rule_total_cash'), ref('tianv_hr_payroll.tianv_payroll_rule_total_actual'), ref('tianv_hr_payroll.tianv_payroll_rule_total_all')])]"/>
             <field name="parent_id" ref="tianv_payroll_salary_structure_bonus"/>
         </record>
     </data>
