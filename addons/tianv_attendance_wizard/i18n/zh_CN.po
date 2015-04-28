@@ -1,0 +1,149 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* tianv_attendance_wizard
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-04-28 16:20+0000\n"
+"PO-Revision-Date: 2015-04-28 16:20+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: tianv_attendance_wizard
+#: model:ir.model,name:tianv_attendance_wizard.model_tianv_hr_attendance_wizard
+msgid "Attendance Create Wizard"
+msgstr "工资生成向导"
+
+#. module: tianv_attendance_wizard
+#: field:tianv.hr.attendance.wizard,relative_attendances:0
+msgid "Attendance Records"
+msgstr "考勤记录"
+
+#. module: tianv_attendance_wizard
+#: field:tianv.hr.attendance.wizard,contracts:0
+msgid "Contracts"
+msgstr "合同"
+
+#. module: tianv_attendance_wizard
+#: selection:tianv.hr.attendance.wizard,state:0
+msgid "Done"
+msgstr "完成"
+
+#. module: tianv_attendance_wizard
+#: field:tianv.hr.attendance.wizard,employees:0
+msgid "Employees"
+msgstr "雇员"
+
+#. module: tianv_attendance_wizard
+#: selection:tianv.hr.attendance.wizard,state:0
+msgid "Generate Attendance"
+msgstr "生成考勤记录"
+
+#. module: tianv_attendance_wizard
+#: selection:tianv.hr.attendance.wizard,state:0
+msgid "Generate Payroll"
+msgstr "生成工资条"
+
+#. module: tianv_attendance_wizard
+#: selection:tianv.hr.attendance.wizard,state:0
+msgid "Generate Social Insurance"
+msgstr "生成社保"
+
+#. module: tianv_attendance_wizard
+#: field:tianv.hr.attendance.wizard,id:0
+msgid "ID"
+msgstr "ID"
+
+#. module: tianv_attendance_wizard
+#: code:addons/tianv_attendance_wizard/models/attendance_wizard.py:41
+#, python-format
+msgid "Related employee have find multi contract or have not match contract for employee: %s"
+msgstr "在会计周期内找到多个或者没有找到相关合同:%s"
+
+#. module: tianv_attendance_wizard
+#: field:tianv.hr.attendance.wizard,relative_payslips:0
+msgid "Relative Payslip"
+msgstr "工资条"
+
+#. module: tianv_attendance_wizard
+#: field:tianv.hr.attendance.wizard,relative_social:0
+msgid "Relative Social"
+msgstr "社保"
+
+#. module: tianv_attendance_wizard
+#: field:tianv.hr.attendance.wizard,period:0
+#: selection:tianv.hr.attendance.wizard,state:0
+msgid "Select Period"
+msgstr "选择会计周期"
+
+#. module: tianv_attendance_wizard
+#: field:tianv.hr.attendance.wizard,state:0
+msgid "State"
+msgstr "状态"
+
+#. module: tianv_attendance_wizard
+#: view:tianv.hr.attendance.wizard:tianv_attendance_wizard.view_tianv_attendance_wizard_form
+msgid "上一步"
+msgstr "上一步"
+
+#. module: tianv_attendance_wizard
+#: view:tianv.hr.attendance.wizard:tianv_attendance_wizard.view_tianv_attendance_wizard_form
+msgid "下一步"
+msgstr "下一步"
+
+#. module: tianv_attendance_wizard
+#: view:tianv.hr.attendance.wizard:tianv_attendance_wizard.view_tianv_attendance_wizard_form
+msgid "发送工资条记录"
+msgstr "发送工资条记录"
+
+#. module: tianv_attendance_wizard
+#: model:res.groups,name:tianv_attendance_wizard.group_attendance_wizard_creator
+msgid "可以使用工资生成向导"
+msgstr "可以使用工资生成向导"
+
+#. module: tianv_attendance_wizard
+#: model:ir.actions.act_window,name:tianv_attendance_wizard.action_tianv_attendance_wizard
+msgid "工资生成向导"
+msgstr "工资生成向导"
+
+#. module: tianv_attendance_wizard
+#: model:ir.ui.menu,name:tianv_attendance_wizard.menuitem_tianv_attendance_wizard_root
+msgid "工资计算向导"
+msgstr "工资计算向导"
+
+#. module: tianv_attendance_wizard
+#: model:ir.ui.menu,name:tianv_attendance_wizard.menuitem_tianv_attendance_wizard_start
+msgid "开始一个向导"
+msgstr "开始一个向导"
+
+#. module: tianv_attendance_wizard
+#: view:tianv.hr.attendance.wizard:tianv_attendance_wizard.view_tianv_attendance_wizard_form
+msgid "生成工资信息"
+msgstr "生成工资信息"
+
+#. module: tianv_attendance_wizard
+#: view:tianv.hr.attendance.wizard:tianv_attendance_wizard.view_tianv_attendance_wizard_form
+msgid "生成社保记录"
+msgstr "生成社保记录"
+
+#. module: tianv_attendance_wizard
+#: view:tianv.hr.attendance.wizard:tianv_attendance_wizard.view_tianv_attendance_wizard_form
+msgid "生成考勤记录"
+msgstr "生成考勤记录"
+
+#. module: tianv_attendance_wizard
+#: view:tianv.hr.attendance.wizard:tianv_attendance_wizard.view_tianv_attendance_wizard_form
+msgid "相关合同"
+msgstr "相关合同"
+
+#. module: tianv_attendance_wizard
+#: view:tianv.hr.attendance.wizard:tianv_attendance_wizard.view_tianv_attendance_wizard_form
+msgid "选择会计周期和人员"
+msgstr "选择会计周期和人员"
+
