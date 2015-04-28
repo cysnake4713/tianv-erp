@@ -9,7 +9,7 @@
         <record model="res.groups" id="group_attendance_admin">
             <field name="name">可以管理考勤后台数据</field>
             <field name="category_id" ref="base.module_category_attendance"/>
-            <field name="implied_ids" eval="[(4, ref('tianv_attendance.group_attendance_manager'))]"/>
+            <field name="implied_ids" eval="[(4, ref('tianv_attendance.group_attendance_manager')),(4, ref('base.group_hr_manager'))]"/>
         </record>
     </data>
 
