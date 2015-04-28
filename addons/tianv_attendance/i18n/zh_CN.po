@@ -1,0 +1,488 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* tianv_attendance
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-04-28 12:43+0000\n"
+"PO-Revision-Date: 2015-04-28 12:43+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: tianv_attendance
+#: field:tianv.hr.attendance.record.line,adjust_hour:0
+msgid "Adjust Hour"
+msgstr "调整小时"
+
+#. module: tianv_attendance
+#: field:tianv.hr.attendance.record.line,adjust_tags:0
+msgid "Adjust Tags"
+msgstr "调整标签"
+
+#. module: tianv_attendance
+#: field:tianv.hr.attendance.record.line,plan_date:0
+msgid "Plan Date"
+msgstr "日期"
+
+#. module: tianv_attendance
+#: field:tianv.hr.attendance.record.line,plan_date_week:0
+msgid "Week"
+msgstr "星期"
+
+#. module: tianv_attendance
+#: field:tianv.hr.attendance.record.line,plan_hour:0
+msgid "Plan Hour"
+msgstr "排班小时"
+
+#. module: tianv_attendance
+#: field:tianv.hr.attendance.record.line,plan_comment:0
+msgid "Plan Comment"
+msgstr "备注"
+
+#. module: tianv_attendance
+#: field:tianv.hr.attendance.config.line,allow_early_minute:0
+msgid "Allow Early Minute"
+msgstr "允许早退时间"
+
+#. module: tianv_attendance
+#: field:tianv.hr.attendance.config,allow_early_time:0
+msgid "Allow Early Time"
+msgstr "允许早退次数"
+
+#. module: tianv_attendance
+#: field:tianv.hr.attendance.config.line,allow_late_minute:0
+msgid "Allow Late Minute"
+msgstr "允许迟到时间"
+
+#. module: tianv_attendance
+#: field:tianv.hr.attendance.config,allow_late_time:0
+msgid "Allow Late Time"
+msgstr "允许迟到次数"
+
+#. module: tianv_attendance
+#: field:tianv.hr.attendance.config,allow_leave_time:0
+msgid "Allow Leave Time"
+msgstr "允许事假次数"
+
+#. module: tianv_attendance
+#: model:ir.model,name:tianv_attendance.model_tianv_hr_attendance_plan
+msgid "Attendance Plan"
+msgstr "考勤计划"
+
+#. module: tianv_attendance
+#: model:ir.model,name:tianv_attendance.model_tianv_hr_attendance_plan_line
+msgid "Attendance Plan Line"
+msgstr "考勤计划条目"
+
+#. module: tianv_attendance
+#: model:ir.model,name:tianv_attendance.model_tianv_hr_attendance_record
+msgid "Attendance Record"
+msgstr "考勤记录"
+
+#. module: tianv_attendance
+#: model:ir.model,name:tianv_attendance.model_tianv_hr_attendance_record_line
+msgid "Attendance Record Line"
+msgstr "考勤记录条目"
+
+#. module: tianv_attendance
+#: field:hr.contract,attendance_rule:0
+msgid "Attendance Rule"
+msgstr "考勤规则"
+
+#. module: tianv_attendance
+#: model:ir.model,name:tianv_attendance.model_tianv_hr_attendance_config
+msgid "Attendance Timetable Config"
+msgstr "考勤时刻表设置"
+
+#. module: tianv_attendance
+#: model:ir.model,name:tianv_attendance.model_tianv_hr_attendance_config_line
+msgid "Attendance Timetable Config Line"
+msgstr "考勤时刻表设置条目"
+
+#. module: tianv_attendance
+#: model:ir.model,name:tianv_attendance.model_tianv_hr_attendance_config_type
+msgid "Attendance Timetable Config Type"
+msgstr "考勤时刻班次类型"
+
+#. module: tianv_attendance
+#: field:tianv.hr.attendance.plan.line,comment:0
+#: field:tianv.hr.attendance.record.line,comment:0
+msgid "Comment"
+msgstr "备注"
+
+#. module: tianv_attendance
+#: field:tianv.hr.attendance.config.line,config:0
+msgid "Config"
+msgstr "设置"
+
+#. module: tianv_attendance
+#: field:tianv.hr.attendance.config,lines:0
+msgid "Config Lines"
+msgstr "设置条目"
+
+#. module: tianv_attendance
+#: model:ir.model,name:tianv_attendance.model_hr_contract
+#: field:tianv.hr.attendance.record,contract:0
+msgid "Contract"
+msgstr "合同"
+
+#. module: tianv_attendance
+#: field:tianv.hr.attendance.config,end_date:0
+msgid "End Date"
+msgstr "结束时间"
+
+#. module: tianv_attendance
+#: code:addons/tianv_attendance/models/attendance_config.py:34
+#, python-format
+msgid "End Date must after Start Date"
+msgstr "结束时间必须大于开始时间"
+
+#. module: tianv_attendance
+#: field:tianv.hr.attendance.config.line,punch_end_time:0
+msgid "End Punch End Time"
+msgstr "结束签退时间"
+
+#. module: tianv_attendance
+#: field:tianv.hr.attendance.config.line,end_time:0
+msgid "End Time"
+msgstr "结束时间"
+
+#. module: tianv_attendance
+#: code:addons/tianv_attendance/models/attendance_record.py:215
+#, python-format
+msgid "Fail to get type related config or rule "
+msgstr "无法获得相关的配置和规则"
+
+#. module: tianv_attendance
+#: code:addons/tianv_attendance/models/attendance_record.py:87
+#, python-format
+msgid "Have no relative Attendance Plan or have Multi!"
+msgstr "没有获得或者获得多个相关的考勤计划!"
+
+#. module: tianv_attendance
+#: field:tianv.hr.attendance.plan,holiday_date:0
+#: field:tianv.hr.attendance.record,holiday_date:0
+msgid "Holiday Days"
+msgstr "节日天数"
+
+#. module: tianv_attendance
+#: field:tianv.hr.attendance.plan,legal_hour:0
+#: field:tianv.hr.attendance.record,legal_hour:0
+msgid "Legal Total Hours"
+msgstr "法定最大时长(h)"
+
+#. module: tianv_attendance
+#: field:tianv.hr.attendance.plan,min_hour:0
+#: field:tianv.hr.attendance.record,min_hour:0
+msgid "Min Total Hour"
+msgstr "法定最小时长(h)"
+
+#. module: tianv_attendance
+#: field:tianv.hr.attendance.plan,actual_hour:0
+msgid "Actual Total Hours"
+msgstr "排班时长(h)"
+
+#. module: tianv_attendance
+#: field:tianv.hr.attendance.record,employee:0
+msgid "Employee"
+msgstr "雇员"
+
+#. module: tianv_attendance
+#: field:tianv.hr.attendance.record,plan_hour:0
+msgid "Plan Total Hours"
+msgstr "排班时长(h)"
+
+#. module: tianv_attendance
+#: field:tianv.hr.attendance.record,late_time:0
+msgid "Late Time"
+msgstr "迟到次数"
+
+#. module: tianv_attendance
+#: field:tianv.hr.attendance.record,early_time:0
+msgid "Early Time"
+msgstr "早退次数"
+
+#. module: tianv_attendance
+#: field:tianv.hr.attendance.record,absent_time:0
+msgid "Absent Hour"
+msgstr "缺勤时长(h)"
+
+#. module: tianv_attendance
+#: field:tianv.hr.attendance.record,leave_time:0
+msgid "Personal Leave Hour"
+msgstr "事假时长(h)"
+
+#. module: tianv_attendance
+#: field:tianv.hr.attendance.record,sick_time:0
+msgid "Sick Leave Hour"
+msgstr "病假时长(h)"
+
+#. module: tianv_attendance
+#: field:tianv.hr.attendance.record,no_time:0
+msgid "No Work Hour"
+msgstr "缺职时长(h)"
+
+#. module: tianv_attendance
+#: field:tianv.hr.attendance.config.line,is_cross_day:0
+msgid "Is Cross Day"
+msgstr "是否跨天"
+
+#. module: tianv_attendance
+#: field:tianv.hr.attendance.plan,lines:0
+#: field:tianv.hr.attendance.record,lines:0
+msgid "Lines"
+msgstr "条目"
+
+#. module: tianv_attendance
+#: field:tianv.hr.attendance.config.type,name:0
+#: field:tianv.hr.attendance.record.type,name:0
+#: field:tianv.hr.attendance.rule,name:0
+msgid "Name"
+msgstr "名称"
+
+#. module: tianv_attendance
+#: field:tianv.hr.attendance.rule.line,is_need_punch_in:0
+msgid "Need Punch In"
+msgstr "需要签到"
+
+#. module: tianv_attendance
+#: field:tianv.hr.attendance.rule.line,is_need_punch_out:0
+msgid "Need Punch Out"
+msgstr "需要签退"
+
+#. module: tianv_attendance
+#: field:tianv.hr.attendance.plan.line,config_types:0
+msgid "Need Work Type"
+msgstr "班次"
+
+#. module: tianv_attendance
+#: model:ir.model,name:tianv_attendance.model_tianv_hr_attendance_record_type
+msgid "New Description"
+msgstr "描述"
+
+#. module: tianv_attendance
+#: field:tianv.hr.attendance.plan.line,plan:0
+msgid "Plan"
+msgstr "计划"
+
+#. module: tianv_attendance
+#: field:tianv.hr.attendance.plan.line,plan_date:0
+msgid "Plan Date"
+msgstr "计划日期"
+
+#. module: tianv_attendance
+#: field:tianv.hr.attendance.plan.line,plan_date_week:0
+msgid "Week"
+msgstr "星期"
+
+#. module: tianv_attendance
+#: field:tianv.hr.attendance.plan.line,hour:0
+msgid "Hour"
+msgstr "小时"
+
+#. module: tianv_attendance
+#: code:addons/tianv_attendance/models/attendance_plan.py:115
+#, python-format
+msgid "Plan Date must between plan period"
+msgstr "计划日期必须在计划的会计周期内"
+
+#. module: tianv_attendance
+#: field:tianv.hr.attendance.record.line,plan_line:0
+msgid "Plan Line"
+msgstr "计划条目"
+
+#. module: tianv_attendance
+#: field:tianv.hr.attendance.plan,period:0
+#: field:tianv.hr.attendance.record,period:0
+msgid "Plan Period"
+msgstr "计划会计周期"
+
+#. module: tianv_attendance
+#: field:tianv.hr.attendance.config.line,punch_begin_time:0
+msgid "Punch Begin Time"
+msgstr "签入开始时间"
+
+#. module: tianv_attendance
+#: field:tianv.hr.attendance.record.line,record_hour:0
+msgid "Record Hour"
+msgstr "考勤时间"
+
+#. module: tianv_attendance
+#: field:tianv.hr.attendance.record,plan:0
+msgid "Related Plan"
+msgstr "相关计划"
+
+#. module: tianv_attendance
+#: field:tianv.hr.attendance.record.line,record:0
+msgid "Related Record"
+msgstr "相关记录"
+
+#. module: tianv_attendance
+#: field:tianv.hr.attendance.rule.line,rule:0
+msgid "Relative Rule"
+msgstr "相关规则"
+
+#. module: tianv_attendance
+#: field:tianv.hr.attendance.rule,lines:0
+msgid "Rule Lines"
+msgstr "规则条目"
+
+#. module: tianv_attendance
+#: field:tianv.hr.attendance.config,start_date:0
+msgid "Start Date"
+msgstr "开始日期"
+
+#. module: tianv_attendance
+#: field:tianv.hr.attendance.config.line,start_time:0
+msgid "Start Time"
+msgstr "开始时间"
+
+#. module: tianv_attendance
+#: field:tianv.hr.attendance.record.line,tags:0
+msgid "Tags"
+msgstr "标签"
+
+#. module: tianv_attendance
+#: sql_constraint:tianv.hr.attendance.plan:0
+msgid "The period must be unique per plan!"
+msgstr "同一个会计周期下不能出现多个考勤计划!"
+
+#. module: tianv_attendance
+#: sql_constraint:tianv.hr.attendance.record:0
+msgid "The period of a contract must be unique per record!"
+msgstr "同一个周期下一个合同只能有一条考勤记录!"
+
+#. module: tianv_attendance
+#: sql_constraint:tianv.hr.attendance.record.line:0
+msgid "The plan must be unique per record!"
+msgstr "考勤记录只能对应一条相关的考勤计划!"
+
+#. module: tianv_attendance
+#: sql_constraint:tianv.hr.attendance.plan.line:0
+msgid "The plan_date must be unique per plan!"
+msgstr "同一个计划下考勤日期不能重复!"
+
+#. module: tianv_attendance
+#: model:ir.model,name:tianv_attendance.model_tianv_hr_attendance_rule
+#: model:ir.model,name:tianv_attendance.model_tianv_hr_attendance_rule_line
+msgid "Tianv Attendance Rule"
+msgstr "考勤规则"
+
+#. module: tianv_attendance
+#: field:tianv.hr.attendance.config.line,type:0
+#: field:tianv.hr.attendance.rule.line,type:0
+msgid "Type"
+msgstr "类型"
+
+#. module: tianv_attendance
+#: model:hr.holidays.status,name:tianv_attendance.holiday_status_personal
+msgid "事假"
+msgstr "事假"
+
+#. module: tianv_attendance
+#: view:tianv.hr.attendance.plan:tianv_attendance.view_tianv_hr_attendance_plan_form
+msgid "会清除已有计划,请注意!"
+msgstr "会清除已有计划,请注意!"
+
+#. module: tianv_attendance
+#: view:tianv.hr.attendance.record:tianv_attendance.view_tianv_hr_attendance_record_form
+msgid "会清除所有记录!"
+msgstr "会清除所有记录!"
+
+#. module: tianv_attendance
+#: model:res.groups,name:tianv_attendance.group_attendance_manager
+msgid "可以修改考勤计划,考勤记录"
+msgstr "可以修改考勤计划,考勤记录"
+
+#. module: tianv_attendance
+#: model:res.groups,name:tianv_attendance.group_attendance_admin
+msgid "可以管理考勤后台数据"
+msgstr "可以管理考勤后台数据"
+
+#. module: tianv_attendance
+#: model:hr.holidays.status,name:tianv_attendance.holiday_status_out
+msgid "外勤"
+msgstr "外勤"
+
+#. module: tianv_attendance
+#: model:hr.holidays.status,name:tianv_attendance.holiday_status_year
+msgid "年假"
+msgstr "年假"
+
+#. module: tianv_attendance
+#: view:tianv.hr.attendance.record:tianv_attendance.view_tianv_hr_attendance_record_form
+msgid "生成考勤记录会清除原有记录!"
+msgstr "生成考勤记录会清除原有记录!"
+
+#. module: tianv_attendance
+#: view:tianv.hr.attendance.plan:tianv_attendance.view_tianv_hr_attendance_plan_form
+msgid "生成计划"
+msgstr "生成计划"
+
+#. module: tianv_attendance
+#: model:hr.holidays.status,name:tianv_attendance.holiday_status_sick
+msgid "病假"
+msgstr "病假"
+
+#. module: tianv_attendance
+#: model:hr.holidays.status,name:tianv_attendance.holiday_status_no
+msgid "缺职"
+msgstr "缺职"
+
+#. module: tianv_attendance
+#: model:ir.ui.menu,name:tianv_attendance.menuitem_tianv_attendance_root
+msgid "考勤"
+msgstr "考勤"
+
+#. module: tianv_attendance
+#: model:ir.actions.act_window,name:tianv_attendance.action_tianv_attendance_config_type
+#: model:ir.ui.menu,name:tianv_attendance.menuitem_tianv_attendance_config_type
+msgid "考勤区间类型设置"
+msgstr "考勤区间类型设置"
+
+#. module: tianv_attendance
+#: model:ir.actions.act_window,name:tianv_attendance.action_tianv_attendance_config
+#: model:ir.ui.menu,name:tianv_attendance.menuitem_tianv_attendance_config
+msgid "考勤区间设置"
+msgstr "考勤区间设置"
+
+#. module: tianv_attendance
+#: view:tianv.hr.attendance.record.line:tianv_attendance.view_tianv_hr_attendance_record_line_tree
+msgid "考勤机记录"
+msgstr "考勤机记录"
+
+#. module: tianv_attendance
+#: model:ir.actions.act_window,name:tianv_attendance.action_tianv_attendance_rule
+#: model:ir.ui.menu,name:tianv_attendance.menuitem_tianv_attendance_rule
+msgid "考勤规则"
+msgstr "考勤规则"
+
+#. module: tianv_attendance
+#: model:ir.actions.act_window,name:tianv_attendance.action_tianv_attendance_plan
+#: model:ir.ui.menu,name:tianv_attendance.menuitem_tianv_attendance_plan
+msgid "考勤计划"
+msgstr "考勤计划"
+
+#. module: tianv_attendance
+#: model:ir.actions.act_window,name:tianv_attendance.action_tianv_attendance_record
+#: model:ir.ui.menu,name:tianv_attendance.menuitem_tianv_attendance_record
+#: view:tianv.hr.attendance.record:tianv_attendance.view_tianv_hr_attendance_record_form
+msgid "考勤记录"
+msgstr "考勤记录"
+
+#. module: tianv_attendance
+#: model:ir.ui.menu,name:tianv_attendance.menuitem_tianv_attendance_setting
+msgid "考勤设置"
+msgstr "考勤设置"
+
+#. module: tianv_attendance
+#: view:tianv.hr.attendance.record:tianv_attendance.view_tianv_hr_attendance_record_form
+msgid "重新生成考勤记录"
+msgstr "重新生成考勤记录"
+
