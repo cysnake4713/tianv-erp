@@ -22,7 +22,7 @@
                         <button name="button_payroll_to_done" type="object" string="下一步" class="oe_highlight" states="generate_payroll"/>
 
 
-                        <button name="button_payroll_send" type="object" string="发送工资条记录" class="oe_highlight" states="done"/>
+                        <button name="button_payroll_send" type="object" string="确认并发送工资条记录" class="oe_highlight" states="done"/>
 
                         <field name="state" widget="statusbar" readonly="1"/>
                     </header>

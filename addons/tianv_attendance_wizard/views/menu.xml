@@ -7,9 +7,9 @@
             <field name="view_mode">form</field>
         </record>
 
-        <menuitem id="menuitem_tianv_attendance_wizard_root" name="工资计算向导" parent="hr.menu_hr_root" sequence="36"/>
+        <menuitem id="menuitem_tianv_attendance_wizard_root" name="工资计算向导" parent="hr.menu_hr_root" sequence="45"/>
         <menuitem id="menuitem_tianv_attendance_wizard_start" name="开始一个向导" parent="menuitem_tianv_attendance_wizard_root" sequence="4"
-                  action="action_tianv_attendance_wizard"/>
+                  action="action_tianv_attendance_wizard" groups="group_attendance_wizard_creator"/>
 
     </data>
 </openerp>

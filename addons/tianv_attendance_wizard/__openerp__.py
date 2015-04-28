@@ -10,6 +10,7 @@ Tianv Attendance Wizard""",
     'website': 'http://odoosoft.com',
     'depends': ['base', 'tianv_attendance', 'tianv_insurance', 'tianv_hr_payroll', 'hr_payroll'],
     'data': [
+        'security/security.xml',
         'views/menu.xml',
         'views/attendance_wizard_view.xml',
     ],

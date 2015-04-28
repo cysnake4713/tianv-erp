@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+          <record model="res.groups" id="group_attendance_wizard_creator">
+            <field name="name">可以使用工资生成向导</field>
+            <field name="category_id" ref="base.module_category_attendance"/>
+        </record>
+    </data>
+</openerp>
