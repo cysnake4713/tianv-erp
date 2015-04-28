@@ -11,5 +11,25 @@
             <field name="category_id" ref="base.module_category_attendance"/>
         </record>
     </data>
+    <data noupdate="1">
+        <record id="rule_tianv_attendance_machine_employee" model="ir.rule">
+            <field name="name">员工只能看自己打卡记录</field>
+            <field name="model_id" ref="model_tianv_attendance_machine"/>
+            <field name="groups"
+                   eval="[(6,0,[ref('base.group_user')])]"/>
+            <field name="domain_force">[('log_employee.user_id','=',user.id)]</field>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <record id="rule_tianv_attendance_machine_admin" model="ir.rule">
+            <field name="name">管理所有打卡</field>
+            <field name="model_id" ref="model_tianv_attendance_machine"/>
+            <field name="groups"
+                   eval="[(6,0,[ref('tianv_machine.group_attendance_machine_admin')])]"/>
+            <field name="domain_force">[(1,'=',1)]</field>
+        </record>
+    </data>
 </openerp>
 

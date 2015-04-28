@@ -1,0 +1,104 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* tianv_machine
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-04-28 08:58+0000\n"
+"PO-Revision-Date: 2015-04-28 08:58+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: tianv_machine
+#: field:tianv.attendance.machine.log,error_info:0
+msgid "Error Info"
+msgstr "错误信息"
+
+#. module: tianv_machine
+#: field:tianv.attendance.machine,id:0
+#: field:tianv.attendance.machine.log,id:0
+msgid "ID"
+msgstr "ID"
+
+#. module: tianv_machine
+#: field:tianv.attendance.machine.log,import_datetime:0
+msgid "Import Datetime"
+msgstr "导入时间"
+
+#. module: tianv_machine
+#: field:tianv.attendance.machine.log,is_success:0
+msgid "Is Success"
+msgstr "是否成功"
+
+#. module: tianv_machine
+#: field:tianv.attendance.machine,log_employee:0
+msgid "Log Employee"
+msgstr "相关雇员"
+
+#. module: tianv_machine
+#: field:tianv.attendance.machine,log_time:0
+msgid "Log Time"
+msgstr "打卡时间"
+
+#. module: tianv_machine
+#: field:tianv.attendance.machine,user_id:0
+msgid "Machine User ID"
+msgstr "考勤机用户编号"
+
+#. module: tianv_machine
+#: field:tianv.attendance.machine,user_true_name:0
+msgid "Machine User True Name"
+msgstr "考勤机用户名"
+
+#. module: tianv_machine
+#: view:tianv.attendance.machine:tianv_machine.view_attendance_machine_tree
+msgid "删除所有记录"
+msgstr "删除所有记录"
+
+#. module: tianv_machine
+#: view:tianv.attendance.machine:tianv_machine.view_attendance_machine_tree
+msgid "匹配记录"
+msgstr "匹配记录"
+
+#. module: tianv_machine
+#: model:res.groups,name:tianv_machine.group_attendance_machine_admin
+msgid "可以修改考勤机记录"
+msgstr "可以修改考勤机记录"
+
+#. module: tianv_machine
+#: model:ir.ui.menu,name:tianv_machine.menuitem_attendane_machine_log_info
+msgid "导入记录"
+msgstr "导入记录"
+
+#. module: tianv_machine
+#: model:res.groups,name:tianv_machine.group_attendance_machine_upload
+msgid "特殊权限:勾选可以上传考勤机数据"
+msgstr "特殊权限:勾选可以上传考勤机数据"
+
+#. module: tianv_machine
+#: view:tianv.attendance.machine:tianv_machine.view_attendance_machine_tree
+msgid "确定删除所有记录？删除的记录不能被恢复"
+msgstr "确定删除所有记录？删除的记录不能被恢复"
+
+#. module: tianv_machine
+#: model:ir.ui.menu,name:tianv_machine.menuitem_attendane_machine_root
+msgid "考勤机"
+msgstr "考勤机"
+
+#. module: tianv_machine
+#: model:ir.actions.act_window,name:tianv_machine.action_attendance_machine
+#: model:ir.ui.menu,name:tianv_machine.menuitem_attendane_machine_info
+msgid "考勤机信息"
+msgstr "考勤机信息"
+
+#. module: tianv_machine
+#: model:ir.actions.act_window,name:tianv_machine.action_attendance_machine_log
+msgid "考勤机导入历史记录"
+msgstr "考勤机导入历史记录"
+

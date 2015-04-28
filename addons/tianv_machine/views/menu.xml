@@ -18,7 +18,7 @@
         <menuitem id="menuitem_attendane_machine_root" name="考勤机" parent="hr.menu_hr_root" sequence="43"/>
         <!-- This Menu Item must have a parent and an action -->
         <menuitem id="menuitem_attendane_machine_info" name="考勤机信息" parent="menuitem_attendane_machine_root" sequence="10"
-                  action="action_attendance_machine"/>
+                  action="action_attendance_machine" groups="base.group_user"/>
         <!-- This Menu Item must have a parent and an action -->
         <menuitem id="menuitem_attendane_machine_log_info" name="导入记录" parent="menuitem_attendane_machine_root" sequence="20"
                   action="action_attendance_machine_log" groups="tianv_machine.group_attendance_machine_admin"/>
