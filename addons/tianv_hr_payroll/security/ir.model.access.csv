@@ -5,6 +5,9 @@ access_hr_contract_job_admin,access_hr_contract_job_admin,model_hr_contract_job,
 access_hr_contract_skill,access_hr_contract_skill,model_hr_contract_skill,,1,0,0,0
 access_hr_contract_skill_admin,access_hr_contract_skill_admin,model_hr_contract_skill,base.group_no_one,1,1,1,1
 
+access_hr_contract_skill,access_hr_contract_skill,model_hr_contract_skill,,1,0,0,0
+access_hr_contract_officer,access_hr_contract_officer,hr_contract.model_hr_contract,base.group_hr_user,1,0,0,0
+
 access_hr_salary_rule_category_employee,hr.salary.rule.category_employee,hr_payroll.model_hr_salary_rule_category,base.group_user,1,0,0,0
 access_hr_payslip_employee,hr.payslip_employee,hr_payroll.model_hr_payslip,base.group_user,1,0,0,0
 access_hr_payslip_line_employee,hr.payslip.line_employee,hr_payroll.model_hr_payslip_line,base.group_user,1,0,0,0
