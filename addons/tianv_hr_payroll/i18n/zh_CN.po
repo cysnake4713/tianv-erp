@@ -1,0 +1,109 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* tianv_hr_payroll
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-04-28 16:05+0000\n"
+"PO-Revision-Date: 2015-04-28 16:05+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: tianv_hr_payroll
+#: model:ir.model,name:tianv_hr_payroll.model_hr_contract
+msgid "Contract"
+msgstr "合同"
+
+#. module: tianv_hr_payroll
+#: model:ir.model,name:tianv_hr_payroll.model_hr_employee
+msgid "Employee"
+msgstr "员工"
+
+#. module: tianv_hr_payroll
+#: field:hr.contract.job,id:0
+#: field:hr.contract.skill,id:0
+msgid "ID"
+msgstr "ID"
+
+#. module: tianv_hr_payroll
+#: field:hr.payslip,is_confirmed:0
+msgid "Is Confirmed"
+msgstr "经理已经确认"
+
+#. module: tianv_hr_payroll
+#: field:hr.contract,job:0
+msgid "Job"
+msgstr "岗位"
+
+#. module: tianv_hr_payroll
+#: field:hr.contract.job,name:0
+#: field:hr.contract.skill,name:0
+msgid "Name"
+msgstr "名称"
+
+#. module: tianv_hr_payroll
+#: model:ir.model,name:tianv_hr_payroll.model_hr_payslip
+msgid "Pay Slip"
+msgstr "工资单"
+
+#. module: tianv_hr_payroll
+#: field:hr.contract,skill:0
+msgid "Skill"
+msgstr "技能"
+
+#. module: tianv_hr_payroll
+#: field:hr.employee,work_start_date:0
+msgid "Work Start Date"
+msgstr "参加工作时间"
+
+#. module: tianv_hr_payroll
+#: code:addons/tianv_hr_payroll/models/contract.py:20
+#: code:addons/tianv_hr_payroll/models/contract.py:28
+#, python-format
+msgid "can't find insurance record in period or have multi record for on peroid"
+msgstr "在会计周期内没有找到相关社保记录或者存在多个社保记录对应!"
+
+#. module: tianv_hr_payroll
+#: field:hr.contract.job,coefficient:0
+#: field:hr.contract.skill,coefficient:0
+msgid "coefficient"
+msgstr "系数"
+
+#. module: tianv_hr_payroll
+#: view:hr.employee:tianv_hr_payroll.view_hr_employee_form_inherit
+msgid "参加工作时间"
+msgstr "参加工作时间"
+
+#. module: tianv_hr_payroll
+#: view:hr.payslip:tianv_hr_payroll.view_hr_payslip_form_inherit
+msgid "员工确认"
+msgstr "员工确认"
+
+#. module: tianv_hr_payroll
+#: model:ir.actions.act_window,name:tianv_hr_payroll.action_hr_contract_job
+#: model:ir.ui.menu,name:tianv_hr_payroll.menuitem_hr_contract_job
+msgid "岗位"
+msgstr "岗位"
+
+#. module: tianv_hr_payroll
+#: model:ir.actions.act_window,name:tianv_hr_payroll.action_hr_contract_skill
+#: model:ir.ui.menu,name:tianv_hr_payroll.menuitem_hr_contract_skill
+msgid "技能"
+msgstr "技能"
+
+#. module: tianv_hr_payroll
+#: view:hr.payslip:tianv_hr_payroll.view_hr_payslip_form_inherit
+msgid "经理确认生效"
+msgstr "经理确认生效"
+
+#. module: tianv_hr_payroll
+#: view:hr.payslip:tianv_hr_payroll.view_hr_payslip_form_inherit
+msgid "设置为草稿"
+msgstr "设置为草稿"
+
