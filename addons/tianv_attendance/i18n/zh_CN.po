@@ -402,8 +402,8 @@ msgstr "可以修改考勤计划,考勤记录"
 
 #. module: tianv_attendance
 #: model:res.groups,name:tianv_attendance.group_attendance_admin
-msgid "可以管理考勤后台数据"
-msgstr "可以管理考勤后台数据"
+msgid "考勤管理员"
+msgstr "考勤管理员"
 
 #. module: tianv_attendance
 #: model:hr.holidays.status,name:tianv_attendance.holiday_status_out
