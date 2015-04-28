@@ -14,12 +14,13 @@ class SocialInsuranceConfig(models.Model):
     _inherit = 'mail.thread'
 
     contract = fields.Many2one('hr.contract', 'Hr Contract', track_visibility='onchange')
+    employee = fields.Many2one('hr.employee', 'Hr Employee', readonly=True, compute='_compute_total')
     computer_code = fields.Char('Computer Code', track_visibility='onchange')
     census_type = fields.Selection([('city', u'市内城镇'), ('country', u'市外农村')], 'Census Type', track_visibility='onchange')
     lines = fields.One2many('tianv.social.insurance.line', 'config', 'Config Lines')
 
     personal_total = fields.Float('Personal Total', (10, 2), compute='_compute_total')
-    company_total = fields.Float('Company Part', (10, 2), compute='_compute_total')
+    company_total = fields.Float('Company Total', (10, 2), compute='_compute_total')
     total = fields.Float('Total', (10, 2), compute='_compute_total')
     records = fields.One2many('tianv.social.insurance.record', 'config', 'Relative Records')
 
@@ -36,6 +37,7 @@ class SocialInsuranceConfig(models.Model):
             config.personal_total = personal_total
             config.company_total = company_total
             config.total = config.personal_total + config.company_total
+            config.employee = config.sudo().contract.employee_id
 
 
     @api.one

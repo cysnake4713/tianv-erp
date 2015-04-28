@@ -30,7 +30,7 @@
                 action="action_social_insurance_record"/>
 
         <menuitem id="menuitem_social_insurance_config" name="社保设置" parent="menuitem_social_insurance_config_root" sequence="10"
-                action="action_social_insurance_config"/>
+                action="action_social_insurance_config" groups="tianv_insurance.group_insurance_admin"/>
 
     </data>
 </openerp>

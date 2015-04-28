@@ -7,14 +7,33 @@
             <field name="arch" type="xml">
                 <tree>
                     <field name="period"/>
-                    <field name="contract"/>
-                    <field name="config"/>
+                    <field name="contract" groups="tianv_insurance.group_insurance_admin"/>
+                    <field name="employee"/>
+                    <field name="config" groups="tianv_insurance.group_insurance_admin"/>
                     <field name="computer_code"/>
                     <field name="census_type"/>
                     <field name="personal_total"/>
                     <field name="company_total"/>
                     <field name="total"/>
                 </tree>
+            </field>
+        </record>
+
+        <record id="view_social_insurance_record_search" model="ir.ui.view">
+            <field name="name">view.tianv.social.insurance.record.search</field>
+            <field name="model">tianv.social.insurance.record</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="period"/>
+                    <field name="contract" groups="tianv_insurance.group_insurance_admin"/>
+                    <field name="employee"/>
+                    <field name="config" groups="tianv_insurance.group_insurance_admin"/>
+                    <field name="computer_code"/>
+                    <field name="census_type"/>
+                    <field name="personal_total"/>
+                    <field name="company_total"/>
+                    <field name="total"/>
+                </search>
             </field>
         </record>
 
@@ -31,8 +50,9 @@
                     <sheet>
                         <group>
                             <field name="period"/>
-                            <field name="contract"/>
-                            <field name="config"/>
+                            <field name="contract" groups="tianv_insurance.group_insurance_admin"/>
+                            <field name="employee"/>
+                            <field name="config" groups="tianv_insurance.group_insurance_admin"/>
                             <field name="computer_code"/>
                             <field name="census_type"/>
                             <field name="personal_total"/>

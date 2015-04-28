@@ -17,12 +17,29 @@
             <field name="arch" type="xml">
                 <tree>
                     <field name="contract"/>
+                    <field name="employee"/>
                     <field name="computer_code"/>
                     <field name="census_type"/>
                     <field name="personal_total"/>
                     <field name="company_total"/>
                     <field name="total"/>
                 </tree>
+            </field>
+        </record>
+
+        <record id="view_social_insurance_config_search" model="ir.ui.view">
+            <field name="name">view.tianv.social.insurance.config.search</field>
+            <field name="model">tianv.social.insurance.config</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="contract"/>
+                    <field name="employee"/>
+                    <field name="computer_code"/>
+                    <field name="census_type"/>
+                    <field name="personal_total"/>
+                    <field name="company_total"/>
+                    <field name="total"/>
+                </search>
             </field>
         </record>
 
@@ -37,6 +54,7 @@
                     <sheet>
                         <group>
                             <field name="contract"/>
+                            <field name="employee"/>
                             <field name="computer_code"/>
                             <field name="census_type"/>
                             <field name="personal_total"/>

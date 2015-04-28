@@ -1,0 +1,236 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* tianv_insurance
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-04-28 09:26+0000\n"
+"PO-Revision-Date: 2015-04-28 09:26+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: tianv_insurance
+#: code:addons/tianv_insurance/models/social_insurance.py:123
+#, python-format
+msgid "A active same period and contract insurance record exist! remove or inactive old one before create"
+msgstr "在当前会计周期已经生成过社保记录,如果需要重新生成请删除或者冻结旧的记录!"
+
+#. module: tianv_insurance
+#: field:tianv.social.insurance.record,period:0
+msgid "Account Period"
+msgstr "会计周期"
+
+#. module: tianv_insurance
+#: code:addons/tianv_insurance/models/social_insurance.py:146
+#, python-format
+msgid "Can't find related insurance config!"
+msgstr "没有找到相关的社保配置!"
+
+#. module: tianv_insurance
+#: field:tianv.social.insurance.config,census_type:0
+#: field:tianv.social.insurance.record,census_type:0
+msgid "Census Type"
+msgstr "户口类型"
+
+#. module: tianv_insurance
+#: field:tianv.social.insurance.line,company_part:0
+#: field:tianv.social.insurance.record.line,company_part:0
+msgid "Company Part"
+msgstr "公司部分"
+
+#. module: tianv_insurance
+#: field:tianv.social.insurance.config,computer_code:0
+#: field:tianv.social.insurance.record,computer_code:0
+msgid "Computer Code"
+msgstr "电脑号"
+
+#. module: tianv_insurance
+#: field:tianv.social.insurance.config,lines:0
+msgid "Config Lines"
+msgstr "条目"
+
+#. module: tianv_insurance
+#: model:ir.model,name:tianv_insurance.model_hr_contract
+msgid "Contract"
+msgstr "合同"
+
+#. module: tianv_insurance
+#: code:addons/tianv_insurance/models/social_insurance.py:45
+#, python-format
+msgid "Contract already have a active social insurance config, please inactive old one or change the contract"
+msgstr "当前合同已经有相关社保配置,请冻结旧的或者更改当前关联合同."
+
+#. module: tianv_insurance
+#: field:tianv.social.insurance.config,contract:0
+#: field:tianv.social.insurance.record,contract:0
+msgid "Hr Contract"
+msgstr "相关合同"
+
+#. module: tianv_insurance
+#: field:tianv.social.insurance.config,employee:0
+#: field:tianv.social.insurance.record,employee:0
+msgid "Hr Employee"
+msgstr "相关雇员"
+
+#. module: tianv_insurance
+#: field:tianv.social.insurance.config,personal_total:0
+#: field:tianv.social.insurance.record,personal_total:0
+msgid "Personal Total"
+msgstr "个人总额"
+
+#. module: tianv_insurance
+#: field:tianv.social.insurance.config,company_total:0
+#: field:tianv.social.insurance.record,company_total:0
+msgid "Company Total"
+msgstr "公司总额"
+
+#. module: tianv_insurance
+#: field:tianv.social.insurance.config,total:0
+#: field:tianv.social.insurance.record,total:0
+msgid "Total"
+msgstr "社保总额"
+
+#. module: tianv_insurance
+#: field:tianv.social.insurance.config,id:0
+#: field:tianv.social.insurance.line,id:0
+#: field:tianv.social.insurance.record,id:0
+#: field:tianv.social.insurance.record.line,id:0
+#: field:tianv.social.insurance.type,id:0
+msgid "ID"
+msgstr "ID"
+
+#. module: tianv_insurance
+#: field:tianv.social.insurance.line,type:0
+#: field:tianv.social.insurance.record.line,type:0
+msgid "Insurance Type"
+msgstr "社保类型"
+
+#. module: tianv_insurance
+#: field:tianv.social.insurance.config,active:0
+#: field:tianv.social.insurance.record,active:0
+msgid "Is Active"
+msgstr "激活"
+
+#. module: tianv_insurance
+#: field:tianv.social.insurance.type,name:0
+msgid "Name"
+msgstr "名称"
+
+#. module: tianv_insurance
+#: field:tianv.social.insurance.line,personal_part:0
+#: field:tianv.social.insurance.record.line,personal_part:0
+msgid "Personal Part"
+msgstr "个人部分"
+
+#. module: tianv_insurance
+#: field:tianv.social.insurance.record,lines:0
+msgid "Record Lines"
+msgstr "条目"
+
+#. module: tianv_insurance
+#: field:tianv.social.insurance.line,config:0
+#: field:tianv.social.insurance.record.line,config:0
+msgid "Related Config"
+msgstr "相关配置"
+
+#. module: tianv_insurance
+#: field:tianv.social.insurance.record.line,record:0
+msgid "Related Record"
+msgstr "相关记录"
+
+#. module: tianv_insurance
+#: field:tianv.social.insurance.config,records:0
+#: field:tianv.social.insurance.record,records:0
+msgid "Relative Records"
+msgstr "相关记录"
+
+#. module: tianv_insurance
+#: field:tianv.social.insurance.record,config:0
+msgid "Relative insurance Config"
+msgstr "相关配置"
+
+#. module: tianv_insurance
+#: code:addons/tianv_insurance/models/social_insurance.py:189
+#, python-format
+msgid "name must be unique !"
+msgstr "名称不可重复!"
+
+#. module: tianv_insurance
+#: model:res.groups,name:tianv_insurance.group_insurance_admin
+msgid "可以修改社保记录"
+msgstr "可以修改社保记录"
+
+#. module: tianv_insurance
+#: sql_constraint:tianv.social.insurance.type:0
+msgid "名称不可重复!"
+msgstr "名称不可重复!"
+
+#. module: tianv_insurance
+#: view:tianv.social.insurance.record:tianv_insurance.view_social_insurance_record_form
+msgid "回写当前数据"
+msgstr "回写当前数据"
+
+#. module: tianv_insurance
+#: selection:tianv.social.insurance.config,census_type:0
+#: selection:tianv.social.insurance.record,census_type:0
+msgid "市内城镇"
+msgstr "市内城镇"
+
+#. module: tianv_insurance
+#: selection:tianv.social.insurance.config,census_type:0
+#: selection:tianv.social.insurance.record,census_type:0
+msgid "市外农村"
+msgstr "市外农村"
+
+#. module: tianv_insurance
+#: view:tianv.social.insurance.config:tianv_insurance.view_social_insurance_config_form
+msgid "根据此配置生成当月社保记录"
+msgstr "根据此配置生成当月社保记录"
+
+#. module: tianv_insurance
+#: view:tianv.social.insurance.record:tianv_insurance.view_social_insurance_record_form
+msgid "注意:一经确认,此合同新生成的社保记录会使用此条目数值,请谨慎使用."
+msgstr "注意:一经确认,此合同新生成的社保记录会使用此条目数值,请谨慎使用."
+
+#. module: tianv_insurance
+#: view:tianv.social.insurance.config:tianv_insurance.view_social_insurance_config_form
+msgid "生成记录"
+msgstr "生成记录"
+
+#. module: tianv_insurance
+#: model:ir.ui.menu,name:tianv_insurance.menuitem_social_insurance_config_root
+msgid "社保"
+msgstr "社保"
+
+#. module: tianv_insurance
+#: model:ir.ui.menu,name:tianv_insurance.menuitem_social_insurance_type_config
+msgid "社保类型"
+msgstr "社保类型"
+
+#. module: tianv_insurance
+#: model:ir.actions.act_window,name:tianv_insurance.action_social_insurance_type
+msgid "社保类型设置"
+msgstr "社保类型设置"
+
+#. module: tianv_insurance
+#: model:ir.actions.act_window,name:tianv_insurance.action_social_insurance_record
+#: model:ir.ui.menu,name:tianv_insurance.menuitem_social_insurance_record
+msgid "社保记录"
+msgstr "社保记录"
+
+#. module: tianv_insurance
+#: model:ir.ui.menu,name:tianv_insurance.menuitem_social_insurance_config
+msgid "社保设置"
+msgstr "社保设置"
+
+#. module: tianv_insurance
+#: model:ir.actions.act_window,name:tianv_insurance.action_social_insurance_config
+msgid "社保配置"
+msgstr "社保配置"
+
