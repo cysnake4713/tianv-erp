@@ -1,0 +1,13 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+access_hr_contract_job,access_hr_contract_job,model_hr_contract_job,,1,0,0,0
+access_hr_contract_job_admin,access_hr_contract_job_admin,model_hr_contract_job,base.group_no_one,1,1,1,1
+
+access_hr_contract_skill,access_hr_contract_skill,model_hr_contract_skill,,1,0,0,0
+access_hr_contract_skill_admin,access_hr_contract_skill_admin,model_hr_contract_skill,base.group_no_one,1,1,1,1
+
+access_hr_salary_rule_category_employee,hr.salary.rule.category_employee,hr_payroll.model_hr_salary_rule_category,base.group_user,1,0,0,0
+access_hr_payslip_employee,hr.payslip_employee,hr_payroll.model_hr_payslip,base.group_user,1,0,0,0
+access_hr_payslip_line_employee,hr.payslip.line_employee,hr_payroll.model_hr_payslip_line,base.group_user,1,0,0,0
+access_hr_payslip_input_user_employee,hr.payslip.input.user_employee,hr_payroll.model_hr_payslip_input,base.group_user,1,0,0,0
+access_hr_payslip_worked_days_employee,hr.payslip.worked_days_employee,hr_payroll.model_hr_payslip_worked_days,base.group_user,1,0,0,0
+access_hr_rule_input_hr_user,hr.rule.input_hr_user,hr_payroll.model_hr_rule_input,base.group_hr_user,1,1,1,1

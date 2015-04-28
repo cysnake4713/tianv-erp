@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <menuitem action="hr_payroll.action_view_hr_payslip_form" id="hr_payroll.menu_department_tree" parent="hr_payroll.menu_hr_root_payroll"
+                  groups="base.group_user"/>
+    </data>
+</openerp>
