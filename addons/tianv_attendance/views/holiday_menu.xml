@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openerp>
     <data>
-        <menuitem parent="hr_holidays.menu_open_ask_holidays" id="hr_holidays.menu_open_allocation_holidays" action="hr_holidays.open_allocation_holidays"
-                groups="base.group_hr_manager"/>
+        <menuitem parent="hr_holidays.menu_open_ask_holidays" id="hr_holidays.menu_open_allocation_holidays"
+                  action="hr_holidays.open_allocation_holidays"
+                  groups="base.group_hr_manager"/>
+        <menuitem name="Leave Requests to Approve" parent="hr_holidays.menu_open_ask_holidays" id="hr_holidays.menu_request_approve_holidays"
+                  action="hr_holidays.request_approve_holidays" groups="base.group_hr_manager"/>
     </data>
 </openerp>
