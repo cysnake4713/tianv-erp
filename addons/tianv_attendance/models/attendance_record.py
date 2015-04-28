@@ -47,7 +47,7 @@ class AttendanceRecord(models.Model):
     lines = fields.One2many('tianv.hr.attendance.record.line', 'record', 'Lines')
 
     _sql_constraints = [
-        ('period_uniq', 'unique(period,employee)', 'The period of a employee must be unique per record!'),
+        ('period_uniq', 'unique(period,contract)', 'The period of a contract must be unique per record!'),
     ]
 
     @api.multi
@@ -125,7 +125,7 @@ class AttendanceRecordLine(models.Model):
     plan_comment = fields.Char('Plan Comment', compute='_compute_plan', readonly=True)
 
     _sql_constraints = [
-        ('plan_record_uniq', 'unique(record,plan)', 'The plan must be unique per record!'),
+        ('plan_record_uniq', 'unique(record,plan_line)', 'The plan must be unique per record!'),
     ]
 
     @api.multi
