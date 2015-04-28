@@ -15,6 +15,22 @@
             </field>
         </record>
 
+        <record id="view_tianv_hr_attendance_record_search" model="ir.ui.view">
+            <field name="name">view.tianv.hr.attendance.record.search</field>
+            <field name="model">tianv.hr.attendance.record</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="employee"/>
+                    <field name="contract" groups="tianv_attendance.group_attendance_manager"/>
+                    <field name="period"/>
+                    <field name="legal_hour"/>
+                    <field name="min_hour"/>
+                    <field name="actual_hour"/>
+                    <field name="plan"/>
+                </search>
+            </field>
+        </record>
+
         <record id="view_tianv_hr_attendance_record_form" model="ir.ui.view">
             <field name="name">view.tianv.hr.attendance.record.form</field>
             <field name="model">tianv.hr.attendance.record</field>
@@ -23,13 +39,13 @@
                 <form>
                     <header>
                         <button name="button_generate_record" type="object" string="重新生成考勤记录" class="oe_highlight"
-                                confirm="生成考勤记录会清除原有记录!"/>
-                        <button name="button_clean" type="object" string="清除" confirm="会清除所有记录!"/>
+                                confirm="生成考勤记录会清除原有记录!" groups="tianv_attendance.group_attendance_manager"/>
+                        <button name="button_clean" type="object" string="清除" confirm="会清除所有记录!" groups="tianv_attendance.group_attendance_manager"/>
                     </header>
                     <sheet>
                         <group col="4">
-                            <field name="contract"/>
                             <field name="employee"/>
+                            <field name="contract" groups="tianv_attendance.group_attendance_manager"/>
                             <field name="period"/>
                             <field name="plan" readonly="1"/>
                         </group>

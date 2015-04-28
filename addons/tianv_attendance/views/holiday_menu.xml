@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <menuitem parent="hr_holidays.menu_open_ask_holidays" id="hr_holidays.menu_open_allocation_holidays" action="hr_holidays.open_allocation_holidays"
+                groups="base.group_hr_manager"/>
+    </data>
+</openerp>

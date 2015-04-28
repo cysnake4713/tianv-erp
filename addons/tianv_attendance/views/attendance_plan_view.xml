@@ -15,6 +15,20 @@
             </field>
         </record>
 
+        <record id="view_tianv_hr_attendance_plan_search" model="ir.ui.view">
+            <field name="name">view.tianv.hr.attendance.plan.search</field>
+            <field name="model">tianv.hr.attendance.plan</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="period"/>
+                    <field name="min_hour"/>
+                    <field name="legal_hour"/>
+                    <field name="actual_hour"/>
+                    <field name="holiday_date"/>
+                </search>
+            </field>
+        </record>
+
         <record id="view_tianv_hr_attendance_plan_form" model="ir.ui.view">
             <field name="name">view.tianv.hr.attendance.plan.form</field>
             <field name="model">tianv.hr.attendance.plan</field>
@@ -22,10 +36,11 @@
             <field name="arch" type="xml">
                 <form>
                     <header>
-                        <button name="button_generate_plan" type="object" string="生成计划" confirm="会清除已有计划,请注意!" class="oe_highlight"/>
+                        <button name="button_generate_plan" type="object" string="生成计划" confirm="会清除已有计划,请注意!" class="oe_highlight"
+                                groups="tianv_attendance.group_attendance_manager"/>
                     </header>
                     <sheet>
-                        <group col="3">
+                        <group>
                             <field name="period"/>
                         </group>
                         <group>

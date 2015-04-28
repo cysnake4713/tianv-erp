@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <!-- Inherit Form View to Modify it -->
+        <record id="view_account_period_form_inherit" model="ir.ui.view">
+            <field name="name">view.account.period.form.inherit</field>
+            <field name="model">account.period</field>
+            <field name="inherit_id" ref="account.view_account_period_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@string='Close Period']" position="attributes">
+                    <attribute name="groups">account.group_account_manager</attribute>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>

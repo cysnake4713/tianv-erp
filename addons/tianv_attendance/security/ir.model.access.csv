@@ -1,0 +1,12 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+access_tianv_hr_attendance_record_type,access_tianv_hr_attendance_record_type,model_tianv_hr_attendance_record_type,,1,0,0,0
+access_tianv_hr_attendance_config,access_tianv_hr_attendance_config,model_tianv_hr_attendance_config,,1,0,0,0
+access_tianv_hr_attendance_config_line,access_tianv_hr_attendance_config_line,model_tianv_hr_attendance_config_line,,1,0,0,0
+access_tianv_hr_attendance_config_type,access_tianv_hr_attendance_config_type,model_tianv_hr_attendance_config_type,,1,0,0,0
+access_tianv_hr_attendance_rule,access_tianv_hr_attendance_rule,model_tianv_hr_attendance_rule,,1,0,0,0
+access_tianv_hr_attendance_rule_line,access_tianv_hr_attendance_rule_line,model_tianv_hr_attendance_rule_line,,1,0,0,0
+access_tianv_hr_attendance_plan,access_tianv_hr_attendance_plan,model_tianv_hr_attendance_plan,,1,0,0,0
+access_tianv_hr_attendance_plan_line,access_tianv_hr_attendance_plan_line,model_tianv_hr_attendance_plan_line,,1,0,0,0
+access_tianv_hr_attendance_record,access_tianv_hr_attendance_record,model_tianv_hr_attendance_record,,1,0,0,0
+access_tianv_hr_attendance_record_line,access_tianv_hr_attendance_record_line,model_tianv_hr_attendance_record_line,,1,0,0,0
+access_account_period_employee,access_account_period_employee,account.model_account_period,,1,0,0,0

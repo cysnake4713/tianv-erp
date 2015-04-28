@@ -72,7 +72,7 @@ class AttendanceRecord(models.Model):
 
             record.actual_hour = sum([l.adjust_hour for l in record.lines])
             record.plan_hour = sum([l.plan_hour for l in record.lines])
-            record.employee = record.contract.employee_id
+            record.employee = record.sudo().contract.employee_id
 
     @api.multi
     def button_generate_record(self):

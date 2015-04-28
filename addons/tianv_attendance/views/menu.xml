@@ -37,13 +37,13 @@
         <menuitem id="menuitem_tianv_attendance_plan" name="考勤计划" parent="menuitem_tianv_attendance_root" sequence="5"
                   action="action_tianv_attendance_plan"/>
 
-        <menuitem id="menuitem_tianv_attendance_setting" name="考勤设置" parent="hr.menu_hr_configuration" sequence="45" groups="base.group_system"/>
+        <menuitem id="menuitem_tianv_attendance_setting" name="考勤设置" parent="hr.menu_hr_configuration" sequence="45"/>
         <menuitem id="menuitem_tianv_attendance_config" name="考勤区间设置" parent="menuitem_tianv_attendance_setting" sequence="5"
-                  action="action_tianv_attendance_config"/>
+                  action="action_tianv_attendance_config" groups="tianv_attendance.group_attendance_admin"/>
         <menuitem id="menuitem_tianv_attendance_config_type" name="考勤区间类型设置" parent="menuitem_tianv_attendance_setting" sequence="10"
-                  action="action_tianv_attendance_config_type"/>
+                  action="action_tianv_attendance_config_type" groups="base.group_no_one"/>
         <menuitem id="menuitem_tianv_attendance_rule" name="考勤规则" parent="menuitem_tianv_attendance_setting" sequence="15"
-                  action="action_tianv_attendance_rule"/>
+                  action="action_tianv_attendance_rule" groups="base.group_no_one"/>
 
 
     </data>

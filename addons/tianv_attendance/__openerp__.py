@@ -11,12 +11,16 @@ Tianv Attendance Module
     'website': 'http://odoosoft.com',
     'depends': ['base', 'hr', 'account', 'tianv_machine', 'hr_holidays'],
     'data': [
+        'security/security.xml',
+        'security/ir.model.access.csv',
         'data/data.xml',
         'views/menu.xml',
+        'views/holiday_menu.xml',
         'views/attendance_config_view.xml',
         'views/attendance_rule_view.xml',
         'views/attendance_plan_view.xml',
         'views/attendance_record_view.xml',
+        'views/account_period_view.xml',
 
     ],
     'qweb': [
