@@ -2,12 +2,12 @@
 <openerp>
     <data>
         <record model="res.groups" id="group_attendance_manager">
-            <field name="name">可以修改考勤计划,考勤记录</field>
+            <field name="name">可以修改考勤计划</field>
             <field name="category_id" ref="base.module_category_attendance"/>
             <field name="implied_ids" eval="[(4, ref('base.group_hr_user'))]"/>
         </record>
         <record model="res.groups" id="group_attendance_admin">
-            <field name="name">考勤管理员</field>
+            <field name="name">考勤管理员,可以修改考勤记录</field>
             <field name="category_id" ref="base.module_category_attendance"/>
             <field name="implied_ids" eval="[(4, ref('tianv_attendance.group_attendance_manager')),(4, ref('base.group_hr_manager'))]"/>
         </record>
