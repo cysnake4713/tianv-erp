@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openerp>
-    <data>
+    <data noupdate="1">
         <record id="map_tianv_hr_payroll" model="odoosoft.wechat.enterprise.map">
             <field name="code">tianv_hr_payroll.tianv_hr_payroll</field>
         </record>
