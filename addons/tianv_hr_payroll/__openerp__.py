@@ -8,8 +8,9 @@
 Tianv Hr Payroll Module""",
     'author': 'Matt Cai',
     'website': 'http://odoosoft.com',
-    'depends': ['base', 'hr_payroll', 'hr_contract', 'hr'],
+    'depends': ['base', 'hr_payroll', 'hr_contract', 'hr', 'odoosoft_workflow', 'odoosoft_wechat_enterprise'],
     'data': [
+        'data/wechat_data.xml',
         'security/security.xml',
         'security/ir.model.access.csv',
         'views/employee_view.xml',

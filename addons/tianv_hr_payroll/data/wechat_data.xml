@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record id="map_tianv_hr_payroll" model="odoosoft.wechat.enterprise.map">
+            <field name="code">tianv_hr_payroll.tianv_hr_payroll</field>
+        </record>
+
+        <record id="message_tianv_hr_payslip" model="odoosoft.wechat.enterprise.message.template">
+            <field name="name">微信工资单提醒</field>
+            <field name="title">工资单提醒</field>
+            <field name="content">
+名称: ${object.name}
+状态: ${fields['state'].convert_to_export(object.state, ctx)}
+            </field>
+        </record>
+    </data>
+</openerp>
