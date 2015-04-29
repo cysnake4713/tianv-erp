@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<openerp>
+    <data noupdate="0">
+        <record model="res.groups" id="hr_employee_editor">
+            <field name="name">可以修改雇员信息</field>
+            <field name="category_id" ref="base.module_category_human_resources"/>
+        </record>
+    </data>
+</openerp>
+

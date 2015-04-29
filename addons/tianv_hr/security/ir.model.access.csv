@@ -1,0 +1,2 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+access_hr_employee_editor,access_hr_employee_editor,hr.model_hr_employee,tianv_hr.hr_employee_editor,1,1,1,0
