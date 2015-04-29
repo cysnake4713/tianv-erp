@@ -397,13 +397,13 @@ msgstr "会清除所有记录!"
 
 #. module: tianv_attendance
 #: model:res.groups,name:tianv_attendance.group_attendance_manager
-msgid "可以修改考勤计划,考勤记录"
-msgstr "可以修改考勤计划,考勤记录"
+msgid "可以修改考勤计划"
+msgstr "可以修改考勤计划"
 
 #. module: tianv_attendance
 #: model:res.groups,name:tianv_attendance.group_attendance_admin
-msgid "考勤管理员"
-msgstr "考勤管理员"
+msgid "考勤管理员,可以修改考勤记录"
+msgstr "考勤管理员,可以修改考勤记录"
 
 #. module: tianv_attendance
 #: model:hr.holidays.status,name:tianv_attendance.holiday_status_out
