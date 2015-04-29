@@ -7,7 +7,7 @@
             <field name="implied_ids" eval="[(4, ref('base.group_hr_user'))]"/>
         </record>
         <record model="res.groups" id="group_attendance_admin">
-            <field name="name">可以管理考勤后台数据</field>
+            <field name="name">考勤管理员</field>
             <field name="category_id" ref="base.module_category_attendance"/>
             <field name="implied_ids" eval="[(4, ref('tianv_attendance.group_attendance_manager')),(4, ref('base.group_hr_manager'))]"/>
         </record>
@@ -15,7 +15,7 @@
 
     <data>
         <record id="rule_tianv_hr_attendance_record_employee" model="ir.rule">
-            <field name="name">考勤管理员</field>
+            <field name="name">只能查看自己考勤记录</field>
             <field name="model_id" ref="model_tianv_hr_attendance_record"/>
             <field name="groups"
                    eval="[(6,0,[ref('base.group_user')])]"/>
@@ -29,7 +29,7 @@
             <field name="name">管理考勤记录</field>
             <field name="model_id" ref="model_tianv_hr_attendance_record"/>
             <field name="groups"
-                   eval="[(6,0,[ref('tianv_attendance.group_attendance_manager')])]"/>
+                   eval="[(6,0,[ref('tianv_attendance.group_attendance_admin')])]"/>
             <field name="domain_force">[(1,'=',1)]</field>
         </record>
 

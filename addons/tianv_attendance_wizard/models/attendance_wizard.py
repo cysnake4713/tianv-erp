@@ -68,8 +68,8 @@ class AttendanceWizard(models.TransientModel):
             [('period', '=', self.period.id), ('contract', 'in', [e.id for e in self.contracts])])
         need_process_contracts = self.contracts.filtered(lambda c: c not in [s.contract for s in self.relative_attendances])
         for contract in need_process_contracts:
-            new_attendance_record = self.env['tianv.hr.attendance.record'].create({'contract': contract.id, 'period': self.period.id})
-            new_attendance_record.button_generate_record()
+            new_attendance_record = self.env['tianv.hr.attendance.record'].sudo().create({'contract': contract.id, 'period': self.period.id})
+            new_attendance_record.sudo().button_generate_record()
         self.relative_attendances = self.env['tianv.hr.attendance.record'].search(
             [('period', '=', self.period.id), ('contract', 'in', [e.id for e in self.contracts])])
 
