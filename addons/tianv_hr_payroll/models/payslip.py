@@ -42,6 +42,7 @@ class HrPayslipInherit(models.Model):
                               wechat_code='tianv_hr_payroll.tianv_hr_payroll',
                               wechat_template=self.env.ref('tianv_hr_payroll.message_tianv_hr_payslip').id,
                               ).common_apply()
+        return True
 
     @api.multi
     def button_verified(self):
@@ -52,6 +53,7 @@ class HrPayslipInherit(models.Model):
                               wechat_code='tianv_hr_payroll.tianv_hr_payroll',
                               wechat_template=self.env.ref('tianv_hr_payroll.message_tianv_hr_payslip').id,
                               ).common_apply()
+        return True
 
     @api.multi
     def check_done(self):
@@ -66,3 +68,4 @@ class HrPayslipInherit(models.Model):
                               wechat_code=['tianv_hr_payroll.tianv_hr_payroll'],
                               wechat_template=self.env.ref('tianv_hr_payroll.message_tianv_hr_payslip').id,
                               ).common_apply()
+        return True
