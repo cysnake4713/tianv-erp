@@ -37,22 +37,22 @@ class HrPayslipInherit(models.Model):
     def button_is_confirmed_sheet(self):
         if self.sudo().employee_id.user_id.id == self.env.uid:
             self.sudo().write({'state': 'is_confirmed'})
-            self.with_context(message_groups=['base.group_hr_manager'],
-                              message=u'员工已确认工资单,请确认是否生效',
-                              wechat_code='tianv_hr_payroll.tianv_hr_payroll',
-                              wechat_template=self.env.ref('tianv_hr_payroll.message_tianv_hr_payslip').id,
-                              ).common_apply()
+            self.sudo().with_context(message_groups=['base.group_hr_manager'],
+                                     message=u'员工已确认工资单,请确认是否生效',
+                                     wechat_code='tianv_hr_payroll.tianv_hr_payroll',
+                                     wechat_template=self.env.ref('tianv_hr_payroll.message_tianv_hr_payslip').id,
+                                     ).common_apply()
         return True
 
     @api.multi
     def button_verified(self):
         self.sudo().write({'is_confirmed': True})
         for payslip in self:
-            self.with_context(message_users=[payslip.employee_id.user_id.id],
-                              message=u'工资单已经生效',
-                              wechat_code='tianv_hr_payroll.tianv_hr_payroll',
-                              wechat_template=self.env.ref('tianv_hr_payroll.message_tianv_hr_payslip').id,
-                              ).common_apply()
+            self.sudo().with_context(message_users=[payslip.employee_id.user_id.id],
+                                     message=u'工资单已经生效',
+                                     wechat_code='tianv_hr_payroll.tianv_hr_payroll',
+                                     wechat_template=self.env.ref('tianv_hr_payroll.message_tianv_hr_payslip').id,
+                                     ).common_apply()
         return True
 
     @api.multi
@@ -63,9 +63,9 @@ class HrPayslipInherit(models.Model):
     def hr_verify_sheet(self):
         super(HrPayslipInherit, self).hr_verify_sheet()
         for payslip in self:
-            self.with_context(message_users=[payslip.employee_id.user_id.id],
-                              message=u'您的工资单已经出来,请确认是否正确',
-                              wechat_code=['tianv_hr_payroll.tianv_hr_payroll'],
-                              wechat_template=self.env.ref('tianv_hr_payroll.message_tianv_hr_payslip').id,
-                              ).common_apply()
+            self.sudo().with_context(message_users=[payslip.employee_id.user_id.id],
+                                     message=u'您的工资单已经出来,请确认是否正确',
+                                     wechat_code=['tianv_hr_payroll.tianv_hr_payroll'],
+                                     wechat_template=self.env.ref('tianv_hr_payroll.message_tianv_hr_payslip').id,
+                                     ).common_apply()
         return True

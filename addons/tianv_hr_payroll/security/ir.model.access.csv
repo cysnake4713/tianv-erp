@@ -6,11 +6,27 @@ access_hr_contract_skill,access_hr_contract_skill,model_hr_contract_skill,,1,0,0
 access_hr_contract_skill_admin,access_hr_contract_skill_admin,model_hr_contract_skill,base.group_no_one,1,1,1,1
 
 access_hr_contract_skill,access_hr_contract_skill,model_hr_contract_skill,,1,0,0,0
-access_hr_contract_officer,access_hr_contract_officer,hr_contract.model_hr_contract,base.group_hr_user,1,0,0,0
+access_hr_contract_officer,access_hr_contract_officer,hr_contract.model_hr_contract,base.group_hr_manager,1,0,0,0
 
 access_hr_salary_rule_category_employee,hr.salary.rule.category_employee,hr_payroll.model_hr_salary_rule_category,base.group_user,1,0,0,0
 access_hr_payslip_employee,hr.payslip_employee,hr_payroll.model_hr_payslip,base.group_user,1,0,0,0
 access_hr_payslip_line_employee,hr.payslip.line_employee,hr_payroll.model_hr_payslip_line,base.group_user,1,0,0,0
 access_hr_payslip_input_user_employee,hr.payslip.input.user_employee,hr_payroll.model_hr_payslip_input,base.group_user,1,0,0,0
 access_hr_payslip_worked_days_employee,hr.payslip.worked_days_employee,hr_payroll.model_hr_payslip_worked_days,base.group_user,1,0,0,0
-access_hr_rule_input_hr_user,hr.rule.input_hr_user,hr_payroll.model_hr_rule_input,base.group_hr_user,1,1,1,1
+access_hr_rule_input_hr_user,hr.rule.input_hr_user,hr_payroll.model_hr_rule_input,base.group_hr_user,1,0,0,0
+
+hr_payroll.access_hr_payslip,hr.payslip,hr_payroll.model_hr_payslip,base.group_hr_user,1,0,0,0
+hr_payroll.access_hr_payslip_line,hr.payslip.line,hr_payroll.model_hr_payslip_line,base.group_hr_user,1,0,0,0
+hr_payroll.access_hr_payslip_input_user,hr.payslip.input.user,hr_payroll.model_hr_payslip_input,base.group_hr_user,1,0,0,0
+hr_payroll.access_hr_salary_rule_user,hr.salary.rule.user,hr_payroll.model_hr_salary_rule,base.group_hr_user,1,0,0,0
+hr_payroll.access_hr_payroll_structure,hr.payroll.structure,hr_payroll.model_hr_payroll_structure,base.group_hr_user,1,0,0,0
+hr_payroll.access_hr_contribution_register,hr.contribution.register,hr_payroll.model_hr_contribution_register,base.group_hr_user,1,0,0,0
+hr_payroll.access_hr_salary_rule_category,hr.salary.rule.category,hr_payroll.model_hr_salary_rule_category,base.group_hr_user,1,0,0,0
+
+access_hr_payslip_manager,hr.payslip_manager,hr_payroll.model_hr_payslip,base.group_hr_manager,1,1,1,1
+access_hr_payslip_line_manager,hr.payslip.line_manager,hr_payroll.model_hr_payslip_line,base.group_hr_manager,1,1,1,1
+access_hr_payslip_input_user_manager,hr.payslip.input.user_manager,hr_payroll.model_hr_payslip_input,base.group_hr_manager,1,1,1,1
+access_hr_salary_rule_user_manager,hr.salary.rule.user_manager,hr_payroll.model_hr_salary_rule,base.group_hr_manager,1,1,1,1
+access_hr_payroll_structure_manager,hr.payroll.structure_manager,hr_payroll.model_hr_payroll_structure,base.group_hr_manager,1,1,1,1
+access_hr_contribution_register_manager,hr.contribution.register_manager,hr_payroll.model_hr_contribution_register,base.group_hr_manager,1,1,1,1
+access_hr_salary_rule_category_manager,hr.salary.rule.category_manager,hr_payroll.model_hr_salary_rule_category,base.group_hr_manager,1,1,1,1

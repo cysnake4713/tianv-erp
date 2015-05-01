@@ -8,7 +8,7 @@
             <field name="inherit_id" ref="hr.view_employee_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//page[@string='Personal Information']" position="attributes">
-                    <attribute name="groups">base.group_hr_user,tianv_hr.hr_employee_editor</attribute>
+                    <attribute name="groups">base.group_hr_user</attribute>
                 </xpath>
             </field>
         </record>
