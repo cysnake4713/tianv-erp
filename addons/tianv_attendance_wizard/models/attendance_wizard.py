@@ -50,12 +50,12 @@ class AttendanceWizard(models.TransientModel):
     @api.multi
     def button_generate_social(self):
         self.relative_social = self.env['tianv.social.insurance.record'].search(
-            [('period', '=', self.period.id), ('employee', 'in', [e.id for e in self.employees])])
+            [('period', '=', self.period.id), ('state', '=', 'confirm'), ('employee', 'in', [e.id for e in self.employees])])
         # need_process_employees = self.employees.filtered(lambda employee: employee not in [s.employee for s in self.relative_social])
         # social_config = self.env['tianv.social.insurance.config'].search([('employee', 'in', [c.id for c in need_process_employees])])
         # social_config.with_context(period=self.period.id).generate_insurance_record()
         # self.relative_social = self.env['tianv.social.insurance.record'].search(
-        #     [('period', '=', self.period.id), ('contract', 'in', [e.id for e in self.contracts])])
+        # [('period', '=', self.period.id), ('contract', 'in', [e.id for e in self.contracts])])
 
     @api.multi
     def button_social_to_attendance(self):

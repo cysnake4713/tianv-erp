@@ -22,7 +22,7 @@ class HrEmployee(models.Model):
     def get_insurance_record_by_date(self, date_start, date_end):
         try:
             return self.env['tianv.social.insurance.record'].search(
-                [('period.date_start', '<=', date_start), ('period.date_stop', '>=', date_end)]).ensure_one()
+                [('period.date_start', '<=', date_start), ('period.date_stop', '>=', date_end), ('state', '=', 'confirm')]).ensure_one()
         except Exception:
             raise exceptions.Warning(_("can't find insurance record in period or have multi record for on peroid"))
 
