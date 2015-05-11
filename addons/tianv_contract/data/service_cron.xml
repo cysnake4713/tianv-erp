@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding='UTF-8'?>
+<openerp>
+    <data noupdate="1">
+        <record id="contract_cron_email_template" model="email.template">
+            <field name="name">人资合同提醒</field>
+            <field name="email_from">${(object.user_id.email or object.company_id.email or 'noreply@localhost')|safe}</field>
+            <field name="subject">人资合同提醒 ${user.company_id.name}</field>
+            <field name="email_to">${object.email|safe}</field>
+            <field name="lang">${object.lang}</field>
+            <field name="model_id" ref="base.model_res_users"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html"><![CDATA[
+<h2>以下的雇员合同需要续签:</h2>
+% for employee in ctx["data"]:
+${employee.name}
+% endfor
+            ]]></field>
+        </record>
+
+        <record model="ir.cron" id="service_cron">
+            <field name="name">人资合同提醒</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">work_days</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False"/>
+            <field name="model" eval="'hr.contract'"/>
+            <field name="function" eval="'cron_contract_reminder'"/>
+            <field name="args" eval="'()'" />
+        </record>
+    </data>
+</openerp>

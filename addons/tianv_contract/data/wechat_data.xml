@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data noupdate="1">
+        <record id="map_tianv_hr_contract" model="odoosoft.wechat.enterprise.map">
+            <field name="code">tianv_hr_contract.tianv_hr_contract</field>
+        </record>
+
+        <record id="message_tianv_hr_contract" model="odoosoft.wechat.enterprise.message.template">
+            <field name="name">微信人资合同提醒</field>
+            <field name="title">人资合同提醒</field>
+            <field name="content">
+以下的雇员合同需要续签:
+% for employee in ctx['data']:
+${employee.name}
+% endfor
+            </field>
+        </record>
+    </data>
+</openerp>

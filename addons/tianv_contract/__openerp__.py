@@ -8,8 +8,10 @@
 Tianv Contract Module""",
     'author': 'Matt Cai',
     'website': 'http://odoosoft.com',
-    'depends': ['base', 'hr', 'tianv_hr'],
+    'depends': ['base', 'hr', 'tianv_hr', 'odoosoft_wechat_enterprise'],
     'data': [
+        'data/wechat_data.xml',
+        'data/service_cron.xml',
         'report/report.xml',
         'report/report_contract.xml',
         'views/contract_view.xml',
