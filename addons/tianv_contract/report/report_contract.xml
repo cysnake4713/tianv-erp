@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <template id="report_doc_contract">
+            <t t-call='report.minimal_layout'>
+                <t t-set="css">
+                    body{ padding:20px; margin:0; line-height:200%; font-size:18px; font-family:"仿宋";}
+                    dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,input,form,p{margin:0;padding:0;list-style-type:none;}
+                    h1{ font-family:"黑体";}
+                    .list01{ overflow:hidden;}
+                    .list01 li{ float:left; width:50%; overflow:hidden;}
+                    .list01 li.clid{ width:100%;}
+                </t>
+                <t t-set="body">
+                    <article id="page-news-info" itemtype="http://schema.org/Article" itemscope="itemscope">
+                        <h1 align="center">深圳市劳动合同</h1>
+                        <p>
+                            <br/>
+                        </p>
+
+                        <ul class="list01">
+                            <li>
+                                <strong>甲方(用人单位)</strong>
+                            </li>
+                            <li>
+                                <strong>乙方(员工)</strong>
+                            </li>
+
+                            <li>名称
+                                <u>&nbsp;深圳市天艺网络技术有限公司&nbsp;</u>
+                            </li>
+                            <li>姓名
+                                <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>
+                            </li>
+
+                            <li>法定代表人</li>
+                            <li>身份证（护照）</li>
+
+                            <li>（主要负责人）
+                                <u>&nbsp;&nbsp;黄沂蛟&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>
+                            </li>
+                            <li>号码
+                                <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>
+                            </li>
+
+                            <li>联系人
+                                <u>&nbsp;&nbsp;黄沂蛟&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>
+                            </li>
+                            <li>户籍地址
+                                <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>
+                            </li>
+
+                            <li>联系电话
+                                <u>&nbsp;&nbsp;0755-86226925&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>
+                            </li>
+                            <li>联系电话
+                                <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>
+                            </li>
+
+                            <li class="clid">&nbsp;&nbsp;&nbsp;&nbsp;根据《中华人民共和国劳动法》、《中华人民共和国劳动合同法》、《深圳市员工工资支付条例》等有关法律法规的规定，甲乙双方遵循合法、公平、平等自愿、协商一致、诚实信用的原则，签订本劳动合同，共同遵守本劳动合同所列条款。</li>
+
+                            <li class="clid"><strong>一、</strong>甲乙双方同意按以下第<u>&nbsp;&nbsp;1&nbsp;&nbsp;</u>种方式确定合同期限。
+                            </li>
+                            <li class="clid">1、有固定期限：从<u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>年
+                                <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>
+                                月<u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>日起至<u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>年
+                                <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>
+                                月<u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>日止。
+                            </li>
+                            <li class="clid">2、无固定期限：从<u>&nbsp;&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;&nbsp;</u>年
+                                <u>&nbsp;&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;&nbsp;</u>
+                                月<u>&nbsp;&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;&nbsp;</u>日起。
+                            </li>
+                            <li class="clid">3、以完成一定工作任务为期限<u>&nbsp;&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;&nbsp;</u>年
+                                <u>&nbsp;&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;&nbsp;</u>
+                                月<u>&nbsp;&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;&nbsp;</u>日起至
+                                <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>
+                                工作任务完成时止。
+                            </li>
+
+                            <li class="clid"><strong>二、</strong>乙方的工作内容
+                                <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>
+                                ，工作地点<u>&nbsp;&nbsp;&nbsp;深圳市&nbsp;&nbsp;&nbsp;</u>。
+                            </li>
+
+                            <li class="clid"><strong>三、</strong>乙方依法享有法定节假日、年休假、婚假、产假、丧假等假期。甲乙双方同意按以下第<u>&nbsp;&nbsp;1&nbsp;&nbsp;</u>种方式确定乙方的工作时间。
+                            </li>
+                            <li class="clid">1、标准工时制，即每日工作<u>&nbsp;&nbsp;8&nbsp;&nbsp;</u>小时，每周工作<u>&nbsp;&nbsp;40&nbsp;&nbsp;</u>小时。
+                            </li>
+                            <li class="clid">2、经人力资源保障（劳动）部门批准，实行不定时工作制。</li>
+                            <li class="clid">3、经人力资源保障（劳动）部门批准，实行综合计算工时工作制。</li>
+
+                            <li class="clid"><strong>四、</strong>甲方每月<u>&nbsp;&nbsp;20&nbsp;&nbsp;</u>日左右发放上月工资。甲方经与乙方协商，同意按以下第<u>
+                                &nbsp;&nbsp;1&nbsp;&nbsp;</u>种方式支付乙方的工资。
+                            </li>
+                            <li class="clid">1、乙方每月正常工作时间工资<u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>元。
+                            </li>
+                            <li class="clid">2、双方约定以<u>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>确定乙方工资。
+                            </li>
+
+                            <li class="clid"><strong>五、</strong>甲乙双方按照有关规定缴纳社会保险费。
+                            </li>
+
+                            <li class="clid"><strong>六、</strong>甲方按照劳动保护有关规定，提供符合国家安全卫生标准的劳动作业场所和必要的劳动防护用品，保护乙方的安全和健康。乙方从事<u>
+                                &nbsp;&nbsp;办公室环境&nbsp;&nbsp;</u>作业，可能产生<u>&nbsp;&nbsp;/&nbsp;&nbsp;</u>职业危害。
+                            </li>
+
+                            <li class="clid"><strong>七、</strong>双方认为需要约定的其他事项:
+                            </li>
+                            <li class="clid">
+                                <u>任职期间必须遵守甲方的保密规章、制度，履行与其工作岗位相应的保密职责。公司实行单双周休息方式,即单周六上班。</u>
+                            </li>
+
+                            <li class="clid"><strong>八、</strong>本合同未尽事宜，按现行法律法规执行。本合同一式两份，甲乙双方各执一份。
+                            </li>
+
+                            <li>
+                                <p>
+                                    <br/>
+                                </p>
+                                甲方：（盖章）
+                                <p>
+                                    <br/>
+                                </p>
+                            </li>
+                            <li>
+                                <p>
+                                    <br/>
+                                </p>
+                                乙方：（签名）
+                                <p>
+                                    <br/>
+                                </p>
+                            </li>
+
+                            <li class="clid">法定代表人（主要负责人）：</li>
+
+                            <li>
+                                <p>
+                                    <br/>
+                                </p>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;年&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;月&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;日
+                                <p>
+                                    <br/>
+                                </p>
+                            </li>
+                            <li>
+                                <p>
+                                    <br/>
+                                </p>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;年&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;月&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;日
+                                <p>
+                                    <br/>
+                                </p>
+                            </li>
+
+                        </ul>
+
+                    </article>
+                </t>
+            </t>
+        </template>
+    </data>
+</openerp>

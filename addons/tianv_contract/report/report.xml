@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <!-- QWeb Reports -->
+        <report
+                id="action_report_contract"
+                model="hr.contract"
+                report_type="qweb-pdf"
+                string="合同打印"
+                name="tianv_contract.report_doc_contract"
+                file="tianv_contract.report_doc_contract"
+                />
+    </data>
+</openerp>
