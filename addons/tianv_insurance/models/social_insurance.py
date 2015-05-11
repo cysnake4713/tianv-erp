@@ -54,7 +54,12 @@ class SocialInsuranceConfig(models.Model):
 
     @api.model
     def cron_generate_insurance(self):
-        self.search([('active', '=', True)]).generate_insurance_record()
+        import time
+
+        last_month = time.localtime()[1] - 1 or 12
+        need_compute_date = '%s-%s-01' % (time.localtime()[0], last_month)
+        period = self.env['account.period'].search([('date_start', '<=', need_compute_date), ('date_stop', '>=', need_compute_date)])
+        self.search([('active', '=', True)]).with_context(period=period.id).generate_insurance_record()
 
     @api.multi
     def generate_insurance_record(self):

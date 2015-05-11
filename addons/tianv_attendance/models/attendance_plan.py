@@ -68,8 +68,11 @@ class AttendancePlan(models.Model):
 
     @api.model
     def cron_generate_record(self):
-        contracts = self.env['hr.contract'].search([('date_start', '<=', fields.Datetime.now()), ('date_end', '>=', fields.Datetime.now())])
-        period = self.env['account.period'].search([('date_start', '<=', fields.Datetime.now()), ('date_stop', '>=', fields.Datetime.now())])
+        import time
+        last_month = time.localtime()[1] - 1 or 12
+        need_compute_date = '%s-%s-01' % (time.localtime()[0], last_month)
+        contracts = self.env['hr.contract'].search([('date_start', '<=', need_compute_date), ('date_end', '>=', need_compute_date)])
+        period = self.env['account.period'].search([('date_start', '<=', need_compute_date), ('date_stop', '>=', need_compute_date)])
         relative_attendances = self.env['tianv.hr.attendance.record'].search(
             [('period', '=', period.id), ('contract', 'in', [e.id for e in contracts])])
         need_process_contracts = contracts.filtered(lambda c: c not in [s.contract for s in relative_attendances])
