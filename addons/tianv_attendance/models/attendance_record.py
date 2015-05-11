@@ -22,12 +22,15 @@ def get_workdays(start, end, holidays=0, days_off=None):
 
 class AttendanceRecord(models.Model):
     _name = 'tianv.hr.attendance.record'
+    _inherit = 'odoosoft.workflow.abstract'
     _rec_name = 'employee'
     _order = 'period desc'
     _description = 'Attendance Record'
 
+    state = fields.Selection([('draft', 'Draft'), ('processed', 'Processed'), ('confirm', 'Confirm')], 'State', default='draft')
     contract = fields.Many2one('hr.contract', 'Contract', required=True)
     employee = fields.Many2one('hr.employee', 'Employee', readonly=True, compute='_compute_info')
+    employee_user = fields.Many2one('res.users', 'Employee User', related='employee.user_id')
     period = fields.Many2one('account.period', 'Plan Period', required=True)
 
     legal_hour = fields.Float('Legal Total Hours', digits=(12, 1), readonly=True, compute='_compute_info')

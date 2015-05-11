@@ -11,6 +11,7 @@
                     <field name="legal_hour"/>
                     <field name="min_hour"/>
                     <field name="actual_hour"/>
+                    <field name="state"/>
                 </tree>
             </field>
         </record>
@@ -27,6 +28,7 @@
                     <field name="min_hour"/>
                     <field name="actual_hour"/>
                     <field name="plan"/>
+                    <field name="state"/>
                 </search>
             </field>
         </record>
@@ -38,13 +40,34 @@
             <field name="arch" type="xml">
                 <form>
                     <header>
+                        <button name="sudo_common_apply" string="确认草稿" type="object" class="oe_highlight"
+                                states_editable="{'draft':{'users':[employee_user]}}"
+                                context="{
+                                'state': 'processed',
+                                'message_groups': [%(tianv_attendance.group_attendance_admin)d],
+                                'message': '有新考勤确认申请,请处理',
+                                }"/>
+                        <button name="sudo_common_apply" string="审批通过" type="object" class="oe_highlight"
+                                states_editable="{'processed':{'groups':[%(tianv_attendance.group_attendance_admin)d]}}"
+                                context="{
+                                'state': 'confirm',
+                                }"/>
+                        <button name="sudo_common_reject" string="重设草稿" type="object"
+                                states_editable="{'processed':{'groups':[%(tianv_attendance.group_attendance_admin)d]},
+                                        'confirm':{'users':[employee_user]},}"
+                                context="{
+                                'state': 'draft',
+                                }"/>
+
                         <button name="button_generate_record" type="object" string="重新生成考勤记录" class="oe_highlight"
                                 confirm="生成考勤记录会清除原有记录!" groups="tianv_attendance.group_attendance_admin"/>
                         <button name="button_clean" type="object" string="清除" confirm="会清除所有记录!" groups="tianv_attendance.group_attendance_admin"/>
+                        <field name="state" widget="statusbar" readonly="1"/>
                     </header>
                     <sheet>
                         <group col="4">
                             <field name="employee"/>
+                            <field name="employee_user" invisible="1"/>
                             <field name="contract" groups="tianv_attendance.group_attendance_admin"/>
                             <field name="period"/>
                             <field name="plan" readonly="1"/>

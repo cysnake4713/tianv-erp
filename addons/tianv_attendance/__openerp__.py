@@ -9,7 +9,7 @@ Tianv Attendance Module
 """,
     'author': 'Matt Cai',
     'website': 'http://odoosoft.com',
-    'depends': ['base', 'hr', 'account', 'tianv_machine', 'hr_holidays'],
+    'depends': ['base', 'hr', 'account', 'tianv_machine', 'hr_holidays', 'odoosoft_workflow'],
     'data': [
         'security/security.xml',
         'security/ir.model.access.csv',
