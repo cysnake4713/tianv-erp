@@ -66,6 +66,20 @@ class AttendancePlan(models.Model):
                 self.env['tianv.hr.attendance.plan.line'].create(value)
         return True
 
+    @api.model
+    def cron_generate_record(self):
+        contracts = self.env['hr.contract'].search([('date_start', '<=', fields.Datetime.now()), ('date_end', '>=', fields.Datetime.now())])
+        period = self.env['account.period'].search([('date_start', '<=', fields.Datetime.now()), ('date_stop', '>=', fields.Datetime.now())])
+        relative_attendances = self.env['tianv.hr.attendance.record'].search(
+            [('period', '=', period.id), ('contract', 'in', [e.id for e in contracts])])
+        need_process_contracts = contracts.filtered(lambda c: c not in [s.contract for s in relative_attendances])
+        for contract in need_process_contracts:
+            try:
+                new_attendance_record = self.env['tianv.hr.attendance.record'].create({'contract': contract.id, 'period': period.id})
+                new_attendance_record.button_generate_record()
+            except Exception:
+                pass
+
 
 class AttendancePlanLine(models.Model):
     _name = 'tianv.hr.attendance.plan.line'

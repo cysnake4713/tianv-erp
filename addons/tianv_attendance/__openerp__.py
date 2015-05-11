@@ -11,6 +11,7 @@ Tianv Attendance Module
     'website': 'http://odoosoft.com',
     'depends': ['base', 'hr', 'account', 'tianv_machine', 'hr_holidays', 'odoosoft_workflow'],
     'data': [
+        'data/cron.xml',
         'security/security.xml',
         'security/ir.model.access.csv',
         'data/data.xml',
