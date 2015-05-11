@@ -77,7 +77,7 @@ result = categories.BASIC / plan_hour
             <field name="sequence">18</field>
             <field name="category_id" ref="tianv_hr_payroll.INSURANCE"/>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = contract.get_insurance_record_by_date(payslip.date_from, payslip.date_to).company_total
+            <field name="amount_python_compute">result = employee.get_insurance_record_by_date(payslip.date_from, payslip.date_to).company_total
             </field>
         </record>
         <record id="tianv_payroll_rule_insurance_employee" model="hr.salary.rule">
@@ -86,7 +86,7 @@ result = categories.BASIC / plan_hour
             <field name="sequence">20</field>
             <field name="category_id" ref="tianv_hr_payroll.INSURANCE"/>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = contract.get_insurance_record_by_date(payslip.date_from, payslip.date_to).personal_total
+            <field name="amount_python_compute">result = employee.get_insurance_record_by_date(payslip.date_from, payslip.date_to).personal_total
             </field>
         </record>
 

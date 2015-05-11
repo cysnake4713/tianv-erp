@@ -13,13 +13,6 @@ class HrContract(models.Model):
     skill = fields.Many2one('hr.contract.skill', 'Skill', required=True)
 
     @api.multi
-    def get_insurance_record_by_date(self, date_start, date_end):
-        try:
-            return self.social_insurance.records.filtered(lambda r: r.period.date_start <= date_start and r.period.date_stop >= date_end).ensure_one()
-        except Exception:
-            raise exceptions.Warning(_("can't find insurance record in period or have multi record for on peroid"))
-
-    @api.multi
     def get_attendance_record_by_date(self, date_start, date_end):
         try:
             period = self.env['account.period'].search([('date_start', '<=', date_start), ('date_stop', '=', date_end)]).ensure_one()

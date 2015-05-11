@@ -18,4 +18,12 @@ class HrEmployee(models.Model):
         end_date = fields.Date.from_string(end_date_string)
         return rrule.rrule(rrule.MONTHLY, dtstart=start_date, until=end_date).count()
 
+    @api.multi
+    def get_insurance_record_by_date(self, date_start, date_end):
+        try:
+            return self.env['tianv.social.insurance.record'].search(
+                [('period.date_start', '<=', date_start), ('period.date_stop', '>=', date_end)]).ensure_one()
+        except Exception:
+            raise exceptions.Warning(_("can't find insurance record in period or have multi record for on peroid"))
+
 
