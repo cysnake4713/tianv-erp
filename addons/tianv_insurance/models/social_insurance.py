@@ -13,8 +13,7 @@ class SocialInsuranceConfig(models.Model):
 
     _inherit = 'mail.thread'
 
-    contract = fields.Many2one('hr.contract', 'Hr Contract', track_visibility='onchange')
-    employee = fields.Many2one('hr.employee', 'Hr Employee', readonly=True, compute='_compute_total')
+    employee = fields.Many2one('hr.employee', 'Hr Employee', required=True)
     computer_code = fields.Char('Computer Code', track_visibility='onchange')
     census_type = fields.Selection([('city', u'市内城镇'), ('country', u'市外农村')], 'Census Type', track_visibility='onchange')
     lines = fields.One2many('tianv.social.insurance.line', 'config', 'Config Lines')
@@ -37,14 +36,13 @@ class SocialInsuranceConfig(models.Model):
             config.personal_total = personal_total
             config.company_total = company_total
             config.total = config.personal_total + config.company_total
-            config.employee = config.sudo().contract.employee_id
 
 
     @api.one
-    @api.constrains('contract', 'active')
-    def _check_contract(self):
-        if self.contract and self.search([('id', '!=', self.id), ('contract', '=', self.contract.id), ('active', '=', True)]):
-            raise Warning(_('Contract already have a active social insurance config, please inactive old one or change the contract'))
+    @api.constrains('employee', 'active')
+    def _check_employee(self):
+        if self.employee and self.search([('id', '!=', self.id), ('employee', '=', self.employee.id), ('active', '=', True)]):
+            raise Warning(_('Employee already have a active social insurance config, please inactive old one or change the Employee'))
 
     @api.multi
     def name_get(self):
@@ -63,7 +61,7 @@ class SocialInsuranceConfig(models.Model):
             period = self.env.context['period']
         for config in self:
             data = {
-                'contract': config.contract.id,
+                'employee': config.employee.id,
                 'computer_code': config.computer_code,
                 'census_type': config.census_type,
                 'period': period,
@@ -111,18 +109,18 @@ class SocialInsuranceRecord(models.Model):
     _inherit = 'tianv.social.insurance.config'
     _description = 'Social Insurance Record'
 
-    _order = 'period desc, contract desc'
+    _order = 'period desc, employee desc'
 
     config = fields.Many2one('tianv.social.insurance.config', 'Relative insurance Config')
     lines = fields.One2many('tianv.social.insurance.record.line', 'record', 'Record Lines')
     period = fields.Many2one('account.period', 'Account Period')
 
     @api.one
-    @api.constrains('contract', 'period', 'active')
-    def _check_contract(self):
-        if self.contract and self.period and \
-                self.search([('id', '!=', self.id), ('contract', '=', self.contract.id), ('period', '=', self.period.id), ('active', '=', True)]):
-            raise Warning(_('A active same period and contract insurance record exist! remove or inactive old one before create'))
+    @api.constrains('employee', 'period', 'active')
+    def _check_employee(self):
+        if self.employee and self.period and \
+                self.search([('id', '!=', self.id), ('employee', '=', self.employee.id), ('period', '=', self.period.id), ('active', '=', True)]):
+            raise Warning(_('A active same period and employee insurance record exist! remove or inactive old one before create'))
 
     @api.multi
     def write_back_info(self):
@@ -130,7 +128,7 @@ class SocialInsuranceRecord(models.Model):
             config = self.config
             if config:
                 data = {
-                    'contract': record.contract.id,
+                    'employee': record.employee.id,
                     'computer_code': record.computer_code,
                     'census_type': record.census_type,
                 }

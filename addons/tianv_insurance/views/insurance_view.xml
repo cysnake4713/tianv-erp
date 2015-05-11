@@ -16,7 +16,6 @@
             <field name="model">tianv.social.insurance.config</field>
             <field name="arch" type="xml">
                 <tree>
-                    <field name="contract"/>
                     <field name="employee"/>
                     <field name="computer_code"/>
                     <field name="census_type"/>
@@ -32,7 +31,6 @@
             <field name="model">tianv.social.insurance.config</field>
             <field name="arch" type="xml">
                 <search>
-                    <field name="contract"/>
                     <field name="employee"/>
                     <field name="computer_code"/>
                     <field name="census_type"/>
@@ -53,7 +51,6 @@
                     </header>
                     <sheet>
                         <group>
-                            <field name="contract"/>
                             <field name="employee"/>
                             <field name="computer_code"/>
                             <field name="census_type"/>
@@ -73,7 +70,6 @@
                         <field name="records">
                             <tree>
                                 <field name="period"/>
-                                <field name="contract"/>
                                 <field name="census_type"/>
                                 <field name="personal_total"/>
                                 <field name="company_total"/>
