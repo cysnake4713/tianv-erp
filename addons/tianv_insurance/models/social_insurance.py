@@ -106,11 +106,12 @@ class SocialInsuranceConfig(models.Model):
 
 class SocialInsuranceRecord(models.Model):
     _name = 'tianv.social.insurance.record'
-    _inherit = 'tianv.social.insurance.config'
+    _inherit = ['odoosoft.workflow.abstract', 'tianv.social.insurance.config']
     _description = 'Social Insurance Record'
 
     _order = 'period desc, employee desc'
 
+    state = fields.Selection([('draft', 'Draft'), ('processed', 'Processed'), ('confirm', 'Confirm')], 'State', default='draft')
     config = fields.Many2one('tianv.social.insurance.config', 'Relative insurance Config')
     lines = fields.One2many('tianv.social.insurance.record.line', 'record', 'Record Lines')
     period = fields.Many2one('account.period', 'Account Period')

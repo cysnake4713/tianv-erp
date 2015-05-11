@@ -14,6 +14,7 @@
                     <field name="personal_total"/>
                     <field name="company_total"/>
                     <field name="total"/>
+                    <field name="state"/>
                 </tree>
             </field>
         </record>
@@ -31,6 +32,7 @@
                     <field name="personal_total"/>
                     <field name="company_total"/>
                     <field name="total"/>
+                    <field name="state"/>
                 </search>
             </field>
         </record>
@@ -41,9 +43,29 @@
             <field name="arch" type="xml">
                 <form>
                     <header>
+                        <button name="common_apply" string="确认草稿" type="object" class="oe_highlight"
+                                states_editable="{'draft':{'groups':[%(tianv_insurance.group_insurance_admin)d]}}"
+                                context="{
+                                'state': 'processed',
+                                'message_groups': [%(tianv_insurance.group_insurance_approver)d],
+                                'message': '有新的社保记录审批请求,请处理',
+                                }"/>
+                        <button name="common_apply" string="审批通过" type="object" class="oe_highlight"
+                                states_editable="{'processed':{'groups':[%(tianv_insurance.group_insurance_approver)d]}}"
+                                context="{
+                                'state': 'confirm',
+                                }"/>
+                        <button name="common_reject" string="重设草稿" type="object"
+                                states_editable="{'processed':{'groups':[%(tianv_insurance.group_insurance_admin)d]},
+                                        'confirm':{'groups':[%(tianv_insurance.group_insurance_approver)d]},}"
+                                context="{
+                                'state': 'draft',
+                                }"/>
+
                         <button string="回写当前数据" name="write_back_info" type="object"
                                 groups="tianv_insurance.group_insurance_admin"
                                 confirm="注意:一经确认,此合同新生成的社保记录会使用此条目数值,请谨慎使用."/>
+                        <field name="state" widget="statusbar" readonly="1"/>
                     </header>
                     <sheet>
                         <group>

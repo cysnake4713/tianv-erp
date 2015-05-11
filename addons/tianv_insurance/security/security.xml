@@ -5,6 +5,10 @@
             <field name="name">可以修改社保记录</field>
             <field name="category_id" ref="base.module_category_attendance"/>
         </record>
+        <record model="res.groups" id="group_insurance_approver">
+            <field name="name">可以审批通过社保记录</field>
+            <field name="category_id" ref="base.module_category_attendance"/>
+        </record>
     </data>
 
     <data>
