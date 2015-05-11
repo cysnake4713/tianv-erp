@@ -14,5 +14,36 @@
 发票日期:  ${object.date_invoice}
             </field>
         </record>
+
+        <record id="message_template_service" model="odoosoft.wechat.enterprise.message.template">
+            <field name="name">微信服务过期提醒</field>
+            <field name="title">服务过期提醒</field>
+            <field name="content">
+<![CDATA[
+% macro account_table(values):
+    % for partner, accounts in values:
+        % for account in accounts:
+${partner.name} ${account.date_start} 至 ${account.date and account.date or '???'}
+        % endfor
+    % endfor
+% endmacro
+
+% if "new" in ctx["data"]:
+以下的服务刚刚过期:
+${account_table(ctx["data"]["new"].iteritems())}
+% endif
+
+% if "old" in ctx["data"]:
+以下的服务仍然没有处理:
+${account_table(ctx["data"]["old"].iteritems())}
+% endif
+
+% if "future" in ctx["data"]:
+以下的服务将在一个月内过期:
+${account_table(ctx["data"]["future"].iteritems())}
+% endif
+            ]]>
+            </field>
+        </record>
     </data>
 </openerp>
