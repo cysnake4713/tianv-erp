@@ -5,13 +5,18 @@ __author__ = 'cysnake4713'
 from openerp import tools
 from openerp import models, fields, api
 from openerp.tools.translate import _
+from datetime import date
 
 
 class DocTransform(report_sxw.rml_parse):
     def set_context(self, objects, data, ids, report_type=None):
 
+        def format_date(n_date):
+            return fields.Date.from_string(n_date)
+
         self.localcontext.update({
             'object': self.pool['hr.contract'].browse(self.cr, self.uid, ids[0], context=self.localcontext),
+            'format_date': format_date,
 
         })
         return super(DocTransform, self).set_context(objects, data, ids, report_type=report_type)

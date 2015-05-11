@@ -10,8 +10,8 @@ Tianv Hr Module""",
     'website': 'http://odoosoft.com',
     'depends': ['base', 'hr'],
     'data': [
-        'security/security.xml',
-        'security/ir.model.access.csv',
+        # 'security/security.xml',
+        # 'security/ir.model.access.csv',
         'views/hr_view.xml',
 
     ],

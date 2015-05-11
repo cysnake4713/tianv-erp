@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <!-- Inherit Form View to Modify it -->
+        <record id="view_contract_form_inherit" model="ir.ui.view">
+            <field name="name">view.hr.contract.form.inherit</field>
+            <field name="model">hr.contract</field>
+            <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
+            <field name="arch" type="xml">
+                <field name="notes" position="after">
+                    <group string="工作内容">
+                        <field name="work_info" nolabel="1"/>
+                    </group>
+                </field>
+                <field name="wage" position="after">
+                    <field name="contract_wage"/>
+                </field>
+            </field>
+        </record>
+    </data>
+</openerp>

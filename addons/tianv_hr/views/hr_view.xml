@@ -7,9 +7,9 @@
             <field name="model">hr.employee</field>
             <field name="inherit_id" ref="hr.view_employee_form"/>
             <field name="arch" type="xml">
-                <xpath expr="//page[@string='Personal Information']" position="attributes">
-                    <attribute name="groups">base.group_hr_user</attribute>
-                </xpath>
+                <field name="identification_id" position="after">
+                    <field name="residence_address"/>
+                </field>
             </field>
         </record>
     </data>

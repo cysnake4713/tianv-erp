@@ -8,10 +8,11 @@
 Tianv Contract Module""",
     'author': 'Matt Cai',
     'website': 'http://odoosoft.com',
-    'depends': ['base', 'hr_contract'],
+    'depends': ['base', 'hr', 'tianv_hr'],
     'data': [
         'report/report.xml',
         'report/report_contract.xml',
+        'views/contract_view.xml',
     ],
     'qweb': [
         'static/src/xml/*.xml',
