@@ -13,7 +13,7 @@ class ContractInherit(models.Model):
     _order = 'date_end desc'
 
     work_info = fields.Char('Work Info')
-    contract_wage = fields.Float('Contract Wage')
+    contract_wage = fields.Float('Contract Wage', digits=(12, 2))
 
     @api.model
     def cron_contract_reminder(self):
