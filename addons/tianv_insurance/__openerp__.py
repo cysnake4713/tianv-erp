@@ -11,6 +11,7 @@ Tianv Social Insurance Module
     'website': 'http://odoosoft.com',
     'depends': ['base', 'hr', 'account', 'mail', 'odoosoft_workflow'],
     'data': [
+        'data/cron.xml',
         'security/security.xml',
         'security/ir.model.access.csv',
         #

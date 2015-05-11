@@ -52,6 +52,10 @@ class SocialInsuranceConfig(models.Model):
             result.append((record.id, name % (record.total, record.company_total, record.personal_total)))
         return result
 
+    @api.model
+    def cron_generate_insurance(self):
+        self.search([('active', '=', True)]).generate_insurance_record()
+
     @api.multi
     def generate_insurance_record(self):
         if 'period' not in self.env.context:
@@ -60,12 +64,14 @@ class SocialInsuranceConfig(models.Model):
         else:
             period = self.env.context['period']
         for config in self:
+            if config.records.filtered(lambda r: r.period.id == period):
+                continue
             data = {
                 'employee': config.employee.id,
                 'computer_code': config.computer_code,
                 'census_type': config.census_type,
                 'period': period,
-                'config': self.id,
+                'config': config.id,
             }
             record = self.env['tianv.social.insurance.record'].create(data)
             for line in config.lines:
