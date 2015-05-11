@@ -5,10 +5,12 @@ from openerp import tools
 from openerp import models, fields, api
 from openerp.tools.translate import _
 from datetime import date
+from datetime import timedelta
 
 
 class ContractInherit(models.Model):
     _inherit = 'hr.contract'
+    _order = 'date_end desc'
 
     work_info = fields.Char('Work Info')
     contract_wage = fields.Float('Contract Wage')
@@ -19,7 +21,7 @@ class ContractInherit(models.Model):
         need_process_employee = []
         for employee in employees:
             if employee.contract_id is not None and employee.contract_id.date_end and fields.Date.from_string(
-                    employee.contract_id.date_end) <= date.today():
+                    employee.contract_id.date_end) <= date.today() - timedelta(days=10):
                 need_process_employee += [employee]
 
         if need_process_employee:
