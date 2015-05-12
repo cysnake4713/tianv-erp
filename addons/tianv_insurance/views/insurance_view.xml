@@ -1,6 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
+        <record id="view_social_insurance_wizard_form" model="ir.ui.view">
+            <field name="name">view.tianv.social.insurance.wizard.form</field>
+            <field name="model">tianv.social.insurance.wizard</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group col="4">
+                        <field name="start_period"/>
+                        <field name="end_period"/>
+                    </group>
+                    <footer>
+                        <button name="button_confirm" type="object" string="确认"/>
+                        or
+                        <button name="cancel" type="special" string="取消" class="oe_link"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <record id="action_social_insurance_wizard" model="ir.actions.act_window">
+            <field name="name">社保记录批量生成</field>
+            <field name="res_model">tianv.social.insurance.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
         <record id="view_social_insurance_type_tree" model="ir.ui.view">
             <field name="name">view.tianv.social.insurance.type.tree</field>
             <field name="model">tianv.social.insurance.type</field>
@@ -47,7 +71,8 @@
             <field name="arch" type="xml">
                 <form>
                     <header>
-                        <button string="根据此配置生成当月社保记录" name="generate_insurance_record" type="object" groups="tianv_insurance.group_insurance_admin"/>
+                        <button string="根据此配置生成社保记录" name="%(action_social_insurance_wizard)d" type="action"
+                                groups="tianv_insurance.group_insurance_admin"/>
                     </header>
                     <sheet>
                         <group>

@@ -199,3 +199,23 @@ class SocialInsuranceType(models.Model):
     name = fields.Char('Name', required=True)
 
     _sql_constraints = [('social_insurance_type_name_unique', 'unique(name)', _('name must be unique !'))]
+
+
+class InsuranceWizard(models.TransientModel):
+    _name = 'tianv.social.insurance.wizard'
+    _rec_name = 'start_period'
+    _description = 'Social Insurance Wizard'
+
+    start_period = fields.Many2one('account.period', 'Start Period', required=True)
+    end_period = fields.Many2one('account.period', 'End Period', required=True)
+
+    @api.multi
+    def button_confirm(self):
+        periods = self.env['account.period'].search(
+            [('date_start', '>=', self.start_period.date_start), ('date_stop', '<=', self.end_period.date_stop)])
+        periods = periods.filtered(lambda p: p.date_start != p.date_stop)
+        if not periods:
+            raise exceptions.Warning(_('no period found!'))
+        for period in periods:
+            config = self.env['tianv.social.insurance.config'].browse(self.env.context['active_id'])
+            config.with_context(period=period.id).generate_insurance_record()
