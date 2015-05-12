@@ -10,6 +10,25 @@
                 <field name="identification_id" position="after">
                     <field name="residence_address"/>
                 </field>
+                <xpath expr="//group[@string='Birth']" position="before">
+                    <group string="详细信息">
+                        <field name="nationality"/>
+                        <field name="school"/>
+                        <field name="educational"/>
+                        <field name="major"/>
+                        <field name="language_skill"/>
+                        <field name="basic_english"/>
+                        <field name="qq_id"/>
+                        <field name="wechat_id"/>
+                        <field name="person_mail"/>
+                        <field name="family_members"/>
+                    </group>
+                </xpath>
+                <xpath expr="//group[@string='Birth']" position="after">
+                    <group colspan="2" string="相关附件">
+                        <field name="attachments" widget="many2many_binary"/>
+                    </group>
+                </xpath>
             </field>
         </record>
     </data>
