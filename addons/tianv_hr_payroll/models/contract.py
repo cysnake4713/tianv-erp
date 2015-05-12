@@ -18,7 +18,15 @@ class HrContract(models.Model):
             period = self.env['account.period'].search([('date_start', '<=', date_start), ('date_stop', '=', date_end)]).ensure_one()
             return self.env['tianv.hr.attendance.record'].search([('period', '=', period.id), ('contract', '=', self.id)]).ensure_one()
         except Exception:
-            raise exceptions.Warning(_("can't find insurance record in period or have multi record for on peroid"))
+            raise exceptions.Warning(_("can't find attendance record in period or have multi record for on period"))
+
+    @api.multi
+    def get_attendance_plan_by_date(self, date_start, date_end):
+        try:
+            period = self.env['account.period'].search([('date_start', '<=', date_start), ('date_stop', '=', date_end)]).ensure_one()
+            return self.env['tianv.hr.attendance.plan'].search([('period', '=', period.id)]).ensure_one()
+        except Exception:
+            raise exceptions.Warning(_("can't find attendance plan in period or have multi record for on period"))
 
 
 class HrContractJob(models.Model):

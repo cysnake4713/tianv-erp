@@ -66,7 +66,7 @@
             <field name="category_id" ref="tianv_hr_payroll.BASIC_HOUR"/>
             <field name="amount_select">code</field>
             <field name="amount_python_compute">
-plan_hour = contract.get_attendance_record_by_date(payslip.date_from, payslip.date_to).plan_hour
+plan_hour = contract.get_attendance_plan_by_date(payslip.date_from, payslip.date_to).actual_hour
 result = categories.BASIC / plan_hour
             </field>
         </record>
