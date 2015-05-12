@@ -8,9 +8,8 @@ from openerp.tools.translate import _
 from datetime import date
 
 
-class DocTransform(report_sxw.rml_parse):
+class ContractTrial(report_sxw.rml_parse):
     def set_context(self, objects, data, ids, report_type=None):
-
         def format_date(n_date):
             return fields.Date.from_string(n_date)
 
@@ -19,11 +18,18 @@ class DocTransform(report_sxw.rml_parse):
             'format_date': format_date,
 
         })
-        return super(DocTransform, self).set_context(objects, data, ids, report_type=report_type)
+        return super(ContractTrial, self).set_context(objects, data, ids, report_type=report_type)
 
 
 class ReportTimetable(models.AbstractModel):
     _name = 'report.tianv_contract.report_doc_contract'
     _inherit = 'report.abstract_report'
     _template = 'tianv_contract.report_doc_contract'
-    _wrapped_report_class = DocTransform
+    _wrapped_report_class = ContractTrial
+
+
+class ReportContract(models.AbstractModel):
+    _name = 'report.tianv_contract.report_doc_contract_trial'
+    _inherit = 'report.abstract_report'
+    _template = 'tianv_contract.report_doc_contract_trial'
+    _wrapped_report_class = ContractTrial

@@ -14,6 +14,7 @@ Tianv Contract Module""",
         'data/service_cron.xml',
         'report/report.xml',
         'report/report_contract.xml',
+        'report/report_contract_trial.xml',
         'views/contract_view.xml',
     ],
     'qweb': [

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <template id="report_doc_contract_trial">
+            <t t-call='report.minimal_layout'>
+                <t t-set="css">
+                    body{ padding:20px; margin:0; line-height:200%; font-size:18px; font-family:"仿宋";}
+                    dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,input,form,p{margin:0;padding:0;list-style-type:none;}
+                    h1{ font-family:"黑体";}
+                    .list01{ overflow:hidden;}
+                    .list01 li{ float:left; width:50%; overflow:hidden;}
+                    .list01 li.clid{ width:100%;}
+                </t>
+                <t t-set="body">
+                    <div class="page">
+                        <article id="page-news-info" itemtype="http://schema.org/Article" itemscope="itemscope">
+
+                            <h1 align="center">试用协议书</h1>
+                            <p>
+                                <br/>
+                            </p>
+
+                            <ul class="list01">
+                                <li class="clid">今承<u>深圳市天艺网络技术有限公司</u>（以下简称公司）任用，自愿签订本协议，遵守本协议所列条款，忠诚服务：
+                                </li>
+
+                                <li class="clid"><strong>一、</strong>遵守公司的章程和各项规章制度，服从公司工作调遣指示。
+                                </li>
+
+                                <li class="clid"><strong>二、</strong>严守职务机密。
+                                </li>
+
+                                <li class="clid"><strong>三、</strong>愿按公司规定，自开始服务之日起：
+                                </li>
+                                <li class="clid">试用期薪资为<u t-field="object.contract_wage"/>元人民币，试用期从<u t-esc="format_date(object.date_start).year"/>年
+                                    <u t-esc="format_date(object.date_start).month"/>
+                                    月<u t-esc="format_date(object.date_start).day"/>日起至<u t-esc="format_date(object.date_end).year"/>年
+                                    <u t-esc="format_date(object.date_end).month"/>
+                                    月<u t-esc="format_date(object.date_end).day"/>日。可经考核合格，始得正式录用。
+                                </li>
+
+
+                                <li class="clid"><strong>四、</strong>勤奋工作，按质按量完成公司布置的各项工作任务。工作中应积极思考，善于发现问题，并提出合理化建议。
+                                </li>
+
+                                <li class="clid"><strong>五、</strong>公司可因试用不合格，随时通知停止试用，或于试用期满因情况变更暂不正式任用时，服从公司决定，离职时决不请求任何补助，并保证做好工作交接。
+                                </li>
+
+                                <li class="clid"><strong>六、</strong>试用期不享受公司任何劳保福利待遇（特殊岗位另定）及人事支持，本人与原单位的关系，自行解决。
+                                </li>
+
+                                <li class="clid"><strong>七、</strong>试用期满正式录用后，如未能符合公司要求时，按公司有关规定接受公司迁调或解聘。
+                                </li>
+
+                                <li class="clid"><strong>八、</strong>如有损毁或遗失公司设备财产时，愿意照公司估定价值，与担保人承担连带赔偿责任。
+                                </li>
+
+                                <li class="clid"><strong>九、</strong>本人同意经公司录用开始服务后，中途如因故必须离职时应尽快提出辞职申请，并积极配合交接工作，经批准后方可离开工作岗位，否则依公司规定以旷工处理。
+                                </li>
+
+                                <li>
+                                    <p>
+                                        <br/>
+                                    </p>
+                                    公司（盖章）
+                                </li>
+                                <li>
+                                    <p>
+                                        <br/>
+                                    </p>
+                                    立书人：（签字）
+                                </li>
+
+                                <li>代表人（签字）</li>
+                                <li>&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;年&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;月&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;日</li>
+
+                            </ul>
+
+                        </article>
+                    </div>
+                </t>
+            </t>
+        </template>
+    </data>
+</openerp>

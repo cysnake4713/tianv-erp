@@ -6,9 +6,18 @@
                 id="action_report_contract"
                 model="hr.contract"
                 report_type="qweb-pdf"
-                string="合同打印"
+                string="正式合同打印"
                 name="tianv_contract.report_doc_contract"
                 file="tianv_contract.report_doc_contract"
+                />
+
+        <report
+                id="action_report_contract_trial"
+                model="hr.contract"
+                report_type="qweb-pdf"
+                string="试用合同打印"
+                name="tianv_contract.report_doc_contract_trial"
+                file="tianv_contract.report_doc_contract_trial"
                 />
     </data>
 </openerp>
