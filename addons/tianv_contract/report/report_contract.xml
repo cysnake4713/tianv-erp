@@ -65,7 +65,7 @@
                                     月<u t-esc="format_date(object.date_end).day"/>日止。
                                 </li>
                                 <li class="clid"><strong>二、</strong>乙方的工作内容
-                                    <u t-field="object.work_info"/>
+                                    <u t-field="object.employee_id.department_id"/><u t-field="object.employee_id.job_id"/>
                                     ，工作地点<u>深圳市</u>。
                                 </li>
 
