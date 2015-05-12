@@ -13,7 +13,7 @@
                     <footer>
                         <button name="button_confirm" type="object" string="确认"/>
                         or
-                        <button name="cancel" type="special" string="取消" class="oe_link"/>
+                        <button special="cancel" string="取消" class="oe_link"/>
                     </footer>
                 </form>
             </field>
