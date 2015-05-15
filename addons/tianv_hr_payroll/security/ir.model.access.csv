@@ -30,3 +30,5 @@ access_hr_salary_rule_user_manager,hr.salary.rule.user_manager,hr_payroll.model_
 access_hr_payroll_structure_manager,hr.payroll.structure_manager,hr_payroll.model_hr_payroll_structure,base.group_hr_manager,1,1,1,1
 access_hr_contribution_register_manager,hr.contribution.register_manager,hr_payroll.model_hr_contribution_register,base.group_hr_manager,1,1,1,1
 access_hr_salary_rule_category_manager,hr.salary.rule.category_manager,hr_payroll.model_hr_salary_rule_category,base.group_hr_manager,1,1,1,1
+
+access_hr_payslip_balance_view,access_hr_payslip_balance_view,model_hr_payslip_balance_view,,1,0,0,0
