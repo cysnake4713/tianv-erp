@@ -13,6 +13,16 @@ class AttendanceRule(models.Model):
     name = fields.Char('Name', required=True)
 
     lines = fields.One2many('tianv.hr.attendance.rule.line', 'rule', 'Rule Lines')
+    is_need_attendance = fields.Boolean('Is Need attendance', compute='_compute_is_need_attendance')
+
+    @api.multi
+    def _compute_is_need_attendance(self):
+        result = False
+        for line in self.lines:
+            if line.is_need_punch_in or line.is_need_punch_out:
+                result = True
+                break
+        return result
 
 
 class AttendanceRuleLine(models.Model):
@@ -30,5 +40,3 @@ class HrContractInherit(models.Model):
     _inherit = 'hr.contract'
 
     attendance_rule = fields.Many2one('tianv.hr.attendance.rule', 'Attendance Rule', required=True)
-
-

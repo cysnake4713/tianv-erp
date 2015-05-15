@@ -261,7 +261,9 @@ leave_time = attendance_record.leave_time
 sick_time = attendance_record.sick_time
 actual_hour = attendance_record.actual_hour
 plan_hour = attendance_record.plan_hour
-if late_time == 0 and early_time == 0 and absent_time == 0 and leave_time == 0 and sick_time == 0 and actual_hour >= plan_hour and attendance_record.no_time &lt;= 0.0:
+if not contract.attendance_rule.is_need_attendance:
+    result = 0.0
+elif late_time == 0 and early_time == 0 and absent_time == 0 and leave_time == 0 and sick_time == 0 and actual_hour >= plan_hour and attendance_record.no_time &lt;= 0.0:
     result = categories.BASIC_HOUR * 3 * 8
 else:
     result = 0.0
