@@ -5,7 +5,7 @@
             <field name="name">view.tianv.social.insurance.record.tree</field>
             <field name="model">tianv.social.insurance.record</field>
             <field name="arch" type="xml">
-                <tree>
+                <tree colors="red:state=='processed';green:state=='confirm'">
                     <field name="period"/>
                     <field name="employee"/>
                     <field name="config" groups="tianv_insurance.group_insurance_admin"/>

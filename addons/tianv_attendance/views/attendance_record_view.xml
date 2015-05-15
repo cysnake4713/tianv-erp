@@ -5,7 +5,7 @@
             <field name="name">view.tianv.hr.attendance.record.tree</field>
             <field name="model">tianv.hr.attendance.record</field>
             <field name="arch" type="xml">
-                <tree>
+                <tree colors="red:state=='processed';green:state=='confirm'">
                     <field name="employee"/>
                     <field name="period"/>
                     <field name="legal_hour"/>
