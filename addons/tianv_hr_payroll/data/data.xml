@@ -65,6 +65,7 @@
             <field name="sequence">17</field>
             <field name="category_id" ref="tianv_hr_payroll.BASIC_HOUR"/>
             <field name="amount_select">code</field>
+            <field name="appears_on_payslip" eval="False"/>
             <field name="amount_python_compute">
 plan_hour = contract.get_attendance_plan_by_date(payslip.date_from, payslip.date_to).actual_hour
 result = categories.BASIC / plan_hour
@@ -246,6 +247,16 @@ else:
     result = 0.0
             </field>
         </record>
+        <record id="tianv_payroll_rule_bonus_allowance" model="hr.salary.rule">
+            <field name="name">津贴</field>
+            <field name="code">ALLOWANCE</field>
+            <field name="sequence">36</field>
+            <field name="category_id" ref="tianv_hr_payroll.BONUS"/>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">
+result = contract.allowance
+            </field>
+        </record>
         <record id="tianv_payroll_rule_bonus_full_work" model="hr.salary.rule">
             <field name="name">全勤奖</field>
             <field name="code">FULL_WORK</field>
@@ -339,7 +350,7 @@ result = ACTUAL_TOTAL - INSURANCE_EMPLOYEE
             <field name="name">天艺网络奖金</field>
             <field name="company_id" ref="base.main_company"/>
             <field name="rule_ids"
-            eval="[(6, 0, [ref('tianv_hr_payroll.tianv_payroll_rule_bonus_full_work'), ref('tianv_hr_payroll.tianv_payroll_rule_bonus_extra_work')])]"/>
+            eval="[(6, 0, [ref('tianv_hr_payroll.tianv_payroll_rule_bonus_allowance'), ref('tianv_hr_payroll.tianv_payroll_rule_bonus_full_work'), ref('tianv_hr_payroll.tianv_payroll_rule_bonus_extra_work')])]"/>
             <field name="parent_id" ref="tianv_payroll_salary_structure_attendance"/>
         </record>
         <record id="tianv_payroll_salary_structure_root" model="hr.payroll.structure">

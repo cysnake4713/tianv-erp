@@ -14,6 +14,7 @@ class ContractInherit(models.Model):
 
     work_info = fields.Char('Work Info')
     contract_wage = fields.Float('Contract Wage', digits=(12, 2))
+    allowance = fields.Float('Contract Allowance', digits=(12, 2))
 
     @api.model
     def cron_contract_reminder(self):

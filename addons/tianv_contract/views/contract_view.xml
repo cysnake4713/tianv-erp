@@ -13,6 +13,7 @@
                     </group>
                 </field>
                 <field name="wage" position="after">
+                    <field name="allowance"/>
                     <field name="contract_wage"/>
                 </field>
             </field>
