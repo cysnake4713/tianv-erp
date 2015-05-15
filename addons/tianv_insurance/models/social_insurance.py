@@ -219,3 +219,16 @@ class InsuranceWizard(models.TransientModel):
         for period in periods:
             config = self.env['tianv.social.insurance.config'].browse(self.env.context['active_id'])
             config.with_context(period=period.id).generate_insurance_record()
+
+
+class InsuranceRecordWizard(models.TransientModel):
+    _name = 'tianv.social.insurance.record.wizard'
+    _description = 'Social Insurance Record Wizard'
+
+    @api.multi
+    def button_confirm(self):
+        records = self.env['tianv.social.insurance.record'].browse(self.env.context['active_ids'])
+        if self.user_has_groups('tianv_insurance.group_insurance_approver'):
+            records.write({'state': 'confirm'})
+        else:
+            records.filtered(lambda r: r.state == 'draft').write({'state': 'processed'})

@@ -21,6 +21,7 @@
             <field name="res_model">tianv.social.insurance.record</field>
             <field name="view_mode">tree,form</field>
         </record>
+
         <menuitem id="menuitem_social_insurance_type_config" name="社保类型" parent="hr.menu_hr_configuration" sequence="40"
                   action="action_social_insurance_type" groups="base.group_no_one"/>
 
@@ -32,5 +33,10 @@
         <menuitem id="menuitem_social_insurance_config" name="社保设置" parent="menuitem_social_insurance_config_root" sequence="10"
                 action="action_social_insurance_config" groups="tianv_insurance.group_insurance_admin"/>
 
+        <act_window id="action_social_insurance_confirm"
+            multi="True"
+            key2="client_action_multi" name="批量确认"
+            res_model="tianv.social.insurance.record.wizard" src_model="tianv.social.insurance.record"
+            view_mode="form" target="new" view_type="form" />
     </data>
 </openerp>

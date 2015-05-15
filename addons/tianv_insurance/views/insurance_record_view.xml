@@ -96,5 +96,25 @@
                 </form>
             </field>
         </record>
+
+        <record id="view_social_insurance_record_wizard_form" model="ir.ui.view">
+            <field name="name">view.tianv.social.insurance.record.wizard.form</field>
+            <field name="model">tianv.social.insurance.record.wizard</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <div>
+                            <p>确认批量审批相关社保记录?</p>
+                        </div>
+                    </sheet>
+                    <footer>
+                        <button name="button_confirm" type="object" string="确认"
+                                groups="tianv_insurance.group_insurance_admin,tianv_insurance.group_insurance_approver"/>
+                        or
+                        <button string="取消" special="cancel" class="oe_link"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
     </data>
 </openerp>
