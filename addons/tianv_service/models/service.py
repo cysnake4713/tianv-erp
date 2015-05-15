@@ -151,21 +151,19 @@ class Service(models.Model):
         huang = self.env['res.users'].search([('login', '=', 'jiaolg@tianv.com')])
 
         wechat_template = self.env.ref('tianv_service.message_template_service')
+        users = []
+        datas = {}
         for user_id, data in remind.items():
-            ctx["data"] = data
-            _logger.debug("Sending reminder to uid %s", user_id)
+            datas.update(data)
+            users.append(user_id)
+        ctx["data"] = datas
+        _logger.debug("Sending reminder to uid %s", user_id)
+        for user_id in users:
             template_id.with_context(ctx).send_mail(user_id, force_send=False)
-            target_user_ids = [user_id]
-            if huang:
-                template_id.with_context(ctx).send_mail(huang[0].id, force_send=False)
-                target_user_ids += [huang[0].id]
-                target_user_ids = list(set(target_user_ids))
-
-            self.env['odoosoft.wechat.enterprise.message'].create_message(obj=None,
-                                                                          content=wechat_template.with_context(data=data).render(),
-                                                                          code='tianv_service.map_tianv_service', user_ids=target_user_ids,
-                                                                          type='news', title=wechat_template.title)
-
+        self.env['odoosoft.wechat.enterprise.message'].create_message(obj=None,
+                                                                      content=wechat_template.with_context(data=datas).render(),
+                                                                      code='tianv_service.map_tianv_service', user_ids=users,
+                                                                      type='news', title=wechat_template.title)
         return True
 
     def _message_get_auto_subscribe_fields(self, cr, uid, updated_fields, auto_follow_fields=None, context=None):

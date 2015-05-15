@@ -23,7 +23,7 @@
 % macro account_table(values):
     % for partner, accounts in values:
         % for account in accounts:
-${partner.name} ${account.date_start} 至 ${account.date and account.date or '???'}
+${partner.name} ${account.name} ${account.date_start} 至 ${account.date and account.date or '???'}
         % endfor
     % endfor
 % endmacro
