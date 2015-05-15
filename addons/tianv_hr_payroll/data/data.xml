@@ -291,7 +291,7 @@ else:
             <field name="sequence">38</field>
             <field name="category_id" ref="tianv_hr_payroll.BALANCE"/>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = inputs.BALANCE.amount</field>
+            <field name="amount_python_compute">result = inputs.BALANCE.amount if inputs.BALANCE else 0.0</field>
         </record>
         <record id="tianv_payroll_rule_total_theory" model="hr.salary.rule">
             <field name="name">参考工资</field>
