@@ -51,7 +51,8 @@
                                 'message': '有新的社保记录审批请求,请处理',
                                 }"/>
                         <button name="common_apply" string="审批通过" type="object" class="oe_highlight"
-                                states_editable="{'processed':{'groups':[%(tianv_insurance.group_insurance_approver)d]}}"
+                                states_editable="{'draft':{'groups':[%(tianv_insurance.group_insurance_approver)d]},
+                                'processed':{'groups':[%(tianv_insurance.group_insurance_approver)d]}}"
                                 context="{
                                 'state': 'confirm',
                                 }"/>
