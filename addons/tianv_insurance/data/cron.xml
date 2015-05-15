@@ -11,5 +11,9 @@
             <field name="function" eval="'cron_generate_insurance'"/>
             <field name="args" eval="'()'"/>
         </record>
+
+        <record id="map_tianv_insurance" model="odoosoft.wechat.enterprise.map">
+            <field name="code">tianv_insurance.wechat_code</field>
+        </record>
     </data>
 </openerp>

@@ -60,6 +60,11 @@ class SocialInsuranceConfig(models.Model):
         need_compute_date = '%s-%s-01' % (time.localtime()[0], last_month)
         period = self.env['account.period'].search([('date_start', '<=', need_compute_date), ('date_stop', '>=', need_compute_date)])
         self.search([('active', '=', True)]).with_context(period=period.id).generate_insurance_record()
+        self.env['odoosoft.wechat.enterprise.message'].create_message(obj=None,
+                                                                      content=u'%s 的社保记录已经自动生成,请登陆查看和处理' % period.name,
+                                                                      code='tianv_insurance.wechat_code',
+                                                                      group_ids='tianv_insurance.group_insurance_admin,tianv_insurance.group_insurance_approver',
+                                                                      type='text', title=u'社保记录提醒')
 
     @api.multi
     def generate_insurance_record(self):
