@@ -11,5 +11,9 @@
             <field name="function" eval="'cron_generate_record'"/>
             <field name="args" eval="'()'"/>
         </record>
+
+        <record id="wechat_map_tianv_attendance" model="odoosoft.wechat.enterprise.map">
+            <field name="code">tianv_attendance.wechat_code</field>
+        </record>
     </data>
 </openerp>

@@ -48,7 +48,8 @@
                                 'message': '有新考勤确认申请,请处理',
                                 }"/>
                         <button name="sudo_common_apply" string="审批通过" type="object" class="oe_highlight"
-                                states_editable="{'processed':{'groups':[%(tianv_attendance.group_attendance_admin)d]}}"
+                                states_editable="{'draft':{'groups':[%(tianv_attendance.group_attendance_admin)d]},
+                                'processed':{'groups':[%(tianv_attendance.group_attendance_admin)d]}}"
                                 context="{
                                 'state': 'confirm',
                                 }"/>
@@ -101,13 +102,13 @@
             <field name="model">tianv.hr.attendance.record.line</field>
             <field name="arch" type="xml">
                 <tree editable="bottom" colors="red:adjust_hour&lt;plan_hour">
-                    <field name="plan_date"/>
+                    <field name="plan_date" mobile="1"/>
                     <field name="plan_date_week"/>
                     <field name="plan_hour"/>
                     <field name="record_hour" readonly="1"/>
-                    <field name="adjust_hour"/>
+                    <field name="adjust_hour" mobile="1"/>
                     <field name="tags" widget="many2many_tags" readonly="1"/>
-                    <field name="adjust_tags" widget="many2many_tags"/>
+                    <field name="adjust_tags" widget="many2many_tags" mobile="1"/>
                     <field name="comment"/>
                     <field name="plan_comment"/>
                     <button icon="gtk-find" help="考勤机记录" name="button_get_machine_record" type="object"/>

@@ -1,11 +1,15 @@
 __author__ = 'cysnake4713'
 # coding=utf-8
+
+import logging
 from openerp import tools, exceptions
 from openerp import models, fields, api
 from openerp.tools.translate import _
 from dateutil import rrule
 import datetime
 from datetime import timedelta
+
+_logger = logging.getLogger(__name__)
 
 
 def get_workdays(start, end, holidays=0, days_off=None):
@@ -69,6 +73,7 @@ class AttendancePlan(models.Model):
     @api.model
     def cron_generate_record(self):
         import time
+
         last_month = time.localtime()[1] - 1 or 12
         need_compute_date = '%s-%s-01' % (time.localtime()[0], last_month)
         contracts = self.env['hr.contract'].search([('date_start', '<=', need_compute_date), ('date_end', '>=', need_compute_date)])
@@ -78,10 +83,20 @@ class AttendancePlan(models.Model):
         need_process_contracts = contracts.filtered(lambda c: c not in [s.contract for s in relative_attendances])
         for contract in need_process_contracts:
             try:
+                self.sudo().env.cr.execute('SAVEPOINT generate_attendance_record')
                 new_attendance_record = self.env['tianv.hr.attendance.record'].create({'contract': contract.id, 'period': period.id})
                 new_attendance_record.button_generate_record()
-            except Exception:
-                pass
+                if contract.employee_id.user_id:
+                    values = {
+                        'message_users': [contract.employee_id.user_id.id],
+                        'message': u'%s 考勤记录已经生成,请登陆系统确认' % period.name,
+                        'wechat_code': ['tianv_attendance.wechat_code'],
+                    }
+                    new_attendance_record.with_context(**values).common_apply()
+                self.sudo().env.cr.execute('RELEASE SAVEPOINT generate_attendance_record')
+            except Exception, e:
+                _logger.error('cron generate attendance record error %s', e)
+                self.sudo().env.cr.execute('ROLLBACK TO SAVEPOINT generate_attendance_record')
 
 
 class AttendancePlanLine(models.Model):
