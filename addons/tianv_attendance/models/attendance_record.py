@@ -203,11 +203,13 @@ class AttendanceRecordLine(models.Model):
         plan = self.plan_line
         rule = self.record.contract.attendance_rule
         target_date = self.plan_date
-        config = self.env['tianv.hr.attendance.config'].sudo().search(
-            [('start_date', '<=', target_date), ('end_date', '>=', target_date)]).ensure_one()
+        try:
+            config = self.env['tianv.hr.attendance.config'].sudo().search(
+                [('start_date', '<=', target_date), ('end_date', '>=', target_date)]).ensure_one()
+        except Exception:
+            raise exceptions.Warning(_('Get none or multi Attendance config in one date!'))
 
         machine_obj = self.env['tianv.attendance.machine']
-
         record_hour = 0.0
         tag_ids = []
 

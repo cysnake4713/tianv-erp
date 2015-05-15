@@ -49,23 +49,34 @@ class AttendanceWizard(models.TransientModel):
     @api.multi
     def button_period_to_social(self):
         self.button_get_contract()
-        self.button_generate_social()
+        self.relative_social = self.env['tianv.social.insurance.record'].search(
+            [('period', '=', self.period.id), ('employee', 'in', [e.id for e in self.employees])])
         self.state = 'generate_social'
+
+    @api.multi
+    def button_social_to_attendance(self):
+        if self.relative_social.filtered(lambda s: s.state != 'confirm'):
+            raise exceptions.Warning(_('Some insurance records still not confirmed yet!'))
+        self.relative_attendances = self.env['tianv.hr.attendance.record'].search(
+            [('period', '=', self.period.id), ('contract', 'in', [e.id for e in self.contracts])])
+        self.state = 'generate_attendance'
 
     @api.multi
     def button_generate_social(self):
         self.relative_social = self.env['tianv.social.insurance.record'].search(
             [('period', '=', self.period.id), ('employee', 'in', [e.id for e in self.employees])])
-        # need_process_employees = self.employees.filtered(lambda employee: employee not in [s.employee for s in self.relative_social])
-        # social_config = self.env['tianv.social.insurance.config'].search([('employee', 'in', [c.id for c in need_process_employees])])
-        # social_config.with_context(period=self.period.id).generate_insurance_record()
-        # self.relative_social = self.env['tianv.social.insurance.record'].search(
-        # [('period', '=', self.period.id), ('contract', 'in', [e.id for e in self.contracts])])
+        need_process_employees = self.employees.filtered(lambda ep: ep not in [s.employee for s in self.relative_social])
+        social_config = self.env['tianv.social.insurance.config'].search([('employee', 'in', [c.id for c in need_process_employees])])
+        social_config.with_context(period=self.period.id).generate_insurance_record()
+        self.relative_social = self.env['tianv.social.insurance.record'].search(
+            [('period', '=', self.period.id), ('employee', 'in', [e.id for e in self.employees])])
 
     @api.multi
-    def button_social_to_attendance(self):
-        self.button_generate_attendance()
-        self.state = 'generate_attendance'
+    def button_attendance_to_payroll(self):
+        if self.relative_attendances.filtered(lambda s: s.state != 'confirm'):
+            raise exceptions.Warning(_('Some attendance records still not confirmed yet!'))
+        self.button_generate_payroll()
+        self.state = 'generate_payroll'
 
     @api.multi
     def button_generate_attendance(self):
@@ -77,11 +88,6 @@ class AttendanceWizard(models.TransientModel):
             new_attendance_record.button_generate_record()
         self.relative_attendances = self.env['tianv.hr.attendance.record'].search(
             [('period', '=', self.period.id), ('contract', 'in', [e.id for e in self.contracts])])
-
-    @api.multi
-    def button_attendance_to_payroll(self):
-        self.button_generate_payroll()
-        self.state = 'generate_payroll'
 
     @api.multi
     def button_generate_payroll(self):
