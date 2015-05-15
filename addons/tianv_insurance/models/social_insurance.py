@@ -15,7 +15,7 @@ class SocialInsuranceConfig(models.Model):
 
     employee = fields.Many2one('hr.employee', 'Hr Employee', required=True)
     computer_code = fields.Char('Computer Code', track_visibility='onchange')
-    census_type = fields.Selection([('city', u'市内城镇'), ('country', u'市外农村')], 'Census Type', track_visibility='onchange')
+    census_type = fields.Selection([('city', u'市内城镇'), ('country', u'市外农村'), ('out_city', u'市外城镇')], 'Census Type', track_visibility='onchange')
     lines = fields.One2many('tianv.social.insurance.line', 'config', 'Config Lines')
 
     personal_total = fields.Float('Personal Total', (10, 2), compute='_compute_total')
