@@ -28,6 +28,11 @@ class AttendanceWizard(models.TransientModel):
 
     relative_payslips = fields.Many2many('hr.payslip', 'attendance_wizard_payslip_rel', 'wizard_id', 'payslip_id', 'Relative Payslip')
 
+    @api.onchange('period')
+    def onchange_period(self):
+        contracts = self.env['hr.contract'].search([('date_start', '<=', self.period.date_start), ('date_end', '>=', self.period.date_stop)])
+        self.employees = list(set([c.employee_id.id for c in contracts]))
+
     @api.multi
     def button_get_contract(self):
         for wizard in self:
