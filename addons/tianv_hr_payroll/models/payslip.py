@@ -6,7 +6,7 @@ from openerp.osv import osv, fields
 from openerp.tools.translate import _
 
 from openerp import models, api
-
+from openerp.tools.safe_eval import safe_eval as eval
 
 class HrPayslip(osv.Model):
     _name = 'hr.payslip'
