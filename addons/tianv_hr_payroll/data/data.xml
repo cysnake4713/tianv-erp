@@ -293,6 +293,7 @@ else:
             <field name="amount_select">code</field>
             <field name="amount_python_compute">result = inputs.BALANCE.amount if inputs.BALANCE else 0.0</field>
         </record>
+
         <record id="tianv_payroll_rule_total_theory" model="hr.salary.rule">
             <field name="name">参考工资</field>
             <field name="code">THEORY_TOTAL</field>
@@ -334,6 +335,47 @@ result = ACTUAL_TOTAL - INSURANCE_EMPLOYEE
             </field>
         </record>
 
+        <record id="tianv_payroll_rule_total_theory_trail" model="hr.salary.rule">
+            <field name="name">参考工资</field>
+            <field name="code">THEORY_TOTAL</field>
+            <field name="sequence">49</field>
+            <field name="category_id" ref="tianv_hr_payroll.RESULT"/>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">
+result = categories.BASIC + EXTRA_WORK + categories.BALANCE + categories.BASIC_HOUR * 3 * 8
+            </field>
+        </record>
+        <record id="tianv_payroll_rule_total_all_trail" model="hr.salary.rule">
+            <field name="name">工资支出</field>
+            <field name="code">ALL_TOTAL</field>
+            <field name="sequence">50</field>
+            <field name="category_id" ref="tianv_hr_payroll.RESULT"/>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">
+result = categories.BASIC + categories.BONUS +  categories.ATTENDANCE + categories.BALANCE
+            </field>
+        </record>
+        <record id="tianv_payroll_rule_total_actual_trail" model="hr.salary.rule">
+            <field name="name">实发工资</field>
+            <field name="code">ACTUAL_TOTAL</field>
+            <field name="sequence">52</field>
+            <field name="category_id" ref="tianv_hr_payroll.RESULT"/>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">
+result = ALL_TOTAL
+            </field>
+        </record>
+        <record id="tianv_payroll_rule_total_cash_trail" model="hr.salary.rule">
+            <field name="name">现金工资</field>
+            <field name="code">CASH_TOTAL</field>
+            <field name="sequence">54</field>
+            <field name="category_id" ref="tianv_hr_payroll.RESULT"/>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">
+result = ACTUAL_TOTAL
+            </field>
+        </record>
+
         <record id="tianv_payroll_salary_structure_base" model="hr.payroll.structure">
             <field name="code">TIANV_BASE</field>
             <field name="name">天艺网络基本工资</field>
@@ -342,21 +384,13 @@ result = ACTUAL_TOTAL - INSURANCE_EMPLOYEE
                    eval="[(6, 0, [ref('tianv_hr_payroll.tianv_payroll_rule_work_daily'), ref('tianv_hr_payroll.tianv_payroll_rule_work_skill_salary'), ref('tianv_hr_payroll.tianv_payroll_rule_origin_salary'), ref('tianv_hr_payroll.tianv_payroll_rule_work_age_salary'), ref('tianv_hr_payroll.tianv_payroll_rule_work_job_salary')])]"/>
             <field name="parent_id" eval="False"/>
         </record>
-        <record id="tianv_payroll_salary_structure_insurance" model="hr.payroll.structure">
-            <field name="code">TIANV_INSURANCE</field>
-            <field name="name">天艺网络社保缴费</field>
-            <field name="company_id" ref="base.main_company"/>
-            <field name="rule_ids"
-                   eval="[(6, 0, [ref('tianv_hr_payroll.tianv_payroll_rule_insurance_company'), ref('tianv_hr_payroll.tianv_payroll_rule_insurance_employee')])]"/>
-            <field name="parent_id" ref="tianv_payroll_salary_structure_base"/>
-        </record>
         <record id="tianv_payroll_salary_structure_attendance" model="hr.payroll.structure">
             <field name="code">TIANV_ATTENDANCE</field>
             <field name="name">天艺网络考勤扣款</field>
             <field name="company_id" ref="base.main_company"/>
             <field name="rule_ids"
             eval="[(6, 0, [ref('tianv_hr_payroll.tianv_payroll_rule_attendance_no_work'), ref('tianv_hr_payroll.tianv_payroll_rule_attendance_absent'), ref('tianv_hr_payroll.tianv_payroll_rule_attendance_sick'), ref('tianv_hr_payroll.tianv_payroll_rule_attendance_leave'), ref('tianv_hr_payroll.tianv_payroll_rule_attendance_time'), ref('tianv_hr_payroll.tianv_payroll_rule_attendance_early'), ref('tianv_hr_payroll.tianv_payroll_rule_attendance_late')])]"/>
-            <field name="parent_id" ref="tianv_payroll_salary_structure_insurance"/>
+            <field name="parent_id" ref="tianv_payroll_salary_structure_base"/>
         </record>
         <record id="tianv_payroll_salary_structure_bonus" model="hr.payroll.structure">
             <field name="code">TIANV_BONUS</field>
@@ -366,12 +400,28 @@ result = ACTUAL_TOTAL - INSURANCE_EMPLOYEE
             eval="[(6, 0, [ref('tianv_hr_payroll.tianv_payroll_rule_balance'), ref('tianv_hr_payroll.tianv_payroll_rule_bonus_allowance'), ref('tianv_hr_payroll.tianv_payroll_rule_bonus_full_work'), ref('tianv_hr_payroll.tianv_payroll_rule_bonus_extra_work')])]"/>
             <field name="parent_id" ref="tianv_payroll_salary_structure_attendance"/>
         </record>
+        <record id="tianv_payroll_salary_structure_insurance" model="hr.payroll.structure">
+            <field name="code">TIANV_INSURANCE</field>
+            <field name="name">天艺网络社保缴费</field>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="rule_ids"
+                   eval="[(6, 0, [ref('tianv_hr_payroll.tianv_payroll_rule_insurance_company'), ref('tianv_hr_payroll.tianv_payroll_rule_insurance_employee')])]"/>
+            <field name="parent_id" ref="tianv_payroll_salary_structure_bonus"/>
+        </record>
         <record id="tianv_payroll_salary_structure_root" model="hr.payroll.structure">
             <field name="code">TIANV_SALARY</field>
             <field name="name">天艺网络工资结构</field>
             <field name="company_id" ref="base.main_company"/>
             <field name="rule_ids"
                    eval="[(6,0,[ref('tianv_hr_payroll.tianv_payroll_rule_total_theory'), ref('tianv_hr_payroll.tianv_payroll_rule_total_cash'), ref('tianv_hr_payroll.tianv_payroll_rule_total_actual'), ref('tianv_hr_payroll.tianv_payroll_rule_total_all')])]"/>
+            <field name="parent_id" ref="tianv_payroll_salary_structure_insurance"/>
+        </record>
+        <record id="tianv_payroll_salary_structure_trail" model="hr.payroll.structure">
+            <field name="code">TIANV_TRAIL_SALARY</field>
+            <field name="name">天艺网络实习工资结构</field>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="rule_ids"
+                   eval="[(6,0,[ref('tianv_hr_payroll.tianv_payroll_rule_total_theory_trail'), ref('tianv_hr_payroll.tianv_payroll_rule_total_cash_trail'), ref('tianv_hr_payroll.tianv_payroll_rule_total_actual_trail'), ref('tianv_hr_payroll.tianv_payroll_rule_total_all_trail')])]"/>
             <field name="parent_id" ref="tianv_payroll_salary_structure_bonus"/>
         </record>
     </data>
