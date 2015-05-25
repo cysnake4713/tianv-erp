@@ -69,3 +69,36 @@ class HrPayslipInherit(models.Model):
                                      wechat_template=self.env.ref('tianv_hr_payroll.message_tianv_hr_payslip').id,
                                      ).common_apply()
         return True
+
+
+class HrSalaryRuleInherit(models.Model):
+    _inherit = 'hr.salary.rule'
+
+    @api.v7
+    def compute_rule(self, cr, uid, rule_id, localdict, context=None):
+        """
+        :param rule_id: id of rule to compute
+        :param localdict: dictionary containing the environement in which to compute the rule
+        :return: returns a tuple build as the base/amount computed, the quantity and the rate
+        :rtype: (float, float, float)
+        """
+        rule = self.browse(cr, uid, rule_id, context=context)
+        if rule.amount_select == 'fix':
+            try:
+                return rule.amount_fix, float(eval(rule.quantity, localdict)), 100.0
+            except:
+                raise osv.except_osv(_('Error!'), _('Wrong quantity defined for salary rule %s (%s).') % (rule.name, rule.code))
+        elif rule.amount_select == 'percentage':
+            try:
+                return (float(eval(rule.amount_percentage_base, localdict)),
+                        float(eval(rule.quantity, localdict)),
+                        rule.amount_percentage)
+            except:
+                raise osv.except_osv(_('Error!'), _('Wrong percentage base or quantity defined for salary rule %s (%s).') % (rule.name, rule.code))
+        else:
+            try:
+                eval(rule.amount_python_compute, localdict, mode='exec', nocopy=True)
+                return float(localdict['result']), 'result_qty' in localdict and localdict['result_qty'] or 1.0, 'result_rate' in localdict and \
+                       localdict['result_rate'] or 100.0
+            except Exception, e:
+                raise osv.except_osv(_('Error!'), _('Wrong python code defined for salary rule %s (%s). error: %s') % (rule.name, rule.code, str(e)))
