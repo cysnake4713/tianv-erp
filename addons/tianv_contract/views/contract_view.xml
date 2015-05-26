@@ -18,5 +18,30 @@
                 </field>
             </field>
         </record>
+
+        <record id="view_contract_tree_inherit" model="ir.ui.view">
+            <field name="name">view.hr.contract.tree.inherit</field>
+            <field name="model">hr.contract</field>
+            <field name="inherit_id" ref="hr_contract.hr_contract_view_tree"/>
+            <field name="arch" type="xml">
+                <tree position="attributes">
+                    <attribute name="colors">green:(date_start&lt;=current_date and date_end&gt;=current_date)</attribute>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_contract_search_inherit" model="ir.ui.view">
+            <field name="name">view.hr.contract.search.inherit</field>
+            <field name="model">hr.contract</field>
+            <field name="inherit_id" ref="hr_contract.hr_contract_view_search"/>
+            <field name="arch" type="xml">
+                <field name="employee_id" position="after">
+                    <group expand="0" string="过滤">
+                        <filter string="未到期" icon="terp-go-week" domain="[('date_start','&lt;=',current_date), ('date_end','&gt;=',current_date)]"/>
+                        <filter string="到期一个月" icon="terp-go-week" domain="[('date_end','&lt;=',current_date),('date_end','&gt;=',(context_today() - relativedelta(months=1)).strftime('%Y-%m-%d'))]"/>
+                    </group>
+                </field>
+            </field>
+        </record>
     </data>
 </openerp>
