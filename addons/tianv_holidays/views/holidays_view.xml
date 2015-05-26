@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record id="view_holiday_inherit" model="ir.ui.view">
+            <field name="name">hr.holidays.tree.inherit</field>
+            <field name="model">hr.holidays</field>
+            <field name="inherit_id" ref="hr_holidays.view_holiday"/>
+            <field name="arch" type="xml">
+               <tree position="attributes">
+                    <attribute name="colors">grey:state == 'refuse';blue:state == 'draft';red:state in ('confirm','validate1');green:state == 'validate'</attribute>
+                </tree>
+            </field>
+        </record>
+    </data>
+</openerp>
