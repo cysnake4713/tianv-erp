@@ -8,8 +8,31 @@
             <field name="inherit_id" ref="hr_payroll.view_hr_payslip_form"/>
             <field name="priority">16</field>
             <field name="arch" type="xml">
-                <xpath expr="//separator[@string='Worked Days']" position="replace"/>
-                <field name="worked_days_line_ids" position="replace"/>
+                <xpath expr="//page[@string='Worked Days &amp; Inputs']" position="replace"/>
+                <xpath expr="//page[@string='Details By Salary Rule Category']" position="after">
+                    <page string="输入">
+                        <separator string="输入"/>
+                        <field name="input_line_ids" colspan="4" nolabel="1">
+                            <tree string="Input Data" editable="bottom">
+                                <field name="name"/>
+                                <field name="code"/>
+                                <field name="amount"/>
+                                <field name="contract_id" invisible="1"/>
+                                <field name="sequence" invisible="True"/>
+                            </tree>
+                            <form string="Payslip Line">
+                                <group col="4">
+                                    <field name="name"/>
+                                    <field name="code"/>
+                                    <field name="payslip_id"/>
+                                    <field name="sequence"/>
+                                    <field name="amount"/>
+                                    <field name="contract_id" invisible="1"/>
+                                </group>
+                            </form>
+                        </field>
+                    </page>
+                </xpath>
                 <xpath expr="//header" position="replace">
                     <header>
                         <button string="确认" name="hr_verify_sheet" states="draft" class="oe_highlight" groups="base.group_hr_manager"/>
@@ -30,6 +53,12 @@
                         <field name="message_follower_ids" widget="mail_followers"/>
                         <field name="message_ids" widget="mail_thread"/>
                     </div>
+                </xpath>
+                <xpath expr="//tree[@string='Salary Structure']" position="attributes">
+                    <attribute name="colors">grey:total == 0; red:total&lt;0; blue:total&gt;0</attribute>
+                </xpath>
+                <xpath expr="//tree[@string='Payslip Lines']" position="attributes">
+                    <attribute name="colors">grey:total == 0; red:total&lt;0; blue:total&gt;0</attribute>
                 </xpath>
             </field>
         </record>
