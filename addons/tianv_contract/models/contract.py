@@ -5,7 +5,7 @@ from openerp import tools
 from openerp import models, fields, api
 from openerp.tools.translate import _
 from datetime import date
-from datetime import timedelta
+from dateutil.relativedelta import relativedelta
 
 
 class ContractInherit(models.Model):
@@ -21,9 +21,11 @@ class ContractInherit(models.Model):
         employees = self.env['hr.employee'].search([('active', '=', True)])
         need_process_employee = []
         for employee in employees:
-            if employee.contract_id is not None and employee.contract_id.date_end and fields.Date.from_string(
-                    employee.contract_id.date_end) <= date.today() - timedelta(days=10):
-                need_process_employee += [employee]
+            if employee.contract_id is not None and employee.contract_id.date_end:
+                end_date = fields.Date.from_string(employee.contract_id.date_end)
+                if end_date == date.today() - relativedelta(months=1) or end_date == date.today() or end_date == date.today() + relativedelta(
+                        months=1):
+                    need_process_employee += [employee]
 
         if need_process_employee:
             template_id = self.env['ir.model.data'].get_object('tianv_contract', 'contract_cron_email_template')
