@@ -46,6 +46,7 @@
                                 'state': 'processed',
                                 'message_groups': [%(tianv_attendance.group_attendance_admin)d],
                                 'message': '有新考勤确认申请,请处理',
+                                'wechat_code': ['tianv_attendance.wechat_code'],
                                 }"/>
                         <button name="sudo_common_apply" string="审批通过" type="object" class="oe_highlight"
                                 states_editable="{'draft':{'groups':[%(tianv_attendance.group_attendance_admin)d]},
