@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <!-- QWeb Reports -->
+        <report
+                id="action_report_payslip"
+                model="hr.payslip"
+                string="工资单打印"
+                report_type="qweb-pdf"
+                name="tianv_hr_payroll.report_payslip"
+                file="tianv_hr_payroll.report_payslip"
+                />
+
+    </data>
+</openerp>

@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <template id="tianv_hr_payroll.report_payslip">
+            <t t-call="report.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-if="o and 'company_id' in o">
+                        <t t-set="company" t-value="o.company_id"></t>
+                    </t>
+                    <t t-if="not o or not 'company_id' in o">
+                        <t t-set="company" t-value="res_company"></t>
+                    </t>
+                    <div class="header">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="max-height: 45px;"/>
+                            </div>
+                            <div class="col-xs-9 text-right" style="margin-top:20px;" t-field="company.rml_header1"/>
+                        </div>
+                        <div class="row zero_min_height">
+                            <div class="col-xs-12">
+                                <div style="border-bottom: 1px solid black;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="page">
+                        <h2>工资单</h2>
+                        <p t-field="o.name"/>
+                        <table class="table table-condensed table-bordered">
+                            <tr>
+                                <td>
+                                    <strong>员工姓名</strong>
+                                </td>
+                                <td>
+                                    <span t-field="o.employee_id"/>
+                                </td>
+                                <td>
+                                    <strong>职务名称</strong>
+                                </td>
+                                <td>
+                                    <span t-field="o.employee_id.job_id"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>员工类型</strong>
+                                </td>
+                                <td>
+                                    <span t-field="o.contract_id.type_id"/>
+                                </td>
+                                <td>
+                                    <strong>身份证号</strong>
+                                </td>
+                                <td>
+                                    <span t-field="o.employee_id.identification_id"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>相关单号</strong>
+                                </td>
+                                <td>
+                                    <span t-field="o.number"/>
+                                </td>
+                                <td>
+                                    <strong>银行账号</strong>
+                                </td>
+                                <td>
+                                    <span t-field="o.employee_id.bank_account_id"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>起始日期</strong>
+                                </td>
+                                <td>
+                                    <span t-field="o.date_from"/>
+                                </td>
+                                <td>
+                                    <strong>结束日期</strong>
+                                </td>
+                                <td>
+                                    <span t-field="o.date_to"/>
+                                </td>
+                            </tr>
+                        </table>
+                        <table class="table table-condensed">
+                            <thead>
+                                <tr>
+                                    <th>名称</th>
+                                    <th>编码</th>
+                                    <th>合计</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="get_payslip_lines(o.line_ids)" t-as="p">
+                                    <t t-if="p.code not in ['THEORY_TOTAL', 'ALL_TOTAL', 'ACTUAL_TOTAL', 'CASH_TOTAL']">
+                                        <td>
+                                            <span t-field="p.name"/>
+                                        </td>
+                                        <td>
+                                            <span t-field="p.code"/>
+                                        </td>
+                                        <td>
+                                            <span t-esc="formatLang(p.total, currency_obj=o.company_id.currency_id)"/>
+                                        </td>
+                                    </t>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="row">
+                            <div class="col-xs-4">
+                                <p>深圳市天艺网络技术有限公司</p>
+                                <br/>
+                                <br/>
+                                <p class="text-left">员工(签名):</p>
+                                <br/>
+                                <br/>
+                                <p>&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;年&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;月&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;日</p>
+                            </div>
+                            <div class="col-xs-8">
+                                <div t-foreach="get_payslip_lines(o.line_ids)" t-as="p">
+                                    <t t-if="p.code=='ACTUAL_TOTAL'">
+                                        <h4 class="text-right">
+                                            <strong>合计实发工资:&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;
+                                                <span t-esc="formatLang(p.total, currency_obj=o.company_id.currency_id)"/>
+                                            </strong>
+                                        </h4>
+                                        <br/>
+                                        <br/>
+                                    </t>
+                                </div>
+                                <div t-foreach="get_payslip_lines(o.line_ids)" t-as="p">
+                                    <t t-if="p.code=='THEORY_TOTAL'">
+                                        <p class="text-right">获得全勤奖金情况下参考工资:&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;
+                                            <span t-esc="formatLang(p.total, currency_obj=o.company_id.currency_id)"/>
+                                        </p>
+                                    </t>
+                                </div>
+                                <div t-foreach="get_payslip_lines(o.line_ids)" t-as="p">
+                                    <t t-if="p.code=='ALL_TOTAL'">
+                                        <p class="text-right">包含单位交保支出:&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;
+                                            <span t-esc="formatLang(p.total, currency_obj=o.company_id.currency_id)"/>
+                                        </p>
+                                    </t>
+                                </div>
+                                <div t-foreach="get_payslip_lines(o.line_ids)" t-as="p">
+                                    <t t-if="p.code=='CASH_TOTAL'">
+                                        <p class="text-right">扣除代付个人交保工资:&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;
+                                            <span t-esc="formatLang(p.total, currency_obj=o.company_id.currency_id)"/>
+                                        </p>
+                                    </t>
+                                </div>
+                                <p class="text-right">截止至
+                                    <t t-esc="o.date_to"/>
+                                    <t t-esc="o.employee_id.name"/>工资已所有结清，不存在拖欠情况．
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+                <t t-call="report.external_layout_footer"/>
+            </t>
+        </template>
+    </data>
+</openerp>

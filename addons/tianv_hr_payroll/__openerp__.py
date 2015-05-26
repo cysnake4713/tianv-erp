@@ -19,6 +19,9 @@ Tianv Hr Payroll Module""",
         'views/payroll_menu.xml',
         'views/menu.xml',
         'data/data.xml',
+
+        'report/report.xml',
+        'report/report_payslip.xml',
     ],
     'qweb': [
         'static/src/xml/*.xml',
