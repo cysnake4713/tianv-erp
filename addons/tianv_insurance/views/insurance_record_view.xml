@@ -50,7 +50,6 @@
                                 'message_groups': [%(tianv_insurance.group_insurance_approver)d],
                                 'message': '有新的社保记录审批请求,请处理',
                                 'wechat_code': ['tianv_insurance.wechat_code'],
-                                'wechat_template': %(tianv_insurance.message_tianv_insurance)d,
                                 }"/>
                         <button name="common_apply" string="审批通过" type="object" class="oe_highlight"
                                 states_editable="{'draft':{'groups':[%(tianv_insurance.group_insurance_approver)d]},
