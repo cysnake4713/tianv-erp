@@ -257,7 +257,7 @@ else:
             </field>
         </record>
         <record id="tianv_payroll_rule_bonus_allowance" model="hr.salary.rule">
-            <field name="name">津贴</field>
+            <field name="name">额外津贴</field>
             <field name="code">ALLOWANCE</field>
             <field name="sequence">36</field>
             <field name="category_id" ref="tianv_hr_payroll.BONUS"/>
@@ -267,7 +267,7 @@ result = contract.allowance
             </field>
         </record>
         <record id="tianv_payroll_rule_bonus_full_work" model="hr.salary.rule">
-            <field name="name">全勤奖</field>
+            <field name="name">全勤奖金</field>
             <field name="code">FULL_WORK</field>
             <field name="sequence">37</field>
             <field name="category_id" ref="tianv_hr_payroll.BONUS"/>
@@ -364,7 +364,7 @@ result = ACTUAL_TOTAL - INSURANCE_EMPLOYEE
             <field name="category_id" ref="tianv_hr_payroll.RESULT"/>
             <field name="amount_select">code</field>
             <field name="amount_python_compute">
-result = categories.BASIC + EXTRA_WORK + categories.BALANCE + categories.BASIC_HOUR * 3 * 8 + categories.COMMISSION
+result = categories.BASIC + categories.BONUS + EXTRA_WORK + categories.BALANCE + categories.BASIC_HOUR * 3 * 8 + categories.COMMISSION
             </field>
         </record>
         <record id="tianv_payroll_rule_total_all_trail" model="hr.salary.rule">
@@ -400,7 +400,7 @@ result = ACTUAL_TOTAL
 
         <record id="tianv_payroll_salary_structure_base" model="hr.payroll.structure">
             <field name="code">TIANV_BASE</field>
-            <field name="name">天艺网络基本工资</field>
+            <field name="name">基本工资</field>
             <field name="company_id" ref="base.main_company"/>
             <field name="rule_ids"
                    eval="[(6, 0, [ref('tianv_hr_payroll.tianv_payroll_rule_work_daily'), ref('tianv_hr_payroll.tianv_payroll_rule_work_skill_salary'), ref('tianv_hr_payroll.tianv_payroll_rule_origin_salary'), ref('tianv_hr_payroll.tianv_payroll_rule_work_age_salary'), ref('tianv_hr_payroll.tianv_payroll_rule_work_job_salary')])]"/>
@@ -408,7 +408,7 @@ result = ACTUAL_TOTAL
         </record>
         <record id="tianv_payroll_salary_structure_attendance" model="hr.payroll.structure">
             <field name="code">TIANV_ATTENDANCE</field>
-            <field name="name">天艺网络考勤扣款</field>
+            <field name="name">考勤扣款</field>
             <field name="company_id" ref="base.main_company"/>
             <field name="rule_ids"
             eval="[(6, 0, [ref('tianv_hr_payroll.tianv_payroll_rule_attendance_no_work'), ref('tianv_hr_payroll.tianv_payroll_rule_attendance_absent'), ref('tianv_hr_payroll.tianv_payroll_rule_attendance_sick'), ref('tianv_hr_payroll.tianv_payroll_rule_attendance_leave'), ref('tianv_hr_payroll.tianv_payroll_rule_attendance_time'), ref('tianv_hr_payroll.tianv_payroll_rule_attendance_early'), ref('tianv_hr_payroll.tianv_payroll_rule_attendance_late')])]"/>
@@ -416,7 +416,7 @@ result = ACTUAL_TOTAL
         </record>
         <record id="tianv_payroll_salary_structure_commission" model="hr.payroll.structure">
             <field name="code">TIANV_COMMISSION</field>
-            <field name="name">天艺网络提成</field>
+            <field name="name">提成工资</field>
             <field name="company_id" ref="base.main_company"/>
             <field name="rule_ids"
             eval="[(6, 0, [ref('tianv_hr_payroll.tianv_payroll_rule_service_commission'), ref('tianv_hr_payroll.tianv_payroll_rule_project_commission')])]"/>
@@ -424,7 +424,7 @@ result = ACTUAL_TOTAL
         </record>
         <record id="tianv_payroll_salary_structure_bonus" model="hr.payroll.structure">
             <field name="code">TIANV_BONUS</field>
-            <field name="name">天艺网络奖金</field>
+            <field name="name">额外奖金</field>
             <field name="company_id" ref="base.main_company"/>
             <field name="rule_ids"
             eval="[(6, 0, [ref('tianv_hr_payroll.tianv_payroll_rule_balance'), ref('tianv_hr_payroll.tianv_payroll_rule_bonus_allowance'), ref('tianv_hr_payroll.tianv_payroll_rule_bonus_full_work'), ref('tianv_hr_payroll.tianv_payroll_rule_bonus_extra_work')])]"/>
@@ -432,7 +432,7 @@ result = ACTUAL_TOTAL
         </record>
         <record id="tianv_payroll_salary_structure_insurance" model="hr.payroll.structure">
             <field name="code">TIANV_INSURANCE</field>
-            <field name="name">天艺网络社保缴费</field>
+            <field name="name">社保缴费</field>
             <field name="company_id" ref="base.main_company"/>
             <field name="rule_ids"
                    eval="[(6, 0, [ref('tianv_hr_payroll.tianv_payroll_rule_insurance_company'), ref('tianv_hr_payroll.tianv_payroll_rule_insurance_employee')])]"/>
@@ -440,7 +440,7 @@ result = ACTUAL_TOTAL
         </record>
         <record id="tianv_payroll_salary_structure_root" model="hr.payroll.structure">
             <field name="code">TIANV_SALARY</field>
-            <field name="name">天艺网络工资结构</field>
+            <field name="name">正式员工</field>
             <field name="company_id" ref="base.main_company"/>
             <field name="rule_ids"
                    eval="[(6,0,[ref('tianv_hr_payroll.tianv_payroll_rule_total_theory'), ref('tianv_hr_payroll.tianv_payroll_rule_total_cash'), ref('tianv_hr_payroll.tianv_payroll_rule_total_actual'), ref('tianv_hr_payroll.tianv_payroll_rule_total_all')])]"/>
@@ -448,7 +448,7 @@ result = ACTUAL_TOTAL
         </record>
         <record id="tianv_payroll_salary_structure_trail" model="hr.payroll.structure">
             <field name="code">TIANV_TRAIL_SALARY</field>
-            <field name="name">天艺网络实习工资结构</field>
+            <field name="name">试用员工</field>
             <field name="company_id" ref="base.main_company"/>
             <field name="rule_ids"
                    eval="[(6,0,[ref('tianv_hr_payroll.tianv_payroll_rule_total_theory_trail'), ref('tianv_hr_payroll.tianv_payroll_rule_total_cash_trail'), ref('tianv_hr_payroll.tianv_payroll_rule_total_actual_trail'), ref('tianv_hr_payroll.tianv_payroll_rule_total_all_trail')])]"/>
