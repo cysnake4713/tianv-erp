@@ -29,6 +29,10 @@
             <field name="name">平衡</field>
             <field name="code">BALANCE</field>
         </record>
+        <record id="COMMISSION" model="hr.salary.rule.category">
+            <field name="name">提成</field>
+            <field name="code">COMMISSION</field>
+        </record>
 
         <record id="tianv_payroll_rule_origin_salary" model="hr.salary.rule">
             <field name="name">初始工资</field>
@@ -285,10 +289,28 @@ else:
     result = 0.0
             </field>
         </record>
+
+        <record id="tianv_payroll_rule_service_commission" model="hr.salary.rule">
+            <field name="name">服务提成</field>
+            <field name="code">SERVICE_COMMISSION</field>
+            <field name="sequence">38</field>
+            <field name="category_id" ref="tianv_hr_payroll.COMMISSION"/>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = inputs.SERVICE_COMMISSION.amount if inputs.SERVICE_COMMISSION else 0.0</field>
+        </record>
+        <record id="tianv_payroll_rule_project_commission" model="hr.salary.rule">
+            <field name="name">项目提成</field>
+            <field name="code">PROJECT_COMMISSION</field>
+            <field name="sequence">40</field>
+            <field name="category_id" ref="tianv_hr_payroll.COMMISSION"/>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = inputs.PROJECT_COMMISSION.amount if inputs.PROJECT_COMMISSION else 0.0</field>
+        </record>
+
         <record id="tianv_payroll_rule_balance" model="hr.salary.rule">
             <field name="name">平衡工资</field>
             <field name="code">BALANCE</field>
-            <field name="sequence">38</field>
+            <field name="sequence">47</field>
             <field name="category_id" ref="tianv_hr_payroll.BALANCE"/>
             <field name="amount_select">code</field>
             <field name="amount_python_compute">result = inputs.BALANCE.amount if inputs.BALANCE else 0.0</field>
@@ -301,7 +323,7 @@ else:
             <field name="category_id" ref="tianv_hr_payroll.RESULT"/>
             <field name="amount_select">code</field>
             <field name="amount_python_compute">
-result = categories.BASIC + categories.INSURANCE + EXTRA_WORK + categories.BALANCE + categories.BASIC_HOUR * 3 * 8
+result = categories.BASIC + categories.INSURANCE + EXTRA_WORK + categories.BALANCE + categories.COMMISSION + categories.BASIC_HOUR * 3 * 8
             </field>
         </record>
         <record id="tianv_payroll_rule_total_all" model="hr.salary.rule">
@@ -311,7 +333,7 @@ result = categories.BASIC + categories.INSURANCE + EXTRA_WORK + categories.BALAN
             <field name="category_id" ref="tianv_hr_payroll.RESULT"/>
             <field name="amount_select">code</field>
             <field name="amount_python_compute">
-result = categories.BASIC + categories.INSURANCE + categories.BONUS +  categories.ATTENDANCE + categories.BALANCE
+result = categories.BASIC + categories.INSURANCE + categories.BONUS +  categories.ATTENDANCE + categories.BALANCE + categories.COMMISSION
             </field>
         </record>
         <record id="tianv_payroll_rule_total_actual" model="hr.salary.rule">
@@ -342,7 +364,7 @@ result = ACTUAL_TOTAL - INSURANCE_EMPLOYEE
             <field name="category_id" ref="tianv_hr_payroll.RESULT"/>
             <field name="amount_select">code</field>
             <field name="amount_python_compute">
-result = categories.BASIC + EXTRA_WORK + categories.BALANCE + categories.BASIC_HOUR * 3 * 8
+result = categories.BASIC + EXTRA_WORK + categories.BALANCE + categories.BASIC_HOUR * 3 * 8 + categories.COMMISSION
             </field>
         </record>
         <record id="tianv_payroll_rule_total_all_trail" model="hr.salary.rule">
@@ -352,7 +374,7 @@ result = categories.BASIC + EXTRA_WORK + categories.BALANCE + categories.BASIC_H
             <field name="category_id" ref="tianv_hr_payroll.RESULT"/>
             <field name="amount_select">code</field>
             <field name="amount_python_compute">
-result = categories.BASIC + categories.BONUS +  categories.ATTENDANCE + categories.BALANCE
+result = categories.BASIC + categories.BONUS +  categories.ATTENDANCE + categories.BALANCE + categories.COMMISSION
             </field>
         </record>
         <record id="tianv_payroll_rule_total_actual_trail" model="hr.salary.rule">
@@ -392,13 +414,21 @@ result = ACTUAL_TOTAL
             eval="[(6, 0, [ref('tianv_hr_payroll.tianv_payroll_rule_attendance_no_work'), ref('tianv_hr_payroll.tianv_payroll_rule_attendance_absent'), ref('tianv_hr_payroll.tianv_payroll_rule_attendance_sick'), ref('tianv_hr_payroll.tianv_payroll_rule_attendance_leave'), ref('tianv_hr_payroll.tianv_payroll_rule_attendance_time'), ref('tianv_hr_payroll.tianv_payroll_rule_attendance_early'), ref('tianv_hr_payroll.tianv_payroll_rule_attendance_late')])]"/>
             <field name="parent_id" ref="tianv_payroll_salary_structure_base"/>
         </record>
+        <record id="tianv_payroll_salary_structure_commission" model="hr.payroll.structure">
+            <field name="code">TIANV_COMMISSION</field>
+            <field name="name">天艺网络提成</field>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="rule_ids"
+            eval="[(6, 0, [ref('tianv_hr_payroll.tianv_payroll_rule_service_commission'), ref('tianv_hr_payroll.tianv_payroll_rule_project_commission')])]"/>
+            <field name="parent_id" ref="tianv_payroll_salary_structure_attendance"/>
+        </record>
         <record id="tianv_payroll_salary_structure_bonus" model="hr.payroll.structure">
             <field name="code">TIANV_BONUS</field>
             <field name="name">天艺网络奖金</field>
             <field name="company_id" ref="base.main_company"/>
             <field name="rule_ids"
             eval="[(6, 0, [ref('tianv_hr_payroll.tianv_payroll_rule_balance'), ref('tianv_hr_payroll.tianv_payroll_rule_bonus_allowance'), ref('tianv_hr_payroll.tianv_payroll_rule_bonus_full_work'), ref('tianv_hr_payroll.tianv_payroll_rule_bonus_extra_work')])]"/>
-            <field name="parent_id" ref="tianv_payroll_salary_structure_attendance"/>
+            <field name="parent_id" ref="tianv_payroll_salary_structure_commission"/>
         </record>
         <record id="tianv_payroll_salary_structure_insurance" model="hr.payroll.structure">
             <field name="code">TIANV_INSURANCE</field>

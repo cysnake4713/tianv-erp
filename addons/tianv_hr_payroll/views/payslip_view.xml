@@ -8,34 +8,8 @@
             <field name="inherit_id" ref="hr_payroll.view_hr_payslip_form"/>
             <field name="priority">16</field>
             <field name="arch" type="xml">
-                <xpath expr="//page[@string='Worked Days &amp; Inputs']" position="replace"/>
-                <xpath expr="//page[@string='Details By Salary Rule Category']" position="after">
-                    <page string="Worked Days &amp; Inputs">
-                        <separator string="Other Inputs"/>
-                        <field name="input_line_ids" colspan="4" nolabel="1" context="{'default_contract_id':contract_id,
-                        'default_name':'平衡',
-                        'default_code':'BALANCE'
-                        }">
-                            <tree string="Input Data" editable="bottom">
-                                <field name="name"/>
-                                <field name="code"/>
-                                <field name="amount"/>
-                                <field name="contract_id"/>
-                                <field name="sequence" invisible="True"/>
-                            </tree>
-                            <form string="Payslip Line">
-                                <group col="4">
-                                    <field name="name"/>
-                                    <field name="code"/>
-                                    <field name="payslip_id"/>
-                                    <field name="sequence"/>
-                                    <field name="amount"/>
-                                    <field name="contract_id"/>
-                                </group>
-                            </form>
-                        </field>
-                    </page>
-                </xpath>
+                <xpath expr="//separator[@string='Worked Days']" position="replace"/>
+                <field name="worked_days_line_ids" position="replace"/>
                 <xpath expr="//header" position="replace">
                     <header>
                         <button string="确认" name="hr_verify_sheet" states="draft" class="oe_highlight" groups="base.group_hr_manager"/>
