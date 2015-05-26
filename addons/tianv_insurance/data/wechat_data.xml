@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data noupdate="1">
+        <record id="map_tianv_insurance" model="odoosoft.wechat.enterprise.map">
+            <field name="code">tianv_insurance.wechat_code</field>
+        </record>
+
+        <record id="message_tianv_insurance" model="odoosoft.wechat.enterprise.message.template">
+            <field name="name">社保审批提醒</field>
+            <field name="title">社保审批提醒</field>
+            <field name="content">
+雇员: ${object.employee.name}
+会计周期: ${object.period.name}
+            </field>
+        </record>
+    </data>
+</openerp>
