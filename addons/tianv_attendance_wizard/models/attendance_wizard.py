@@ -4,6 +4,7 @@ __author__ = 'cysnake4713'
 from openerp import tools, exceptions
 from openerp import models, fields, api
 from openerp.tools.translate import _
+import datetime
 
 
 class AttendanceWizard(models.TransientModel):
@@ -97,7 +98,7 @@ class AttendanceWizard(models.TransientModel):
         need_process_contracts = self.contracts.filtered(lambda ct: ct not in [s.contract_id for s in self.relative_payslips])
         for contract in need_process_contracts:
             self.env['hr.payslip'].create({
-                'name': u'工资条: %s %s' % (contract.employee_id.name, self.period.name),
+                'name': u'%s%s' % (contract.employee_id.name, fields.Date.from_string(self.period.date_start).strftime('%Y%m')),
                 'employee_id': contract.employee_id.id,
                 'contract_id': contract.id,
                 'struct_id': contract.struct_id.id,
