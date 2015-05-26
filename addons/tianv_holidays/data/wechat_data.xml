@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data noupdate="1">
+        <record id="map_tianv_holidays" model="odoosoft.wechat.enterprise.map">
+            <field name="code">tianv_holidays.wechat_code</field>
+        </record>
+
+        <record id="message_tianv_holidays" model="odoosoft.wechat.enterprise.message.template">
+            <field name="name">请假申请</field>
+            <field name="title">请假申请</field>
+            <field name="content">
+员工: ${object.employee_id.name}
+类型: ${object.holiday_status_id.name}
+说明: ${object.name}
+            </field>
+        </record>
+    </data>
+</openerp>

@@ -8,8 +8,9 @@
 """,
     'author': 'Matt Cai',
     'website': 'http://odoosoft.com',
-    'depends': ['base', 'hr_holidays'],
+    'depends': ['base', 'hr_holidays', 'odoosoft_workflow', 'odoosoft_wechat_enterprise'],
     'data': [
+        'data/wechat_data.xml',
         'views/holidays_view.xml',
     ],
     'qweb': [
