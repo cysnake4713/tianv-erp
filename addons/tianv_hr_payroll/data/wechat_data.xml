@@ -10,7 +10,7 @@
             <field name="title">工资单提醒</field>
             <field name="content">
 名称: ${object.name}
-状态: ${fields['state'].convert_to_export(object.state, ctx)}
+状态: ${fields['state'].convert_to_export(object.state, env)}
             </field>
         </record>
     </data>
