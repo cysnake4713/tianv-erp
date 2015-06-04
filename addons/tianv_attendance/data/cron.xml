@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openerp>
-    <data>
+    <data noupdate="1">
         <record model="ir.cron" id="insurance_cron">
             <field name="name">考勤自动生成</field>
             <field name="interval_number">1</field>
@@ -14,6 +14,15 @@
 
         <record id="wechat_map_tianv_attendance" model="odoosoft.wechat.enterprise.map">
             <field name="code">tianv_attendance.wechat_code</field>
+        </record>
+
+        <record id="message_template_attendance" model="odoosoft.wechat.enterprise.message.template">
+            <field name="name">微信考勤审批提醒</field>
+            <field name="title">考勤审批提醒</field>
+            <field name="content">
+员工: ${object.employee.name}
+状态: ${fields['state'].convert_to_export(object.state, env)}
+            </field>
         </record>
     </data>
 </openerp>
