@@ -252,6 +252,7 @@ class AttendanceRecordLine(models.Model):
 
             # if is leave
             if self.env['hr.holidays'].search([
+                ('type', '=', 'remove'),
                 ('employee_id', '=', self.record.employee.id),
                 ('date_from', '<=', config_start_time),
                 ('date_to', '>=', config_end_time),
@@ -260,6 +261,7 @@ class AttendanceRecordLine(models.Model):
                 (hour, tags) = (hour, [leave_tag])
             # if is sick
             elif self.env['hr.holidays'].search([
+                ('type', '=', 'remove'),
                 ('employee_id', '=', self.record.employee.id),
                 ('date_from', '<=', config_start_time),
                 ('date_to', '>=', config_end_time),
@@ -268,6 +270,7 @@ class AttendanceRecordLine(models.Model):
                 (hour, tags) = (hour, [sick_tag])
             # if is year holiday
             elif self.env['hr.holidays'].search([
+                ('type', '=', 'remove'),
                 ('employee_id', '=', self.record.employee.id),
                 ('date_from', '<=', config_start_time),
                 ('date_to', '>=', config_end_time),
@@ -277,6 +280,7 @@ class AttendanceRecordLine(models.Model):
                                        datetime.datetime.strptime(config_end_time, DEFAULT_SERVER_DATETIME_FORMAT), None)[0], [year_tag])
             # if is out source
             elif self.env['hr.holidays'].search([
+                ('type', '=', 'remove'),
                 ('employee_id', '=', self.record.employee.id),
                 ('date_from', '<=', config_start_time),
                 ('date_to', '>=', config_end_time),
@@ -286,6 +290,7 @@ class AttendanceRecordLine(models.Model):
                                        datetime.datetime.strptime(config_end_time, DEFAULT_SERVER_DATETIME_FORMAT), None)[0], [out_tag])
             # if is no work
             elif self.env['hr.holidays'].search([
+                ('type', '=', 'remove'),
                 ('employee_id', '=', self.record.employee.id),
                 ('date_from', '<=', config_start_time),
                 ('date_to', '>=', config_end_time),
