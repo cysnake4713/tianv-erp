@@ -33,6 +33,11 @@
                     <field name="company_total"/>
                     <field name="total"/>
                     <field name="state"/>
+                    <group string="分组">
+                        <filter string="会计周期" context="{'group_by':'period'}"/>
+                        <filter string="状态" context="{'group_by':'state'}"/>
+                        <filter string="雇员" context="{'group_by':'employee'}"/>
+                    </group>
                 </search>
             </field>
         </record>

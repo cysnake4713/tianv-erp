@@ -29,6 +29,10 @@
                     <field name="actual_hour"/>
                     <field name="plan"/>
                     <field name="state"/>
+                    <group string="分组">
+                        <filter string="会计周期" context="{'group_by':'period'}"/>
+                        <filter string="状态" context="{'group_by':'state'}"/>
+                    </group>
                 </search>
             </field>
         </record>
