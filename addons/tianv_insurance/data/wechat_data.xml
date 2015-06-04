@@ -11,6 +11,7 @@
             <field name="content">
 雇员: ${object.employee.name}
 会计周期: ${object.period.name}
+状态: ${fields['state'].convert_to_export(object.state, env)}
             </field>
         </record>
     </data>
