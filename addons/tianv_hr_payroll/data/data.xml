@@ -211,7 +211,7 @@ attendance_record = contract.get_attendance_record_by_date(payslip.date_from, pa
 P = plan_hour = attendance_record.plan_hour
 M = min_hour = attendance_record.min_hour
 L = legal_hour = attendance_record.legal_hour
-A = actual_hour = attendance_record.actual_hour
+A = actual_hour = attendance_record.actual_hour + attendance_record.leave_time + attendance_record.sick_time
 
 if A &lt; P &lt; M &lt; L:
     result = categories.BASIC_HOUR * (P - A) * 3
