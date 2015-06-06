@@ -24,7 +24,9 @@
                         </div>
                     </div>
                     <div class="page">
-                        <h2>工资单</h2>
+                        <h2>工资单
+                            <span style="color:grey;">PAYROLL</span>
+                        </h2>
                         <p t-field="o.name"/>
                         <table class="table table-condensed table-bordered">
                             <tr>
@@ -89,23 +91,30 @@
                                 <tr>
                                     <th>名称</th>
                                     <th>编码</th>
-                                    <th>合计</th>
+                                    <th  style="text-align: right;">金额</th>
+                                    <th  style="text-align: right;">实发</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr t-foreach="get_payslip_lines(o.line_ids)" t-as="p">
-                                    <t t-if="p.code not in ['THEORY_TOTAL', 'ALL_TOTAL', 'ACTUAL_TOTAL', 'CASH_TOTAL']">
+                            <tbody style="border-bottom: 1px solid black !important;">
+                                <t t-foreach="get_payslip_lines(o.line_ids)" t-as="p">
+                                    <tr t-if="p.code not in ['THEORY_TOTAL', 'ALL_TOTAL', 'ACTUAL_TOTAL', 'CASH_TOTAL']">
                                         <td>
                                             <span t-field="p.name"/>
                                         </td>
                                         <td>
                                             <span t-field="p.code"/>
                                         </td>
-                                        <td>
+                                        <td style="text-align: right;">
                                             <span t-esc="formatLang(p.total, currency_obj=o.company_id.currency_id)"/>
                                         </td>
-                                    </t>
-                                </tr>
+                                        <td t-if="p.code not in ['INSURANCE_COMPANY']" style="text-align: right;">
+                                            <span t-esc="formatLang(p.total, currency_obj=o.company_id.currency_id)"/>
+                                        </td>
+                                        <td t-if="p.code in ['INSURANCE_COMPANY']" style="text-align: right;">
+                                            <span t-esc="formatLang(0.0, currency_obj=o.company_id.currency_id)"/>
+                                        </td>
+                                    </tr>
+                                </t>
                             </tbody>
                         </table>
                         <div class="row">
