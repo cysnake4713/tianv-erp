@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openerp>
     <data>
+        <record id="view_hr_payslip_search_inherit" model="ir.ui.view">
+        <field name="name">view.hr.payslip.search.inherit</field>
+        <field name="model">hr.payslip</field>
+        <field name="inherit_id" ref="hr_payroll.view_hr_payslip_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='state']" position="after">
+                <filter string="开始日期" name="date_start" icon="terp-stock_effects-object-colorize" context="{'group_by':'date_from:month'}"/>
+            </xpath>
+        </field>
+        </record>
         <!-- Inherit Form View to Modify it -->
         <record id="view_hr_payslip_form_inherit" model="ir.ui.view">
             <field name="name">view.hr.payslip.form.inherit</field>
