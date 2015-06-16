@@ -11,7 +11,7 @@ from openerp.tools.safe_eval import safe_eval as eval
 class HrPayslip(osv.Model):
     _name = 'hr.payslip'
     _inherit = ['hr.payslip', 'odoosoft.workflow.abstract']
-    _order = 'date_from'
+    _order = 'date_from desc'
 
     _columns = {
         'state': fields.selection([
