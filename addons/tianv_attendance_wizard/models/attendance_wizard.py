@@ -106,7 +106,9 @@ class AttendanceWizard(models.TransientModel):
                 'date_to': self.period.date_stop,
                 'input_line_ids': [(0, 0, {'contract_id': contract.id, 'name': u'项目提成', 'code': 'PROJECT_COMMISSION'}),
                                    (0, 0, {'contract_id': contract.id, 'name': u'服务提成', 'code': 'SERVICE_COMMISSION'}),
+                                   (0, 0, {'contract_id': contract.id, 'name': u'商务提成', 'code': 'BUSINESS_COMMISSION'}),
                                    (0, 0, {'contract_id': contract.id, 'name': u'平衡工资', 'code': 'BALANCE'}),
+                                   (0, 0, {'contract_id': contract.id, 'name': u'年终奖', 'code': 'YEAR_AWARD'}),
                                    ],
             }).compute_sheet()
         self.relative_payslips = self.env['hr.payslip'].search([('date_from', '<=', self.period.date_start),

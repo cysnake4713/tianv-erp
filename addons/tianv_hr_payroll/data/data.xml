@@ -266,6 +266,21 @@ else:
 result = contract.allowance
             </field>
         </record>
+        <record id="tianv_payroll_rule_award_allowance" model="hr.salary.rule">
+            <field name="name">年终奖</field>
+            <field name="code">YEAR_AWARD</field>
+            <field name="sequence">34</field>
+            <field name="category_id" ref="tianv_hr_payroll.BONUS"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">
+result = True if inputs.YEAR_AWARD and inputs.YEAR_AWARD.amount != 0.0 else False
+            </field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">
+result = inputs.YEAR_AWARD.amount if inputs.YEAR_AWARD else 0.0
+            </field>
+        </record>
+
         <record id="tianv_payroll_rule_bonus_full_work" model="hr.salary.rule">
             <field name="name">全勤奖金</field>
             <field name="code">FULL_WORK</field>
@@ -306,6 +321,15 @@ else:
             <field name="amount_select">code</field>
             <field name="amount_python_compute">result = inputs.PROJECT_COMMISSION.amount if inputs.PROJECT_COMMISSION else 0.0</field>
         </record>
+        <record id="tianv_payroll_rule_business_commission" model="hr.salary.rule">
+            <field name="name">商务提成</field>
+            <field name="code">BUSINESS_COMMISSION</field>
+            <field name="sequence">41</field>
+            <field name="category_id" ref="tianv_hr_payroll.COMMISSION"/>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = inputs.BUSINESS_COMMISSION.amount if inputs.BUSINESS_COMMISSION else 0.0</field>
+        </record>
+
 
         <record id="tianv_payroll_rule_balance" model="hr.salary.rule">
             <field name="name">平衡工资</field>
@@ -419,7 +443,7 @@ result = ACTUAL_TOTAL
             <field name="name">提成工资</field>
             <field name="company_id" ref="base.main_company"/>
             <field name="rule_ids"
-            eval="[(6, 0, [ref('tianv_hr_payroll.tianv_payroll_rule_service_commission'), ref('tianv_hr_payroll.tianv_payroll_rule_project_commission')])]"/>
+            eval="[(6, 0, [ref('tianv_hr_payroll.tianv_payroll_rule_business_commission'), ref('tianv_hr_payroll.tianv_payroll_rule_service_commission'), ref('tianv_hr_payroll.tianv_payroll_rule_project_commission')])]"/>
             <field name="parent_id" ref="tianv_payroll_salary_structure_attendance"/>
         </record>
         <record id="tianv_payroll_salary_structure_bonus" model="hr.payroll.structure">
@@ -427,7 +451,7 @@ result = ACTUAL_TOTAL
             <field name="name">额外奖金</field>
             <field name="company_id" ref="base.main_company"/>
             <field name="rule_ids"
-            eval="[(6, 0, [ref('tianv_hr_payroll.tianv_payroll_rule_balance'), ref('tianv_hr_payroll.tianv_payroll_rule_bonus_allowance'), ref('tianv_hr_payroll.tianv_payroll_rule_bonus_full_work'), ref('tianv_hr_payroll.tianv_payroll_rule_bonus_extra_work')])]"/>
+            eval="[(6, 0, [ref('tianv_hr_payroll.tianv_payroll_rule_award_allowance'), ref('tianv_hr_payroll.tianv_payroll_rule_balance'), ref('tianv_hr_payroll.tianv_payroll_rule_bonus_allowance'), ref('tianv_hr_payroll.tianv_payroll_rule_bonus_full_work'), ref('tianv_hr_payroll.tianv_payroll_rule_bonus_extra_work')])]"/>
             <field name="parent_id" ref="tianv_payroll_salary_structure_commission"/>
         </record>
         <record id="tianv_payroll_salary_structure_insurance" model="hr.payroll.structure">
