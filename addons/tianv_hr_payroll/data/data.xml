@@ -267,7 +267,7 @@ result = contract.allowance
             </field>
         </record>
         <record id="tianv_payroll_rule_award_allowance" model="hr.salary.rule">
-            <field name="name">年终奖</field>
+            <field name="name">年终奖金</field>
             <field name="code">YEAR_AWARD</field>
             <field name="sequence">34</field>
             <field name="category_id" ref="tianv_hr_payroll.BONUS"/>
