@@ -54,7 +54,7 @@
                         <button string="冲销" name="refund_sheet" states="confirm,done" type='object' groups="base.group_hr_manager"/>
                         <button string="设置为草稿" name="draft" states="cancel" groups="base.group_hr_manager"/>
 
-                        <button string="取消" name="cancel_sheet" states="draft,hr_check,confirm,verify,is_confirmed" groups="base.group_hr_manager"/>
+                        <button string="取消" name="cancel_sheet" states="draft,hr_check,confirm,verify,is_confirmed,done" groups="base.group_hr_manager"/>
                         <field name="state" widget="statusbar" statusbar_visible="draft,confirm"/>
                     </header>
                 </xpath>
