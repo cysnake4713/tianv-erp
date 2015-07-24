@@ -223,6 +223,7 @@ msgstr "服务没有指派负责人"
 #. module: tianv_service
 #: field:tianv.service.service,create_uid:0
 #: field:tianv.service.service.record,create_uid:0
+#: field:tianv.service.service.record.wizard.line,create_uid:0
 #: field:tianv.service.service.wizard,create_uid:0
 msgid "Created by"
 msgstr "创建人"
@@ -230,6 +231,7 @@ msgstr "创建人"
 #. module: tianv_service
 #: field:tianv.service.service,create_date:0
 #: field:tianv.service.service.record,create_date:0
+#: field:tianv.service.service.record.wizard.line,create_date:0
 #: field:tianv.service.service.wizard,create_date:0
 msgid "Created on"
 msgstr "创建时间"
@@ -251,7 +253,7 @@ msgstr "草稿"
 
 #. module: tianv_service
 #: field:tianv.service.service.record,end_date:0
-#: field:tianv.service.service.wizard,end_date:0
+#: field:tianv.service.service.record.wizard.line,end_date:0
 msgid "End Date"
 msgstr "结束时间"
 
@@ -298,6 +300,7 @@ msgstr "Holds the Chatter summary (number of messages, ...). This summary is dir
 #. module: tianv_service
 #: field:tianv.service.service,id:0
 #: field:tianv.service.service.record,id:0
+#: field:tianv.service.service.record.wizard.line,id:0
 #: field:tianv.service.service.wizard,id:0
 msgid "ID"
 msgstr "ID"
@@ -328,6 +331,11 @@ msgid "In Progress"
 msgstr "运行中"
 
 #. module: tianv_service
+#: model:ir.model,name:tianv_service.model_account_invoice
+msgid "Invoice"
+msgstr "发票"
+
+#. module: tianv_service
 #: field:tianv.service.service,message_is_follower:0
 msgid "Is a Follower"
 msgstr "是一个关注人"
@@ -340,6 +348,7 @@ msgstr "最后消息时间"
 #. module: tianv_service
 #: field:tianv.service.service,write_uid:0
 #: field:tianv.service.service.record,write_uid:0
+#: field:tianv.service.service.record.wizard.line,write_uid:0
 #: field:tianv.service.service.wizard,write_uid:0
 msgid "Last Updated by"
 msgstr "最后更新人"
@@ -347,6 +356,7 @@ msgstr "最后更新人"
 #. module: tianv_service
 #: field:tianv.service.service,write_date:0
 #: field:tianv.service.service.record,write_date:0
+#: field:tianv.service.service.record.wizard.line,write_date:0
 #: field:tianv.service.service.wizard,write_date:0
 msgid "Last Updated on"
 msgstr "最后更新时间"
@@ -383,6 +393,7 @@ msgstr "不重要"
 
 #. module: tianv_service
 #: field:tianv.service.service.record,order_id:0
+#: field:tianv.service.service.record.wizard.line,order_id:0
 #: field:tianv.service.service.wizard,order_id:0
 msgid "Order"
 msgstr "订单"
@@ -415,6 +426,7 @@ msgstr "服务端口"
 #. module: tianv_service
 #: view:tianv.service.service:tianv_service.view_service_service_search
 #: field:tianv.service.service,product_id:0
+#: field:tianv.service.service.record.wizard.line,product_id:0
 msgid "Product"
 msgstr "产品"
 
@@ -424,14 +436,25 @@ msgid "Product Price"
 msgstr "服务价格"
 
 #. module: tianv_service
+#: field:tianv.service.service.wizard,record_ids:0
+msgid "Records"
+msgstr "记录"
+
+#. module: tianv_service
 #: view:tianv.service.service:tianv_service.view_service_service_search
 msgid "Search Services"
 msgstr "搜索服务"
 
 #. module: tianv_service
+#: code:addons/tianv_service/models/service.py:235
+#, python-format
+msgid "Selected Service have multi or have no partner!"
+msgstr "选择的服务没有甲方或者有不同的甲方!"
+
+#. module: tianv_service
 #: model:ir.model,name:tianv_service.model_tianv_service_service
 #: field:tianv.service.service.record,service_id:0
-#: field:tianv.service.service.wizard,service_id:0
+#: field:tianv.service.service.record.wizard.line,service_id:0
 msgid "Service"
 msgstr "服务"
 
@@ -457,7 +480,7 @@ msgstr "服务正常"
 
 #. module: tianv_service
 #: field:tianv.service.service.record,price:0
-#: field:tianv.service.service.wizard,price:0
+#: field:tianv.service.service.record.wizard.line,price:0
 msgid "Service Price"
 msgstr "服务价格"
 
@@ -488,6 +511,7 @@ msgstr "服务待续签"
 
 #. module: tianv_service
 #: model:ir.model,name:tianv_service.model_tianv_service_service_record
+#: model:ir.model,name:tianv_service.model_tianv_service_service_record_wizard_line
 #: model:ir.model,name:tianv_service.model_tianv_service_service_wizard
 msgid "Service record"
 msgstr "服务记录"
@@ -510,7 +534,7 @@ msgstr "设置为进行中"
 
 #. module: tianv_service
 #: field:tianv.service.service.record,start_date:0
-#: field:tianv.service.service.wizard,start_date:0
+#: field:tianv.service.service.record.wizard.line,start_date:0
 msgid "Start Date"
 msgstr "开始时间"
 
@@ -551,9 +575,14 @@ msgid "Very Important"
 msgstr "非常重要"
 
 #. module: tianv_service
+#: field:tianv.service.service.record.wizard.line,wizard_id:0
+msgid "Wizard"
+msgstr "相关向导"
+
+#. module: tianv_service
 #: view:account.invoice:tianv_service.view_account_invoice_tree_inherit
-msgid "blue:state == 'draft';black:state in ('proforma','proforma2',);gray:state == 'cancel';red:state == 'open'"
-msgstr "blue:state == 'draft';black:state in ('proforma','proforma2',);gray:state == 'cancel';red:state == 'open'"
+msgid "blue:state == 'draft';black:state in ('proforma','proforma2',);gray:state == 'cancel';red:state in ('open','paid')"
+msgstr "blue:state == 'draft';black:state in ('proforma','proforma2',);gray:state == 'cancel';red:state in ('open','paid')"
 
 #. module: tianv_service
 #: selection:tianv.service.service,service_level:0
@@ -586,9 +615,25 @@ msgid "其它信息"
 msgstr "其它信息"
 
 #. module: tianv_service
+#: view:tianv.service.service:tianv_service.view_service_service_all_form
+msgid "内部编号"
+msgstr "内部编号"
+
+#. module: tianv_service
+#: view:tianv.service.service:tianv_service.view_service_service_all_form
+#: view:tianv.service.service:tianv_service.view_service_service_all_tree
+msgid "到期时间"
+msgstr "到期时间"
+
+#. module: tianv_service
 #: model:product.uom,name:tianv_service.uom_half_year
 msgid "半年"
 msgstr "半年"
+
+#. module: tianv_service
+#: view:tianv.service.service:tianv_service.view_service_service_all_tree
+msgid "合同状态"
+msgstr "合同状态"
 
 #. module: tianv_service
 #: view:tianv.service.service:tianv_service.view_service_service_all_form
@@ -606,14 +651,35 @@ msgid "季度"
 msgstr "季度"
 
 #. module: tianv_service
+#: view:account.invoice:tianv_service.view_account_invoice_form_inherit
+msgid "审批通过"
+msgstr "审批通过"
+
+#. module: tianv_service
 #: model:product.uom,name:tianv_service.uom_year
 msgid "年"
 msgstr "年"
 
 #. module: tianv_service
 #: view:tianv.service.service:tianv_service.view_service_service_all_form
+#: view:tianv.service.service:tianv_service.view_service_service_all_tree
+msgid "开始时间"
+msgstr "开始时间"
+
+#. module: tianv_service
+#: view:tianv.service.service:tianv_service.view_service_service_all_form
 msgid "归属信息"
 msgstr "归属信息"
+
+#. module: tianv_service
+#: model:ir.actions.act_window,name:tianv_service.action_service_order_creation
+msgid "批量创建订单"
+msgstr "批量创建订单"
+
+#. module: tianv_service
+#: view:account.invoice:tianv_service.view_account_invoice_form_inherit
+msgid "撤销审批"
+msgstr "撤销审批"
 
 #. module: tianv_service
 #: view:tianv.service.service:tianv_service.view_service_service_all_form
@@ -631,11 +697,6 @@ msgid "服务"
 msgstr "服务"
 
 #. module: tianv_service
-#: view:tianv.service.service.wizard:tianv_service.view_serivce_wizard_form
-msgid "服务价格"
-msgstr "服务价格"
-
-#. module: tianv_service
 #: model:ir.actions.act_window,name:tianv_service.action_service_service_all
 #: model:ir.ui.menu,name:tianv_service.menu_service_service_all
 msgid "服务信息"
@@ -643,7 +704,6 @@ msgstr "服务信息"
 
 #. module: tianv_service
 #: model:product.uom.categ,name:tianv_service.uom_cate_0001
-#: view:tianv.service.service.wizard:tianv_service.view_serivce_wizard_form
 msgid "服务周期"
 msgstr "服务周期"
 
@@ -674,6 +734,11 @@ msgid "服务记录"
 msgstr "服务记录"
 
 #. module: tianv_service
+#: view:account.invoice:tianv_service.view_account_invoice_form_inherit
+msgid "查看关联服务"
+msgstr "查看关联服务"
+
+#. module: tianv_service
 #: view:tianv.service.service:tianv_service.view_service_service_all_form
 msgid "查看相关合同:"
 msgstr "查看相关合同:"
@@ -694,4 +759,15 @@ msgstr "标准I型"
 #: view:tianv.service.service.wizard:tianv_service.view_serivce_wizard_form
 msgid "生成订单"
 msgstr "生成订单"
+
+#. module: tianv_service
+#: view:tianv.service.service:tianv_service.view_service_service_all_form
+msgid "立刻发送邮件通知"
+msgstr "立刻发送邮件通知"
+
+#. module: tianv_service
+#: view:tianv.service.service:tianv_service.view_service_service_all_form
+#: view:tianv.service.service:tianv_service.view_service_service_all_tree
+msgid "负责人"
+msgstr "负责人"
 

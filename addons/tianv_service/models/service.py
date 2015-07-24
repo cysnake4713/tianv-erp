@@ -2,7 +2,8 @@
 import datetime
 import logging
 import time
-from openerp import models, fields, api, _
+from dateutil.relativedelta import relativedelta
+from openerp import models, fields, api, _, exceptions
 
 __author__ = 'cysnake4713'
 _logger = logging.getLogger(__name__)
@@ -157,9 +158,9 @@ class Service(models.Model):
             datas.update(data)
             users.append(user_id)
         ctx["data"] = datas
-        _logger.debug("Sending reminder to uid %s", user_id)
         for user_id in users:
             template_id.with_context(ctx).send_mail(user_id, force_send=False)
+            _logger.debug("Sending reminder to uid %s", user_id)
         self.env['odoosoft.wechat.enterprise.message'].create_message(obj=None,
                                                                       content=wechat_template.with_context(data=datas).render(),
                                                                       code='tianv_service.map_tianv_service', user_ids=users,
@@ -186,48 +187,71 @@ class ServiceRecord(models.Model):
     order_id = fields.Many2one('sale.order', 'Order')
 
 
+class ServiceRecordWziardLine(models.TransientModel):
+    _name = "tianv.service.service.record.wizard.line"
+    _inherit = "tianv.service.service.record"
+
+    product_id = fields.Many2one('product.product', string='Product', related='service_id.product_id')
+    wizard_id = fields.Many2one('tianv.service.service.wizard', 'Wizard', ondelete='cascade', required=True)
+
+
 class ServiceRecordWizard(models.TransientModel):
-    _inherit = 'tianv.service.service.record'
     _name = 'tianv.service.service.wizard'
 
+    record_ids = fields.One2many('tianv.service.service.record.wizard.line', 'wizard_id', 'Records')
+    order_id = fields.Many2one('sale.order', 'Order')
     state = fields.Selection([('draft', 'Draft'), ('confirm', 'Confirm')], 'State')
 
     @api.model
     def default_get(self, fields_list):
-        """
-        This function gets default values
-        """
         res = super(ServiceRecordWizard, self).default_get(fields_list)
-        res['service_id'] = self.env.context['active_id']
-        last_record = self.env['tianv.service.service.record'].search([('service_id', '=', res['service_id'])], order='end_date desc')
-        if last_record:
-            res['price'] = last_record[0].price
+        record_ids = []
+        for service in self.env['tianv.service.service'].browse(self.env.context['active_ids']):
+            record = service.record_ids.search([('service_id', '=', service.id)], order='end_date desc')
+            price = record[0].price if record else service.product_id.price
+            start_date = fields.Date.to_string(
+                fields.Date.from_string(record[0].end_date) + datetime.timedelta(days=1)) if record else fields.Date.today()
+            end_date = fields.Date.to_string(
+                fields.Date.from_string(start_date) + relativedelta(years=1) - relativedelta(days=1))
+            record_ids += [
+                (0, 0,
+                 {'wizard_id': self.id,
+                  'service_id': service.id,
+                  'start_date': start_date,
+                  'end_date': end_date,
+                  'price': price,
+                  })]
+        res['record_ids'] = record_ids
         return res
 
     _defaults = {
         'state': 'draft',
-        'start_date': lambda *a: fields.Date.today(),
     }
 
     @api.multi
     def generate_order(self):
-        service = self.service_id
+        partner_id = set([r.service_id.partner_id.id for r in self.record_ids])
+        if len(partner_id) != 1:
+            raise exceptions.ValidationError(_('Selected Service have multi or have no partner!'))
+        else:
+            partner_id = partner_id.pop()
         order_info = {
-            'partner_id': service.partner_id.id,
-            'project_id': service.analytic_account_id.id,
-            'order_line': [(0, 0, {'product_id': service.product_id.id, 'price_unit': self.price})],
-            'user_id': service.manager_id.id,
+            'partner_id': partner_id,
+            'order_line': [(0, 0, {'product_id': r.product_id.id, 'price_unit': r.price}) for r in self.record_ids],
+            'user_id': self.env.uid,
         }
         order_id = self.env['sale.order'].create(order_info)
-        self.write({'state': 'confirm', 'order_id': order_id.id, 'end_date': self.end_date})
-        service.write({'date': self.end_date})
-        self.env['tianv.service.service.record'].create({
-            'start_date': self.start_date,
-            'end_date': self.end_date,
-            'price': self.price,
-            'service_id': self.service_id.id,
-            'order_id': self.order_id.id,
-        })
+        self.write({'state': 'confirm', 'order_id': order_id.id})
+        for record in self.record_ids:
+            service = record.service_id
+            service.write({'date': record.end_date})
+            self.env['tianv.service.service.record'].create({
+                'start_date': record.start_date,
+                'end_date': record.end_date,
+                'price': record.price,
+                'service_id': service.id,
+                'order_id': self.order_id.id,
+            })
         return {
             'type': 'ir.actions.act_window',
             'res_model': 'tianv.service.service.wizard',

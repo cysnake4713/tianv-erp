@@ -9,15 +9,16 @@
                     <header>
                         <field name="state" widget="statusbar" readonly="1"/>
                     </header>
-                    <group invisible="1">
-                        <field name="service_id"/>
-                    </group>
-                    <group col="4" colspan="2" string="服务周期">
-                        <field name="start_date"/>
-                        <field name="end_date"/>
-                    </group>
-                    <group colspan="2" col="4" string="服务价格">
-                        <field name="price"/>
+                    <group string="从服务生成订单">
+                        <field name="record_ids" nolabel="1">
+                            <tree create="false" delete="false" editable="bottom">
+                                <field name="service_id" readonly="1"/>
+                                <field name="product_id" readonly="1"/>
+                                <field name="price"/>
+                                <field name="start_date"/>
+                                <field name="end_date"/>
+                            </tree>
+                        </field>
                     </group>
                     <footer states="draft">
                         <button string="生成订单" type="object" name="generate_order" default_focus="1" class="oe_highlight"
@@ -70,7 +71,7 @@
                     <field name="manager_id" string="负责人"/>
                     <field name="date_start" string="开始时间"/>
                     <field name="date" string="到期时间"/>
-                    <field name="service_status" />
+                    <field name="service_status"/>
                     <field name="state" string="合同状态"/>
                 </tree>
             </field>
@@ -84,7 +85,8 @@
                         <div groups="tianv_service.group_service_manager" class="oe_left" style="width:700px !important">
                             <button name="set_pending" string="To Renew" type="object" states="open" class="oe_highlight"/>
                             <button name="set_close" string="Close Contract" type="object" states="open,pending"/>
-                            <button name="set_open" string="Set In Progress" type="object" states="pending,close,cancelled,draft" class="oe_highlight"/>
+                            <button name="set_open" string="Set In Progress" type="object" states="pending,close,cancelled,draft"
+                                    class="oe_highlight"/>
                             <button name="set_cancel" string="Cancel Contract" type="object" states="open,pending"/>
                             <button name="button_send_notify_mail" type="object" string="立刻发送邮件通知"/>
                         </div>
@@ -93,7 +95,8 @@
                     </header>
                     <header>
                         <div groups="tianv_service.group_service_manager" class="oe_left" style="width:700px !important">
-                            <button name="open_service" string="启动服务" type="object" attrs="{'invisible':[('service_status','=','normal')]}" class="oe_highlight"/>
+                            <button name="open_service" string="启动服务" type="object" attrs="{'invisible':[('service_status','=','normal')]}"
+                                    class="oe_highlight"/>
                             <button name="close_service" string="关闭服务" type="object" attrs="{'invisible':[('service_status','=','stop')]}"/>
                             <button name="pause_service" string="暂停服务" type="object" attrs="{'invisible':[('service_status','=','pause')]}"/>
                             <button name="%(action_service_create_order)d" string="生成订单" type="action"/>

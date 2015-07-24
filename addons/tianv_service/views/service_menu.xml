@@ -23,5 +23,11 @@
         <menuitem name="服务信息" id="menu_service_service_all" parent="menu_service_service_manager" action="action_service_service_all" sequence="4"/>
         <!--config-->
 
+        <act_window id="action_service_order_creation"
+            multi="True"
+            key2="client_action_multi" name="批量创建订单"
+            res_model="tianv.service.service.wizard" src_model="tianv.service.service"
+            view_mode="form" target="new" view_type="form" />
+
     </data>
 </openerp>
