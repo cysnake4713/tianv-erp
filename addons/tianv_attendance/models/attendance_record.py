@@ -146,17 +146,6 @@ class AttendanceRecordLine(models.Model):
         late_tag = self.env.ref('tianv_attendance.attendance_type_late').id
         early_tag = self.env.ref('tianv_attendance.attendance_type_early').id
         error_tag = self.env.ref('tianv_attendance.attendance_type_error').id
-        leave_tag = self.env.ref('tianv_attendance.attendance_type_leave').id
-        sick_tag = self.env.ref('tianv_attendance.attendance_type_sick').id
-        year_tag = self.env.ref('tianv_attendance.attendance_type_year').id
-        out_tag = self.env.ref('tianv_attendance.attendance_type_out').id
-        no_tag = self.env.ref('tianv_attendance.attendance_type_no').id
-
-        leave_holiday = self.env.ref('tianv_attendance.holiday_status_personal').id
-        sick_holiday = self.env.ref('tianv_attendance.holiday_status_sick').id
-        year_holiday = self.env.ref('tianv_attendance.holiday_status_year').id
-        out_holiday = self.env.ref('tianv_attendance.holiday_status_out').id
-        no_holiday = self.env.ref('tianv_attendance.holiday_status_no').id
 
         normal = lambda p_in, p_out, c_start, c_end, conf: ((c_end - c_start).seconds / 3600.0, [])
         absent = lambda p_in, p_out, c_start, c_end, conf: (0, [absent_tag])
@@ -250,54 +239,20 @@ class AttendanceRecordLine(models.Model):
                                    config_end_time,
                                    config_line)
 
-            # if is leave
-            if self.env['hr.holidays'].search([
+            holiday_record = self.env['hr.holidays'].search([
                 ('type', '=', 'remove'),
                 ('employee_id', '=', self.record.employee.id),
                 ('date_from', '<=', config_start_time),
                 ('date_to', '>=', config_end_time),
-                ('state', '=', 'validate'),
-                ('holiday_status_id', '=', leave_holiday)]):
-                (hour, tags) = (hour, [leave_tag])
-            # if is sick
-            elif self.env['hr.holidays'].search([
-                ('type', '=', 'remove'),
-                ('employee_id', '=', self.record.employee.id),
-                ('date_from', '<=', config_start_time),
-                ('date_to', '>=', config_end_time),
-                ('state', '=', 'validate'),
-                ('holiday_status_id', '=', sick_holiday)]):
-                (hour, tags) = (hour, [sick_tag])
-            # if is year holiday
-            elif self.env['hr.holidays'].search([
-                ('type', '=', 'remove'),
-                ('employee_id', '=', self.record.employee.id),
-                ('date_from', '<=', config_start_time),
-                ('date_to', '>=', config_end_time),
-                ('state', '=', 'validate'),
-                ('holiday_status_id', '=', year_holiday)]):
-                (hour, tags) = (normal(None, None, datetime.datetime.strptime(config_start_time, DEFAULT_SERVER_DATETIME_FORMAT),
-                                       datetime.datetime.strptime(config_end_time, DEFAULT_SERVER_DATETIME_FORMAT), None)[0], [year_tag])
-            # if is out source
-            elif self.env['hr.holidays'].search([
-                ('type', '=', 'remove'),
-                ('employee_id', '=', self.record.employee.id),
-                ('date_from', '<=', config_start_time),
-                ('date_to', '>=', config_end_time),
-                ('state', '=', 'validate'),
-                ('holiday_status_id', '=', out_holiday)]):
-                (hour, tags) = (normal(None, None, datetime.datetime.strptime(config_start_time, DEFAULT_SERVER_DATETIME_FORMAT),
-                                       datetime.datetime.strptime(config_end_time, DEFAULT_SERVER_DATETIME_FORMAT), None)[0], [out_tag])
-            # if is no work
-            elif self.env['hr.holidays'].search([
-                ('type', '=', 'remove'),
-                ('employee_id', '=', self.record.employee.id),
-                ('date_from', '<=', config_start_time),
-                ('date_to', '>=', config_end_time),
-                ('state', '=', 'validate'),
-                ('holiday_status_id', '=', no_holiday)]):
-                (hour, tags) = (normal(None, None, datetime.datetime.strptime(config_start_time, DEFAULT_SERVER_DATETIME_FORMAT),
-                                       datetime.datetime.strptime(config_end_time, DEFAULT_SERVER_DATETIME_FORMAT), None)[0], [no_tag])
+                ('state', '=', 'validate')])
+            if holiday_record:
+                holiday_status = holiday_record[0].holiday_status_id
+                related_tag = self.env['tianv.hr.attendance.record.type'].search([('related_holiday_type', '=', holiday_status.id)])
+                if related_tag:
+                    tag_hour = hour if not related_tag.is_full_time else \
+                        normal(None, None, datetime.datetime.strptime(config_start_time, DEFAULT_SERVER_DATETIME_FORMAT),
+                               datetime.datetime.strptime(config_end_time, DEFAULT_SERVER_DATETIME_FORMAT), None)[0]
+                    (hour, tags) = (tag_hour, [related_tag.id])
 
             tag_ids += tags
             record_hour += hour
@@ -350,3 +305,5 @@ class AttendanceRecordType(models.Model):
     _description = 'New Description'
 
     name = fields.Char('Name', required=True)
+    related_holiday_type = fields.Many2one('hr.holidays.status', 'Related Holiday Status')
+    is_full_time = fields.Boolean('Mark As Full Time')

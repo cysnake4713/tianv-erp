@@ -22,6 +22,7 @@ Tianv Attendance Module
         'views/attendance_plan_view.xml',
         'views/attendance_record_view.xml',
         'views/account_period_view.xml',
+        'views/attendance_type_view.xml',
 
     ],
     'qweb': [

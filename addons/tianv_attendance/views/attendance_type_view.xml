@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record id="view_tianv_attendance_record_type_tree" model="ir.ui.view">
+            <field name="name">view.tianv.hr.attendance.record.type.tree</field>
+            <field name="model">tianv.hr.attendance.record.type</field>
+            <field name="arch" type="xml">
+                <tree editable="top">
+                    <field name="name"/>
+                    <field name="related_holiday_type"/>
+                    <field name="is_full_time"/>
+                </tree>
+            </field>
+        </record>
+    </data>
+</openerp>

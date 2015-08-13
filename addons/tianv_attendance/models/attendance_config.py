@@ -8,6 +8,7 @@ from openerp.tools.translate import _
 class AttendanceConfig(models.Model):
     _name = 'tianv.hr.attendance.config'
     _description = 'Attendance Timetable Config'
+    _order = 'start_date desc'
 
     start_date = fields.Date('Start Date', required=True, default=lambda *args: fields.Date.today())
     end_date = fields.Date('End Date', required=True, default=lambda *args: fields.Date.today())
