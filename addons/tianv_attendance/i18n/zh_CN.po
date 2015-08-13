@@ -21,6 +21,16 @@ msgid "Adjust Hour"
 msgstr "调整小时"
 
 #. module: tianv_attendance
+#: field:tianv.hr.attendance.record.type,is_full_time:0
+msgid "Mark As Full Time"
+msgstr "覆盖计算时长"
+
+#. module: tianv_attendance
+#: field:tianv.hr.attendance.record.type,related_holiday_type:0
+msgid "Related Holiday Status"
+msgstr "相关考勤类型"
+
+#. module: tianv_attendance
 #: field:tianv.hr.attendance.record.line,adjust_tags:0
 msgid "Adjust Tags"
 msgstr "调整标签"
