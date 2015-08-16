@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <menuitem name="China Account" id="oecn_account_print.menu_china_account" parent="account.menu_finance" sequence="4"
+                  groups="account.group_account_invoice"/>
+    </data>
+</openerp>
