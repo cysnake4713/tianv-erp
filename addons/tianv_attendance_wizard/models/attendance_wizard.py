@@ -29,6 +29,8 @@ class AttendanceWizard(models.TransientModel):
 
     relative_payslips = fields.Many2many('hr.payslip', 'attendance_wizard_payslip_rel', 'wizard_id', 'payslip_id', 'Relative Payslip')
 
+    payroll_journal = fields.Many2one('account.journal', 'Payroll Journal', required=True)
+
     @api.onchange('period')
     def onchange_period(self):
         contracts = self.env['hr.contract'].search([('date_start', '<=', self.period.date_start), ('date_end', '>=', self.period.date_stop)])
@@ -104,6 +106,7 @@ class AttendanceWizard(models.TransientModel):
                 'struct_id': contract.struct_id.id,
                 'date_from': self.period.date_start,
                 'date_to': self.period.date_stop,
+                'journal_id': self.payroll_journal.id,
                 'input_line_ids': [(0, 0, {'contract_id': contract.id, 'name': u'项目提成', 'code': 'PROJECT_COMMISSION'}),
                                    (0, 0, {'contract_id': contract.id, 'name': u'服务提成', 'code': 'SERVICE_COMMISSION'}),
                                    (0, 0, {'contract_id': contract.id, 'name': u'商务提成', 'code': 'BUSINESS_COMMISSION'}),
