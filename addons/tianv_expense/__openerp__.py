@@ -11,6 +11,7 @@ Tianv Expense""",
     'website': 'http://odoosoft.com',
     'depends': ['base', 'hr_expense'],
     'data': [
+        'views/expense_view.xml',
     ],
     'qweb': [
         'static/src/xml/*.xml',
