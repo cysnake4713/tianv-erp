@@ -10,9 +10,6 @@
                 <xpath expr="//button[@name='validate']" position="attributes">
                     <attribute name="groups">base.group_hr_manager</attribute>
                 </xpath>
-                <xpath expr="//button[@name='refuse']" position="attributes">
-                    <attribute name="groups">base.group_hr_manager</attribute>
-                </xpath>
             </field>
         </record>
     </data>
