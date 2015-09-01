@@ -13,6 +13,11 @@
                 <xpath expr="//button[@name='refuse']" position="attributes">
                     <attribute name="groups">base.group_hr_manager</attribute>
                 </xpath>
+                <xpath expr="//page[@string='Description']/group" position="after">
+                    <group string="扫描件">
+                        <field name="scan_file" widget="image" nolabel="1"/>
+                    </group>
+                </xpath>
             </field>
         </record>
     </data>

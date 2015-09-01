@@ -3,13 +3,15 @@
 #
 
 from openerp import tools
-from openerp import models, fields, api
+from openerp.osv import osv, fields
 from openerp.tools.translate import _
-from openerp.osv import osv
 
 
 class HrExpense(osv.Model):
     _inherit = 'hr.expense.expense'
+    _columns = {
+        'scan_file': fields.file('Scan File'),
+    }
 
     def action_move_create(self, cr, uid, ids, context=None):
         '''
