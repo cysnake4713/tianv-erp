@@ -42,7 +42,7 @@ class AttendanceMachine(models.Model):
     def import_data_from_machine(self, json_datas):
         datas = json.loads(json_datas)
         if self.user_has_groups('tianv_machine.group_attendance_machine_upload'):
-            self.sudo().env.cr.execute('SAVEPOINT import')
+            self.sudo().env.cr.execute('SAVEPOINT machine_record_import')
             employees = {u.name: u.id for u in self.sudo().env['hr.employee'].search([])}
             for data in datas:
                 if 'log_time' in data:
@@ -52,7 +52,7 @@ class AttendanceMachine(models.Model):
                     self.sudo().match_user(employees, data)
                     self.sudo().create(data)
                 except Exception, e:
-                    self.sudo().env.cr.execute('ROLLBACK TO SAVEPOINT import')
+                    self.sudo().env.cr.execute('ROLLBACK TO SAVEPOINT machine_record_import')
                     _logger.error('create machine upload fail! %s', e)
                     try:
                         error_string = str(e)
@@ -61,7 +61,7 @@ class AttendanceMachine(models.Model):
                     self.sudo().env['tianv.attendance.machine.log'].create({'is_success': False, 'error_info': error_string})
                     return False
             else:
-                self.sudo().env.cr.execute('RELEASE SAVEPOINT import')
+                self.sudo().env.cr.execute('RELEASE SAVEPOINT machine_record_import')
                 self.sudo().env['tianv.attendance.machine.log'].create({'is_success': True})
                 _logger.info('create machine upload success.')
                 return True
