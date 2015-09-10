@@ -10,6 +10,8 @@ from datetime import timedelta
 import logging
 
 _logger = logging.getLogger(__name__)
+
+
 # noinspection PyUnresolvedReferences
 class AttendanceMachine(models.Model):
     _name = 'tianv.attendance.machine'
@@ -42,27 +44,24 @@ class AttendanceMachine(models.Model):
         if self.user_has_groups('tianv_machine.group_attendance_machine_upload'):
             self.sudo().env.cr.execute('SAVEPOINT import')
             employees = {u.name: u.id for u in self.sudo().env['hr.employee'].search([])}
-            result = True
-            error_string = ''
             for data in datas:
                 if 'log_time' in data:
                     data['log_time'] = fields.Datetime.to_string(fields.Datetime.from_string(data['log_time']) - timedelta(hours=8))
                 try:
+                    del data['code']
                     self.sudo().match_user(employees, data)
                     self.sudo().create(data)
                 except Exception, e:
                     # _logger.error('Import machine record error.', e)
-                    result = False
-                    error_string = str(e)
-                    break
+                    self.sudo().env.cr.execute('ROLLBACK TO SAVEPOINT import')
+                    _logger.error('create machine upload fail!', e)
+                    self.sudo().env['tianv.attendance.machine.log'].create({'is_success': False, 'error_info': str(e)})
+                    return False
             else:
                 self.sudo().env.cr.execute('RELEASE SAVEPOINT import')
                 self.sudo().env['tianv.attendance.machine.log'].create({'is_success': True})
-                return result
-
-            self.sudo().env.cr.execute('ROLLBACK TO SAVEPOINT import')
-            self.sudo().env['tianv.attendance.machine.log'].create({'is_success': False, 'error_info': error_string})
-            return result
+                _logger.info('create machine upload success.')
+                return True
         else:
             return False
 
@@ -102,31 +101,31 @@ class AttendanceImportLog(models.Model):
     }
 
 
-    # if __name__ == '__main__':
-    # username = 'machine'  # the user
-    # pwd = 'machine'  # the password of the user
-    # dbname = 'tianv-erp'  # the database
-    # OPENERP_URL = 'localhost:8069'
-    #
-    # sock_common = xmlrpclib.ServerProxy('http://' + OPENERP_URL + '/xmlrpc/common')
-    # uid = sock_common.login(dbname, username, pwd)
-    # sock = xmlrpclib.ServerProxy('http://' + OPENERP_URL + '/xmlrpc/object')
-    #
+if __name__ == '__main__':
+    username = 'machine'  # the user
+    pwd = 'machine123456'  # the password of the user
+    dbname = 'tianv-erp'  # the database
+    OPENERP_URL = 'localhost:8069'
+    import xmlrpclib
+
+    sock_common = xmlrpclib.ServerProxy('http://' + OPENERP_URL + '/xmlrpc/common')
+    uid = sock_common.login(dbname, username, pwd)
+    sock = xmlrpclib.ServerProxy('http://' + OPENERP_URL + '/xmlrpc/object')
+
     # print sock.execute(dbname, uid, pwd, 'tianv.attendance.machine', 'get_last_update_info')
-    #
-    # datas = [
-    # {
-    #             "log_time": "2014-02-11 12:22:10",
-    #             "code": 10,
-    #             "user_id": 1,
-    #             "user_true_name": "符为"
-    #         },
-    #         {
-    #             "log_time": "2014-02-12 12:22:10",
-    #             "code": 11,
-    #             "user_id": 1,
-    #             "user_true_name": "符为"
-    #         }
-    #     ]
-    #
-    #     print sock.execute(dbname, uid, pwd, 'tianv.attendance.machine', 'import_data_from_machine', datas)
+
+    datas = [
+        {
+            "log_time": "2014-02-11 12:22:10",
+            "code": 10,
+            "user_id": 1,
+            "user_true_name": "符为"
+        },
+        {
+            "log_time": "2014-02-12 12:22:10",
+            "code": 11,
+            "user_id": 1,
+            "user_true_name": "符为"
+        }
+    ]
+    sock.execute(dbname, uid, pwd, 'tianv.attendance.machine', 'import_data_from_machine', json.dumps(datas))
