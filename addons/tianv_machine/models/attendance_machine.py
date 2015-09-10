@@ -52,10 +52,13 @@ class AttendanceMachine(models.Model):
                     self.sudo().match_user(employees, data)
                     self.sudo().create(data)
                 except Exception, e:
-                    # _logger.error('Import machine record error.', e)
                     self.sudo().env.cr.execute('ROLLBACK TO SAVEPOINT import')
-                    _logger.error('create machine upload fail!', e)
-                    self.sudo().env['tianv.attendance.machine.log'].create({'is_success': False, 'error_info': str(e)})
+                    _logger.error('create machine upload fail! %s', e)
+                    try:
+                        error_string = str(e)
+                    except Exception:
+                        error_string = u'未知错误!'
+                    self.sudo().env['tianv.attendance.machine.log'].create({'is_success': False, 'error_info': error_string})
                     return False
             else:
                 self.sudo().env.cr.execute('RELEASE SAVEPOINT import')
@@ -125,7 +128,7 @@ if __name__ == '__main__':
             "log_time": "2014-02-12 12:22:10",
             "code": 11,
             "user_id": 1,
-            "user_true_name": "符为"
+            # "user_true_name": "符嗖嗖嗖为"
         }
     ]
     sock.execute(dbname, uid, pwd, 'tianv.attendance.machine', 'import_data_from_machine', json.dumps(datas))
