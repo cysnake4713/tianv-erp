@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record id="action_project_deduct_type" model="ir.actions.act_window">
+            <field name="name">项目提成类型</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">tianv.project.deduct.type</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="action_project_project" model="ir.actions.act_window">
+            <field name="name">项目信息</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">tianv.project.project</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="action_project_template" model="ir.actions.act_window">
+            <field name="name">项目模板</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">tianv.project.template</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_project_project_root" name="项目" parent="tianv_service.menu_service_root" sequence="50"/>
+        <menuitem id="menu_project_project" name="项目信息" parent="menu_project_project_root" sequence="20"
+                  action="action_project_project"/>
+
+        <menuitem id="menu_project_template" name="项目模板" parent="menu_project_project_root" sequence="30"
+                  action="action_project_template"/>
+
+        <menuitem id="menu_project_deduct_type" name="项目提成类型" parent="tianv_service.menu_service_config" sequence="10"
+                  action="action_project_deduct_type"/>
+    </data>
+</openerp>

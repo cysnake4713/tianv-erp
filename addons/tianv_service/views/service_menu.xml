@@ -22,6 +22,7 @@
         <menuitem id="menu_service_service_manager" parent="menu_service_root" name="服务管理" sequence="5" />
         <menuitem name="服务信息" id="menu_service_service_all" parent="menu_service_service_manager" action="action_service_service_all" sequence="4"/>
         <!--config-->
+        <menuitem name="设置" id="menu_service_config" parent="menu_service_root"  sequence="80"/>
 
         <act_window id="action_service_order_creation"
             multi="True"

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record id="view_tianv_project_deduct_type_tree" model="ir.ui.view">
+            <field name="name">view.tianv.project.deduct.type.tree</field>
+            <field name="model">tianv.project.deduct.type</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_tianv_project_deduct_type_form" model="ir.ui.view">
+            <field name="name">view.tianv.project.deduct.type.form</field>
+            <field name="model">tianv.project.deduct.type</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</openerp>
