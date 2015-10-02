@@ -52,6 +52,7 @@ class ProjectTemplateParam(models.Model):
     default_proportion = fields.Float('Default Proportion', PRICE_DIGITS)
     default_value = fields.Float('Default_value', PRICE_DIGITS)
     template_id = fields.Many2one('tianv.project.template', 'Related Template', ondelete='cascade')
+    is_tax = fields.Boolean('Is Base On Tax')
 
 
 class ProjectTemplateLine(models.Model):

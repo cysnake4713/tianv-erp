@@ -27,12 +27,19 @@
                                 <tree editable="bottom">
                                     <field name="name"/>
                                     <field name="code"/>
+                                    <field name="is_tax"/>
                                     <field name="default_proportion" widget="percentage"/>
                                     <field name="default_value"/>
                                 </tree>
                             </field>
                         </group>
                         <group string="计算项">
+                            <div>
+                                <p>RESULT: 计算结果, 最终结果以 RESULT = ***** 形式表示</p>
+                                <p>TOTAL: 合同含税金额</p>
+                                <p>ACTUAL_TOTAL: 合同不含税金额</p>
+                            </div>
+                            <newline/>
                             <field name="line_ids" nolabel="1">
                                 <tree editable="bottom">
                                     <field name="sequence"/>

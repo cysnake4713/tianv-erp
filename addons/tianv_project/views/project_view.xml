@@ -48,35 +48,41 @@
                             <group string="合同金额">
                                 <field name="contract_price"/>
                                 <field name="tax_id"/>
+                                <field name="tax_price"/>
                                 <field name="actual_price"/>
                             </group>
                         </group>
                         <group>
-                            <group>
+                            <group col="4">
                                 <field name="template_id"/>
+                                <button name="button_init_template" type="object" string="使用模板" confirm="会清除现有信息!"/>
                             </group>
                             <group class="oe_inline">
                             </group>
                         </group>
                         <group string="款项分配">
-                            <field name="param_ids" nolabel="1" context="{'default_project_template_id':template_id}">
+                            <field name="param_ids" nolabel="1">
                                 <tree editable="bottom">
-                                    <field name="template_param_id" domain="[('template_id','=',project_template_id)]"/>
+                                    <field name="name"/>
                                     <field name="code"/>
                                     <field name="price"/>
-                                    <field name="project_template_id" invisible="1"/>
                                 </tree>
                             </field>
                         </group>
                         <group string="提成分配">
-                            <field name="record_ids" nolabel="1">
+                            <div>
+                                <button name="button_compute_record" type="object" string="再计算提成" confirm="会重新计算提成金额"/>
+                            </div>
+                            <newline/>
+                            <field name="record_ids" nolabel="1" context="{'template_id': template_id}">
                                 <tree editable="bottom">
                                     <field name="name"/>
-                                    <field name="template_line_id"/>
+                                    <field name="template_line_id" domain="[('template_id','=',context.get('template_id'))]"/>
                                     <field name="type_id"/>
+                                    <field name="adjustment" widget="percentage"/>
                                     <field name="price"/>
                                     <field name="comment"/>
-                                    <field name="user_id"/>
+                                    <field name="partner_id"/>
                                 </tree>
                             </field>
                         </group>

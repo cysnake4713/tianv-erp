@@ -8,43 +8,6 @@ from openerp.tools.translate import _
 PRICE_DIGITS = (10, 2)
 
 
-class ProjectTemplate(models.Model):
-    _name = 'tianv.project.template'
-    _rec_name = 'name'
-    _description = 'Tianv Project Template'
-
-    name = fields.Char('Name', required=True)
-
-    param_ids = fields.One2many('tianv.project.template.param', 'template_id', 'Params')
-
-    line_ids = fields.One2many('tianv.project.template.line', 'template_id', 'Lines')
-
-
-class ProjectTemplateParam(models.Model):
-    _name = 'tianv.project.template.param'
-    _rec_name = 'name'
-    _description = 'Tianv Project Template Param'
-
-    code = fields.Char('Code', required=True)
-    name = fields.Char('Name', required=True)
-    default_proportion = fields.Float('Default Proportion', PRICE_DIGITS)
-    default_value = fields.Float('Default_value', PRICE_DIGITS)
-    template_id = fields.Many2one('tianv.project.template', 'Related Template', ondelete='cascade')
-
-
-class ProjectTemplateLine(models.Model):
-    _name = 'tianv.project.template.line'
-    _rec_name = 'name'
-    _order = 'sequence'
-    _description = 'Tianv Project Template Line'
-
-    sequence = fields.Integer('Sequence', default=1)
-    name = fields.Char('Name', required=True)
-    type_id = fields.Many2one('tianv.project.deduct.type', 'Type', required=True)
-    python_code = fields.Text('Python Code')
-    template_id = fields.Many2one('tianv.project.template', 'Related Template', ondelete='cascade')
-
-
 class ProjectProject(models.Model):
     _name = 'tianv.project.project'
     _rec_name = 'name'
@@ -80,6 +43,8 @@ class ProjectProject(models.Model):
     tax_id = fields.Many2one('account.tax', 'Tax')
     # 实际金额
     actual_price = fields.Float('Actual Price', PRICE_DIGITS, compute='_compute_actual_price')
+    # 含税金额
+    tax_price = fields.Float('Tax Price', PRICE_DIGITS, compute='_compute_actual_price')
 
     param_ids = fields.One2many('tianv.project.project.param', 'project_id', 'Params')
 
@@ -90,18 +55,62 @@ class ProjectProject(models.Model):
     def _compute_actual_price(self):
         for project in self:
             project.actual_price = project.tax_id.compute_all(project.contract_price, 1)['total']
+            project.tax_price = project.tax_id.compute_all(project.contract_price, 1)['total_included']
+
+    @api.multi
+    def button_init_template(self):
+        for project in self:
+            if project.template_id:
+                # clear current param
+                project.param_ids.unlink()
+                # update project param
+                for param in project.template_id.param_ids:
+                    value = {
+                        'code': param.code,
+                        'name': param.name,
+                        'project_id': project.id,
+                    }
+                    if param.default_proportion:
+                        value['price'] = (project.tax_price if param.is_tax else project.actual_price) * param.default_proportion
+                    elif param.default_value and param.default_value < project.actual_price:
+                        value['price'] = param.default_value
+                    self.env['tianv.project.project.param'].create(value)
+                # clear current record
+                project.record_ids.unlink()
+                # update record
+                for line in project.template_id.line_ids:
+                    value = {
+                        'name': line.name,
+                        'template_line_id': line.id,
+                        'type_id': line.type_id.id,
+                        'project_id': project.id,
+                    }
+                    self.env['tianv.project.project.record'].create(value)
+        self.button_compute_record()
+
+    @api.multi
+    def button_compute_record(self):
+        for project in self:
+            custom_context = {
+                'TOTAL': project.tax_price,
+                'ACTUAL_TOTAL': project.actual_price,
+            }
+            for param in project.param_ids:
+                custom_context[param.code] = param.price
+            for record in project.record_ids:
+                if record.template_line_id:
+                    record.price = record.template_line_id.compute_price(custom_context) * record.adjustment
 
 
 class ProjectProjectParam(models.Model):
     _name = 'tianv.project.project.param'
-    _rec_name = 'template_param_id'
+    _rec_name = 'name'
     _description = 'Tianv Project Param'
 
-    template_param_id = fields.Many2one('tianv.project.template.param', 'Related template Param', required=True)
-    code = fields.Char('Code', related='template_param_id.code', readonly=True)
+    name = fields.Char('Name', required=True)
+    code = fields.Char('Code', required=True)
     price = fields.Float('Price', PRICE_DIGITS)
     project_id = fields.Many2one('tianv.project.project', 'Related Project', ondelete='cascade')
-    project_template_id = fields.Many2one('tianv.project.template', 'Project Template')
 
 
 class ProjectProjectRecord(models.Model):
@@ -114,5 +123,6 @@ class ProjectProjectRecord(models.Model):
     type_id = fields.Many2one('tianv.project.deduct.type', 'Type', required=True)
     price = fields.Float('Price', PRICE_DIGITS)
     comment = fields.Text('Comment')
-    user_id = fields.Many2one('res.partner', 'Partner', required=True)
+    adjustment = fields.Float('Adjustment', PRICE_DIGITS, default=1)
+    partner_id = fields.Many2one('res.partner', 'Partner')
     project_id = fields.Many2one('tianv.project.project', 'Related Project', required=True)
