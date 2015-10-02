@@ -15,6 +15,9 @@
             <field name="model">tianv.project.template</field>
             <field name="arch" type="xml">
                 <form>
+                    <header>
+                        <button name="button_test_available" type="object" string="测试" class="oe_highlight"/>
+                    </header>
                     <sheet>
                         <group>
                             <field name="name"/>
@@ -22,8 +25,8 @@
                         <group string="参数项">
                             <field name="param_ids" nolabel="1">
                                 <tree editable="bottom">
-                                    <field name="code"/>
                                     <field name="name"/>
+                                    <field name="code"/>
                                     <field name="default_proportion" widget="percentage"/>
                                     <field name="default_value"/>
                                 </tree>
