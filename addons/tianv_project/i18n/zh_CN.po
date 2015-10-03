@@ -1,0 +1,471 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* tianv_project
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-10-03 12:03+0000\n"
+"PO-Revision-Date: 2015-10-03 12:03+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: tianv_project
+#: view:tianv.project.template:tianv_project.view_project_template_form
+msgid "ACTUAL_TOTAL: 合同不含税金额"
+msgstr "ACTUAL_TOTAL: 合同不含税金额"
+
+#. module: tianv_project
+#: selection:tianv.project.deduct.type,commission_type:0
+msgid "Account"
+msgstr "会计凭证"
+
+#. module: tianv_project
+#: field:tianv.project.project,actual_finish_date:0
+msgid "Actual Finish Date"
+msgstr "实际结束时间"
+
+#. module: tianv_project
+#: field:tianv.project.project.record,adjustment:0
+msgid "Adjustment"
+msgstr "调整"
+
+#. module: tianv_project
+#: selection:tianv.project.project.record,state:0
+msgid "Cancel"
+msgstr "取消"
+
+#. module: tianv_project
+#: selection:tianv.project.project,state:0
+msgid "Canceled"
+msgstr "取消"
+
+#. module: tianv_project
+#: field:tianv.project.project,code:0
+#: field:tianv.project.project.param,code:0
+#: field:tianv.project.template.param,code:0
+msgid "Code"
+msgstr "代码"
+
+#. module: tianv_project
+#: field:tianv.project.project.record,comment:0
+msgid "Comment"
+msgstr "备注"
+
+#. module: tianv_project
+#: field:tianv.project.deduct.type,commission_code:0
+msgid "Commission Code"
+msgstr "提成编码"
+
+#. module: tianv_project
+#: field:tianv.project.deduct.type,commission_type:0
+msgid "Commission Type"
+msgstr "提成计算类型"
+
+#. module: tianv_project
+#: model:ir.model,name:tianv_project.model_hr_contract
+msgid "Contract"
+msgstr "合同"
+
+#. module: tianv_project
+#: field:tianv.project.project,contract_price:0
+msgid "Contract Price"
+msgstr "合同价款"
+
+#. module: tianv_project
+#: field:tianv.project.deduct.type,credit_account_id:0
+msgid "Credit Account"
+msgstr "贷方科目"
+
+#. module: tianv_project
+#: field:tianv.project.project,partner_id:0
+msgid "Custom Company"
+msgstr "客户公司"
+
+#. module: tianv_project
+#: field:tianv.project.deduct.type,debit_account_id:0
+msgid "Debit Account"
+msgstr "借方科目"
+
+#. module: tianv_project
+#: field:tianv.project.template.param,default_proportion:0
+msgid "Default Proportion"
+msgstr "默认提成"
+
+#. module: tianv_project
+#: field:tianv.project.template.param,default_value:0
+msgid "Default_value"
+msgstr "默认金额"
+
+#. module: tianv_project
+#: selection:tianv.project.project,state:0
+#: selection:tianv.project.project.record,state:0
+msgid "Draft"
+msgstr "草稿"
+
+#. module: tianv_project
+#: selection:tianv.project.deduct.type,commission_type:0
+msgid "Employee"
+msgstr "职员工资"
+
+#. module: tianv_project
+#: field:tianv.project.project.record,finish_date:0
+msgid "Finish Date"
+msgstr "完成时间"
+
+#. module: tianv_project
+#: selection:tianv.project.project,state:0
+#: selection:tianv.project.project.record,state:0
+msgid "Finished"
+msgstr "已完成"
+
+#. module: tianv_project
+#: field:tianv.project.deduct.type,id:0
+#: field:tianv.project.project,id:0
+#: field:tianv.project.project.param,id:0
+#: field:tianv.project.project.record,id:0
+#: field:tianv.project.template,id:0
+#: field:tianv.project.template.line,id:0
+#: field:tianv.project.template.param,id:0
+msgid "ID"
+msgstr "ID"
+
+#. module: tianv_project
+#: field:tianv.project.template.param,is_tax:0
+msgid "Is Base On Tax"
+msgstr "含税计算"
+
+#. module: tianv_project
+#: field:tianv.project.deduct.type,journal_id:0
+msgid "Journal"
+msgstr "日记账"
+
+#. module: tianv_project
+#: field:tianv.project.template,line_ids:0
+msgid "Lines"
+msgstr "记录"
+
+#. module: tianv_project
+#: field:tianv.project.project.record,move_id:0
+msgid "Move id"
+msgstr "会计分录"
+
+#. module: tianv_project
+#: field:tianv.project.deduct.type,name:0
+#: field:tianv.project.project,name:0
+#: field:tianv.project.project.param,name:0
+#: field:tianv.project.project.record,name:0
+#: field:tianv.project.template,name:0
+#: field:tianv.project.template.line,name:0
+#: field:tianv.project.template.param,name:0
+msgid "Name"
+msgstr "名称"
+
+#. module: tianv_project
+#: field:tianv.project.project,param_ids:0
+#: field:tianv.project.template,param_ids:0
+msgid "Params"
+msgstr "参数"
+
+#. module: tianv_project
+#: field:tianv.project.project.record,partner_id:0
+msgid "Partner"
+msgstr "业务伙伴"
+
+#. module: tianv_project
+#: selection:tianv.project.project,state:0
+#: selection:tianv.project.project.record,state:0
+msgid "Pause"
+msgstr "暂停"
+
+#. module: tianv_project
+#: model:ir.model,name:tianv_project.model_hr_payslip
+msgid "Pay Slip"
+msgstr "工资单"
+
+#. module: tianv_project
+#: field:tianv.project.project,plan_finish_date:0
+msgid "Plan Finish Date"
+msgstr "计划完成日期"
+
+#. module: tianv_project
+#: field:tianv.project.project.param,price:0
+#: field:tianv.project.project.record,price:0
+msgid "Price"
+msgstr "金额"
+
+#. module: tianv_project
+#: selection:tianv.project.project,state:0
+#: selection:tianv.project.project.record,state:0
+msgid "Processing"
+msgstr "进行中"
+
+#. module: tianv_project
+#: field:tianv.project.project,product_id:0
+msgid "Product"
+msgstr "产品"
+
+#. module: tianv_project
+#: model:ir.model,name:tianv_project.model_tianv_project_deduct_type
+msgid "Project Deduct Type"
+msgstr "提成类型"
+
+#. module: tianv_project
+#: field:tianv.project.template.line,python_code:0
+msgid "Python Code"
+msgstr "计算代码"
+
+#. module: tianv_project
+#: view:tianv.project.template:tianv_project.view_project_template_form
+msgid "RESULT: 计算结果, 最终结果以 RESULT = ***** 形式表示"
+msgstr "RESULT: 计算结果, 最终结果以 RESULT = ***** 形式表示"
+
+#. module: tianv_project
+#: field:tianv.project.project,record_ids:0
+msgid "Records"
+msgstr "记录"
+
+#. module: tianv_project
+#: field:tianv.project.project.param,project_id:0
+#: field:tianv.project.project.record,project_id:0
+msgid "Related Project"
+msgstr "相关项目"
+
+#. module: tianv_project
+#: field:tianv.project.template.line,template_id:0
+#: field:tianv.project.template.param,template_id:0
+msgid "Related Template"
+msgstr "相关模板"
+
+#. module: tianv_project
+#: field:tianv.project.project.record,template_line_id:0
+msgid "Related Template Line"
+msgstr "模板设定"
+
+#. module: tianv_project
+#: field:tianv.project.project,order_id:0
+msgid "Res Order"
+msgstr "相关订单"
+
+#. module: tianv_project
+#: field:tianv.project.project,template_id:0
+msgid "Res Template"
+msgstr "相关模板"
+
+#. module: tianv_project
+#: selection:tianv.project.project.record,state:0
+msgid "Review"
+msgstr "待确认"
+
+#. module: tianv_project
+#: field:tianv.project.template.line,sequence:0
+msgid "Sequence"
+msgstr "序号"
+
+#. module: tianv_project
+#: field:tianv.project.project,sign_date:0
+msgid "Sign Date"
+msgstr "签订日期"
+
+#. module: tianv_project
+#: field:tianv.project.project,state:0
+#: field:tianv.project.project.record,state:0
+msgid "State"
+msgstr "状态"
+
+#. module: tianv_project
+#: view:tianv.project.template:tianv_project.view_project_template_form
+msgid "TOTAL: 合同含税金额"
+msgstr "TOTAL: 合同含税金额"
+
+#. module: tianv_project
+#: field:tianv.project.project,tax_id:0
+msgid "Tax"
+msgstr "税"
+
+#. module: tianv_project
+#: field:tianv.project.project,tax_price:0
+msgid "Tax Price"
+msgstr "含税金额"
+
+#. module: tianv_project
+#: field:tianv.project.project,actual_price:0
+msgid "Actual Price"
+msgstr "不含税金额"
+
+#. module: tianv_project
+#: model:ir.model,name:tianv_project.model_tianv_project_project
+msgid "Tianv Project"
+msgstr "项目管理"
+
+#. module: tianv_project
+#: model:ir.model,name:tianv_project.model_tianv_project_project_param
+msgid "Tianv Project Param"
+msgstr "项目参数"
+
+#. module: tianv_project
+#: model:ir.model,name:tianv_project.model_tianv_project_project_record
+msgid "Tianv Project Record"
+msgstr "任务记录"
+
+#. module: tianv_project
+#: model:ir.model,name:tianv_project.model_tianv_project_template
+msgid "Tianv Project Template"
+msgstr "项目模板"
+
+#. module: tianv_project
+#: model:ir.model,name:tianv_project.model_tianv_project_template_line
+msgid "Tianv Project Template Line"
+msgstr "模板行"
+
+#. module: tianv_project
+#: model:ir.model,name:tianv_project.model_tianv_project_template_param
+msgid "Tianv Project Template Param"
+msgstr "模板参数"
+
+#. module: tianv_project
+#: field:tianv.project.project.record,type_id:0
+#: field:tianv.project.template.line,type_id:0
+msgid "Type"
+msgstr "类型"
+
+#. module: tianv_project
+#: model:ir.actions.act_window,name:tianv_project.action_project_record
+#: model:ir.ui.menu,name:tianv_project.menu_project_record
+msgid "任务信息"
+msgstr "任务信息"
+
+#. module: tianv_project
+#: view:tianv.project.project:tianv_project.view_project_project_form
+msgid "会清除现有信息!"
+msgstr "会清除现有信息!"
+
+#. module: tianv_project
+#: view:tianv.project.project:tianv_project.view_project_project_form
+msgid "会重新计算提成金额"
+msgstr "会重新计算提成金额"
+
+#. module: tianv_project
+#: view:tianv.project.project:tianv_project.view_project_project_form
+msgid "使用模板"
+msgstr "使用模板"
+
+#. module: tianv_project
+#: view:tianv.project.project:tianv_project.view_project_project_form
+msgid "再计算提成"
+msgstr "再计算提成"
+
+#. module: tianv_project
+#: view:tianv.project.template:tianv_project.view_project_template_form
+msgid "参数项"
+msgstr "参数项"
+
+#. module: tianv_project
+#: model:res.groups,name:tianv_project.group_project_officer
+msgid "可以录入"
+msgstr "可以录入"
+
+#. module: tianv_project
+#: view:tianv.project.project:tianv_project.view_project_project_form
+msgid "合同金额"
+msgstr "合同金额"
+
+#. module: tianv_project
+#: view:tianv.project.project:tianv_project.view_project_project_form
+msgid "基本信息"
+msgstr "基本信息"
+
+#. module: tianv_project
+#: view:tianv.project.project.record:tianv_project.view_tianv_project_record_form
+msgid "审批通过"
+msgstr "审批通过"
+
+#. module: tianv_project
+#: view:tianv.project.project.record:tianv_project.view_tianv_project_record_form
+msgid "待审批"
+msgstr "待审批"
+
+#. module: tianv_project
+#: view:tianv.project.project:tianv_project.view_project_project_form
+msgid "提成分配"
+msgstr "提成分配"
+
+#. module: tianv_project
+#: model:res.groups,name:tianv_project.group_project_user
+msgid "普通员工"
+msgstr "普通员工"
+
+#. module: tianv_project
+#: view:tianv.project.project:tianv_project.view_project_project_form
+msgid "款项分配"
+msgstr "款项分配"
+
+#. module: tianv_project
+#: view:tianv.project.project:tianv_project.view_project_project_form
+msgid "注意重设为草稿将清除相关会计分录!"
+msgstr "注意重设为草稿将清除相关会计分录!"
+
+#. module: tianv_project
+#: code:addons/tianv_project/models/project_template.py:40
+#, python-format
+msgid "测试结果"
+msgstr "测试结果"
+
+#. module: tianv_project
+#: model:res.groups,name:tianv_project.group_project_admin
+msgid "管理员"
+msgstr "管理员"
+
+#. module: tianv_project
+#: model:res.groups,name:tianv_project.group_project_manager
+msgid "经理"
+msgstr "经理"
+
+#. module: tianv_project
+#: view:tianv.project.template:tianv_project.view_project_template_form
+msgid "计算项"
+msgstr "计算项"
+
+#. module: tianv_project
+#: view:tianv.project.project:tianv_project.view_project_project_form
+msgid "重设为草稿"
+msgstr "重设为草稿"
+
+#. module: tianv_project
+#: model:ir.ui.menu,name:tianv_project.menu_project_project_root
+msgid "项目"
+msgstr "项目"
+
+#. module: tianv_project
+#: model:ir.actions.act_window,name:tianv_project.action_project_project
+#: model:ir.ui.menu,name:tianv_project.menu_project_project
+msgid "项目信息"
+msgstr "项目信息"
+
+#. module: tianv_project
+#: view:tianv.project.project:tianv_project.view_project_project_form
+msgid "项目名称"
+msgstr "项目名称"
+
+#. module: tianv_project
+#: model:ir.actions.act_window,name:tianv_project.action_project_deduct_type
+#: model:ir.ui.menu,name:tianv_project.menu_project_deduct_type
+msgid "项目提成类型"
+msgstr "项目提成类型"
+
+#. module: tianv_project
+#: model:ir.actions.act_window,name:tianv_project.action_project_template
+#: model:ir.ui.menu,name:tianv_project.menu_project_template
+msgid "项目模板"
+msgstr "项目模板"
+
+#. module: tianv_project
+#: view:tianv.project.project:tianv_project.view_project_project_form
+msgid "项目编号"
+msgstr "项目编号"
+
