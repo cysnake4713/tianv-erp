@@ -136,8 +136,16 @@ class ProjectProjectRecord(models.Model):
     comment = fields.Text('Comment')
     adjustment = fields.Float('Adjustment', PRICE_DIGITS, default=1)
     partner_id = fields.Many2one('res.partner', 'Partner')
+    user_id = fields.Many2one('res.users', 'User', compute='_compute_user')
     project_id = fields.Many2one('tianv.project.project', 'Related Project', required=True)
     finish_date = fields.Date('Finish Date')
+
+    @api.multi
+    @api.depends('partner_id')
+    def _compute_user(self):
+        for record in self:
+            partner_id = self.env['res.users'].search([('partner_id', '=', record.partner_id.id)])
+            record.user_id = partner_id[0] if partner_id else False
 
 
 class HrContract(models.Model):

@@ -10,10 +10,15 @@
             <field name="category_id" ref="base.module_category_tianv_project"/>
             <field name="implied_ids" eval="[(4, ref('tianv_project.group_project_user'))]"/>
         </record>
+        <record model="res.groups" id="group_project_manager">
+            <field name="name">经理</field>
+            <field name="category_id" ref="base.module_category_tianv_project"/>
+            <field name="implied_ids" eval="[(4, ref('tianv_project.group_project_officer'))]"/>
+        </record>
         <record model="res.groups" id="group_project_admin">
             <field name="name">管理员</field>
             <field name="category_id" ref="base.module_category_tianv_project"/>
-            <field name="implied_ids" eval="[(4, ref('tianv_project.group_project_officer'))]"/>
+            <field name="implied_ids" eval="[(4, ref('tianv_project.group_project_manager'))]"/>
         </record>
     </data>
     <data noupdate="0">
