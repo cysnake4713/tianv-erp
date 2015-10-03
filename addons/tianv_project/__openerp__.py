@@ -15,6 +15,7 @@ Tianv Project Module""",
         'views/project_deduct_type_view.xml',
         'views/project_template_view.xml',
         'views/project_view.xml',
+        'views/project_record.xml',
     ],
     'qweb': [
         'static/src/xml/*.xml',

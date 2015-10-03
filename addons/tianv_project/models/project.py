@@ -118,6 +118,9 @@ class ProjectProjectRecord(models.Model):
     _rec_name = 'name'
     _description = 'Tianv Project Record'
 
+    state = fields.Selection(
+        [('draft', 'Draft'), ('processing', 'Processing'), ('review', 'Review'), ('finished', 'Finished'), ('cancel', 'Cancel'), ('pause', 'Pause')],
+        'State', default='draft')
     name = fields.Char('Name', required=True)
     template_line_id = fields.Many2one('tianv.project.template.line', 'Related Template Line')
     type_id = fields.Many2one('tianv.project.deduct.type', 'Type', required=True)
