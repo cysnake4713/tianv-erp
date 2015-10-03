@@ -12,6 +12,7 @@ class ProjectProject(models.Model):
     _name = 'tianv.project.project'
     _rec_name = 'name'
     _description = 'Tianv Project'
+    _inherit = 'odoosoft.workflow.abstract'
 
     name = fields.Char('Name', required=True)
     # 状态
@@ -101,6 +102,12 @@ class ProjectProject(models.Model):
                 if record.template_line_id:
                     record.price = record.template_line_id.compute_price(custom_context) * record.adjustment
 
+    @api.multi
+    def button_start_process(self):
+        for project in self:
+            project.record_ids.write({'state': 'processing'})
+            project.common_apply()
+
 
 class ProjectProjectParam(models.Model):
     _name = 'tianv.project.project.param'
@@ -115,6 +122,7 @@ class ProjectProjectParam(models.Model):
 
 class ProjectProjectRecord(models.Model):
     _name = 'tianv.project.project.record'
+    _inherit = 'odoosoft.workflow.abstract'
     _rec_name = 'name'
     _description = 'Tianv Project Record'
 
@@ -129,3 +137,4 @@ class ProjectProjectRecord(models.Model):
     adjustment = fields.Float('Adjustment', PRICE_DIGITS, default=1)
     partner_id = fields.Many2one('res.partner', 'Partner')
     project_id = fields.Many2one('tianv.project.project', 'Related Project', required=True)
+    finish_date = fields.Date('Finish Date')

@@ -9,7 +9,7 @@
 Tianv Project Module""",
     'author': 'Matt Cai',
     'website': 'http://odoosoft.com',
-    'depends': ['base', 'account', 'tianv_service'],
+    'depends': ['base', 'account', 'tianv_service', 'odoosoft_workflow'],
     'data': [
         'views/menuitem.xml',
         'views/project_deduct_type_view.xml',
