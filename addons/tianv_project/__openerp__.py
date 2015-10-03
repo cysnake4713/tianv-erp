@@ -12,7 +12,7 @@ Tianv Project Module""",
     'depends': ['base', 'account', 'tianv_service', 'odoosoft_workflow'],
     'data': [
         'views/menuitem.xml',
-        'views/project_deduct_type_view.xml',
+        'views/project_type_view.xml',
         'views/project_template_view.xml',
         'views/project_view.xml',
         'views/project_record.xml',

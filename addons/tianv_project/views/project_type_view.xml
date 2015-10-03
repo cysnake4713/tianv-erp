@@ -7,6 +7,7 @@
             <field name="arch" type="xml">
                 <tree>
                     <field name="name"/>
+                    <field name="commission_type"/>
                 </tree>
             </field>
         </record>
@@ -17,7 +18,15 @@
                 <form>
                     <sheet>
                         <group>
-                            <field name="name"/>
+                            <group>
+                                <field name="name"/>
+                                <field name="commission_type"/>
+                            </group>
+                            <group attrs="{'invisible':[('commission_type','!=','employee')]}">
+                                <field name="commission_code"/>
+                            </group>
+                            <group attrs="{'invisible':[('commission_type','!=','account')]}">
+                            </group>
                         </group>
                     </sheet>
                 </form>

@@ -12,5 +12,5 @@ class ProjectDeductType(models.Model):
     _description = 'Project Deduct Type'
 
     name = fields.Char('Name', required=True)
-
-
+    commission_type = fields.Selection([('employee', 'Employee'), ('account', 'Account')], 'Commission Type', default='employee')
+    commission_code = fields.Char('Commission Code')

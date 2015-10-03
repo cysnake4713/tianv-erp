@@ -138,3 +138,18 @@ class ProjectProjectRecord(models.Model):
     partner_id = fields.Many2one('res.partner', 'Partner')
     project_id = fields.Many2one('tianv.project.project', 'Related Project', required=True)
     finish_date = fields.Date('Finish Date')
+
+
+class HrContract(models.Model):
+    _inherit = 'hr.contract'
+
+    @api.model
+    def get_commission(self, employee, commission_code, date_from, date_to):
+        result = 0.0
+        if employee and employee.user_id:
+            records = self.env['tianv.project.project.record'].search(
+                [('partner_id', '=', employee.user_id.partner_id.id), ('finish_date', '>=', date_from), ('finish_date', '<=', date_to),
+                 ('type_id.commission_type', '=', 'employee'), ('type_id.commission_code', '=', commission_code),
+                 ('state', '=', 'finished')])
+            result = sum([r.price for r in records])
+        return result
