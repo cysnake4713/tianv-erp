@@ -205,23 +205,24 @@ class ServiceRecordWizard(models.TransientModel):
     @api.model
     def default_get(self, fields_list):
         res = super(ServiceRecordWizard, self).default_get(fields_list)
-        record_ids = []
-        for service in self.env['tianv.service.service'].browse(self.env.context['active_ids']):
-            record = service.record_ids.search([('service_id', '=', service.id)], order='end_date desc')
-            price = record[0].price if record else service.product_id.price
-            start_date = fields.Date.to_string(
-                fields.Date.from_string(record[0].end_date) + datetime.timedelta(days=1)) if record else fields.Date.today()
-            end_date = fields.Date.to_string(
-                fields.Date.from_string(start_date) + relativedelta(years=1) - relativedelta(days=1))
-            record_ids += [
-                (0, 0,
-                 {'wizard_id': self.id,
-                  'service_id': service.id,
-                  'start_date': start_date,
-                  'end_date': end_date,
-                  'price': price,
-                  })]
-        res['record_ids'] = record_ids
+        if self.env.context['active_model'] == 'tianv.service.service':
+            record_ids = []
+            for service in self.env['tianv.service.service'].browse(self.env.context['active_ids']):
+                record = service.record_ids.search([('service_id', '=', service.id)], order='end_date desc')
+                price = record[0].price if record else service.product_id.price
+                start_date = fields.Date.to_string(
+                    fields.Date.from_string(record[0].end_date) + datetime.timedelta(days=1)) if record else fields.Date.today()
+                end_date = fields.Date.to_string(
+                    fields.Date.from_string(start_date) + relativedelta(years=1) - relativedelta(days=1))
+                record_ids += [
+                    (0, 0,
+                     {'wizard_id': self.id,
+                      'service_id': service.id,
+                      'start_date': start_date,
+                      'end_date': end_date,
+                      'price': price,
+                      })]
+            res['record_ids'] = record_ids
         return res
 
     _defaults = {

@@ -119,7 +119,7 @@
                         </group>
                         <group colspan="2">
                             <group string="归属信息">
-                                <field name="partner_id" domain="[('customer', '=', True)]" string="甲方"/>
+                                <field name="partner_id" domain="[('customer', '=', True),('is_company','=',True)]" string="甲方"/>
                                 <field name="manager_id" string="负责人"/>
 
                             </group>
