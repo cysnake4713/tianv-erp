@@ -43,5 +43,11 @@
         <menuitem id="menu_project_deduct_type" name="项目提成类型" parent="tianv_service.menu_service_config" sequence="20"
                   action="action_project_deduct_type"
                   groups="tianv_project.group_project_admin"/>
+
+        <act_window id="action_project_order_creation"
+            multi="True"
+            key2="client_action_multi" name="批量创建订单"
+            res_model="tianv.service.service.wizard" src_model="tianv.project.project"
+            view_mode="form" target="new" view_type="form"/>
     </data>
 </openerp>
