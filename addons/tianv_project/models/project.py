@@ -104,9 +104,28 @@ class ProjectProject(models.Model):
 
     @api.multi
     def button_start_process(self):
-        for project in self:
+        for project in self.sudo():
             project.record_ids.write({'state': 'processing'})
+            for record in project.record_ids:
+                if record.type_id.commission_type == 'account':
+                    record.move_id = self.sudo().env['account.move'].create({
+                        'journal_id': record.type_id.journal_id.id,
+                        'date': project.sign_date or fields.Date.today(),
+                        'period_id': self.env['account.period'].find(dt=project.sign_date).id,
+                        'line_id': [(0, 0, {'name': record.name, 'account_id': record.type_id.debit_account_id.id, 'debit': record.price,
+                                            'partner_id': record.partner_id.id}),
+                                    (0, 0, {'name': record.name, 'account_id': record.type_id.credit_account_id.id, 'credit': record.price,
+                                            'partner_id': record.partner_id.id}),
+                                    ]
+                    })
             project.common_apply()
+
+    @api.multi
+    def button_reset_draft(self):
+        for project in self:
+            for record in project.record_ids:
+                record.sudo().move_id.unlink()
+        project.common_reject()
 
 
 class ProjectProjectParam(models.Model):
@@ -139,6 +158,7 @@ class ProjectProjectRecord(models.Model):
     user_id = fields.Many2one('res.users', 'User', compute='_compute_user')
     project_id = fields.Many2one('tianv.project.project', 'Related Project', required=True)
     finish_date = fields.Date('Finish Date')
+    move_id = fields.Many2one('account.move')
 
     @api.multi
     @api.depends('partner_id')

@@ -59,6 +59,7 @@
                             <group>
                                 <field name="project_id" readonly="1"/>
                                 <field name="type_id" readonly="1"/>
+                                <field name="move_id" readonly="1"/>
                             </group>
                             <group>
                                 <field name="partner_id" readonly="1"/>

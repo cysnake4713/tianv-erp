@@ -22,10 +22,15 @@
                                 <field name="name"/>
                                 <field name="commission_type"/>
                             </group>
-                            <group attrs="{'invisible':[('commission_type','!=','employee')]}">
-                                <field name="commission_code"/>
-                            </group>
-                            <group attrs="{'invisible':[('commission_type','!=','account')]}">
+                            <group>
+                                <group attrs="{'invisible':[('commission_type','!=','employee')]}">
+                                    <field name="commission_code"/>
+                                </group>
+                                <group attrs="{'invisible':[('commission_type','!=','account')]}">
+                                    <field name="journal_id"/>
+                                    <field name="debit_account_id" domain="[('type','!=','view')]"/>
+                                    <field name="credit_account_id" domain="[('type','!=','view')]"/>
+                                </group>
                             </group>
                         </group>
                     </sheet>

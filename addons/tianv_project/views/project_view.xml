@@ -50,8 +50,8 @@
                                 context="{
                                 'state': 'pause',
                                 }"/>
-                        <button name="common_reject" string="重设为草稿" type="object" groups="tianv_project.group_project_manager"
-                                states="processing,canceled,pause,finished"
+                        <button name="button_reset_draft" string="重设为草稿" type="object" groups="tianv_project.group_project_manager"
+                                states="processing,canceled,pause,finished" confirm="注意重设为草稿将清除相关会计分录!"
                                 context="{
                                 'state': 'draft',
                                 }"/>
@@ -106,8 +106,7 @@
                                 <field name="template_id" states_editable="{'draft':{'groups':[%(tianv_project.group_project_officer)d]},
                                                         'processing':{'groups':[%(tianv_project.group_project_manager)d]}}"/>
                                 <button name="button_init_template" type="object" string="使用模板" confirm="会清除现有信息!"
-                                        states_editable="{'draft':{'groups':[%(tianv_project.group_project_officer)d]},
-                                                        'processing':{'groups':[%(tianv_project.group_project_manager)d]}}"/>
+                                        states_editable="{'draft':{'groups':[%(tianv_project.group_project_officer)d]}}"/>
                             </group>
                             <group class="oe_inline">
                             </group>
