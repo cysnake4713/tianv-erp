@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<openerp>
+    <data noupdate="0">
+        <record model="res.groups" id="group_project_user">
+            <field name="name">普通员工</field>
+            <field name="category_id" ref="base.module_category_tianv_project"/>
+        </record>
+        <record model="res.groups" id="group_project_officer">
+            <field name="name">可以录入</field>
+            <field name="category_id" ref="base.module_category_tianv_project"/>
+            <field name="implied_ids" eval="[(4, ref('tianv_project.group_project_user'))]"/>
+        </record>
+        <record model="res.groups" id="group_project_admin">
+            <field name="name">管理员</field>
+            <field name="category_id" ref="base.module_category_tianv_project"/>
+            <field name="implied_ids" eval="[(4, ref('tianv_project.group_project_officer'))]"/>
+        </record>
+    </data>
+    <data noupdate="0">
+        <!--<record id="rule_project_record_user_draft" model="ir.rule">-->
+            <!--<field name="name">普通员工只能看到非草稿的记录</field>-->
+            <!--<field name="model_id" ref="model_tianv_project_project_record"/>-->
+            <!--<field name="groups"-->
+                   <!--eval="[(6,0,[ref('tianv_project.group_project_user')])]"/>-->
+            <!--<field name="domain_force">[('state','=','draft')]</field>-->
+            <!--<field name="perm_read" eval="False"/>-->
+            <!--<field name="perm_write" eval="False"/>-->
+            <!--<field name="perm_create" eval="False"/>-->
+            <!--<field name="perm_unlink" eval="False"/>-->
+        <!--</record>-->
+        <record id="rule_project_record_user_no_draft" model="ir.rule">
+            <field name="name">普通员工可以修改非草稿记录</field>
+            <field name="model_id" ref="model_tianv_project_project_record"/>
+            <field name="groups"
+                   eval="[(6,0,[ref('tianv_project.group_project_user')])]"/>
+            <field name="domain_force">[('state','!=','draft'),('partner_id','=',user.partner_id.id)]</field>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <!--<record id="rule_tianv_attendance_machine_admin" model="ir.rule">-->
+        <!--<field name="name">管理所有打卡</field>-->
+        <!--<field name="model_id" ref="model_tianv_attendance_machine"/>-->
+        <!--<field name="groups"-->
+        <!--eval="[(6,0,[ref('tianv_machine.group_attendance_machine_admin')])]"/>-->
+        <!--<field name="domain_force">[(1,'=',1)]</field>-->
+        <!--</record>-->
+    </data>
+</openerp>
+

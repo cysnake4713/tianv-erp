@@ -3,7 +3,7 @@
 {
     'name': 'Tianv Project Module',
     'version': '0.2',
-    'category': 'odoosoft',
+    'category': 'tianv_project',
     'complexity': "easy",
     'description': """
 Tianv Project Module""",
@@ -11,11 +11,14 @@ Tianv Project Module""",
     'website': 'http://odoosoft.com',
     'depends': ['base', 'account', 'tianv_service', 'odoosoft_workflow'],
     'data': [
+        'security/security.xml',
+        'security/ir.model.access.csv',
+
         'views/menuitem.xml',
         'views/project_type_view.xml',
         'views/project_template_view.xml',
         'views/project_view.xml',
-        'views/project_record.xml',
+        'views/project_record_view.xml',
     ],
     'qweb': [
         'static/src/xml/*.xml',

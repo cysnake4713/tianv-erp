@@ -30,14 +30,18 @@
 
         <menuitem id="menu_project_project_root" name="项目" parent="tianv_service.menu_service_root" sequence="50"/>
         <menuitem id="menu_project_project" name="项目信息" parent="menu_project_project_root" sequence="20"
-                  action="action_project_project"/>
+                  action="action_project_project"
+                  groups="tianv_project.group_project_officer"/>
         <menuitem id="menu_project_record" name="任务信息" parent="menu_project_project_root" sequence="25"
-                  action="action_project_record"/>
+                  action="action_project_record"
+                  groups="tianv_project.group_project_user"/>
 
-        <menuitem id="menu_project_template" name="项目模板" parent="menu_project_project_root" sequence="30"
-                  action="action_project_template"/>
+        <menuitem id="menu_project_template" name="项目模板" parent="tianv_service.menu_service_config" sequence="10"
+                  action="action_project_template"
+                  groups="tianv_project.group_project_admin"/>
 
-        <menuitem id="menu_project_deduct_type" name="项目提成类型" parent="tianv_service.menu_service_config" sequence="10"
-                  action="action_project_deduct_type"/>
+        <menuitem id="menu_project_deduct_type" name="项目提成类型" parent="tianv_service.menu_service_config" sequence="20"
+                  action="action_project_deduct_type"
+                  groups="tianv_project.group_project_admin"/>
     </data>
 </openerp>
