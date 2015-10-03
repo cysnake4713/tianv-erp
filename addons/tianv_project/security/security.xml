@@ -22,17 +22,13 @@
         </record>
     </data>
     <data noupdate="0">
-        <!--<record id="rule_project_record_user_draft" model="ir.rule">-->
-            <!--<field name="name">普通员工只能看到非草稿的记录</field>-->
-            <!--<field name="model_id" ref="model_tianv_project_project_record"/>-->
-            <!--<field name="groups"-->
-                   <!--eval="[(6,0,[ref('tianv_project.group_project_user')])]"/>-->
-            <!--<field name="domain_force">[('state','=','draft')]</field>-->
-            <!--<field name="perm_read" eval="False"/>-->
-            <!--<field name="perm_write" eval="False"/>-->
-            <!--<field name="perm_create" eval="False"/>-->
-            <!--<field name="perm_unlink" eval="False"/>-->
-        <!--</record>-->
+        <record id="rule_project_record_officer_no_draft" model="ir.rule">
+            <field name="name">普通员工可以修改非草稿记录</field>
+            <field name="model_id" ref="model_tianv_project_project_record"/>
+            <field name="groups"
+                   eval="[(6,0,[ref('tianv_project.group_project_officer')])]"/>
+            <field name="domain_force">[]</field>
+        </record>
         <record id="rule_project_record_user_no_draft" model="ir.rule">
             <field name="name">普通员工可以修改非草稿记录</field>
             <field name="model_id" ref="model_tianv_project_project_record"/>

@@ -18,7 +18,7 @@ class ProjectProject(models.Model):
     # 状态
     state = fields.Selection([('draft', 'Draft'),
                               ('processing', 'Processing'),
-                              ('finish', 'Finish'),
+                              ('finished', 'Finished'),
                               ('canceled', 'Canceled'),
                               ('pause', 'Pause'), ],
                              'State', default='draft')
@@ -155,7 +155,7 @@ class HrContract(models.Model):
     def get_commission(self, employee, commission_code, date_from, date_to):
         result = 0.0
         if employee and employee.user_id:
-            records = self.env['tianv.project.project.record'].search(
+            records = self.sudo().env['tianv.project.project.record'].search(
                 [('partner_id', '=', employee.user_id.partner_id.id), ('finish_date', '>=', date_from), ('finish_date', '<=', date_to),
                  ('type_id.commission_type', '=', 'employee'), ('type_id.commission_code', '=', commission_code),
                  ('state', '=', 'finished')])

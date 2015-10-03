@@ -25,70 +25,97 @@
             <field name="arch" type="xml">
                 <form>
                     <header>
-                        <!--states_editable="{'draft':{'groups':[%(tianv_attendance.group_attendance_admin)d]},-->
-                        <!--'processed':{'groups':[%(tianv_attendance.group_attendance_admin)d]}}"-->
                         <button name="button_start_process" string="启动" type="object" class="oe_highlight"
+                                states="draft" groups="tianv_project.group_project_manager"
                                 context="{
                                 'state': 'processing',
                                 }"/>
                         <button name="common_apply" string="结束" type="object" class="oe_highlight"
+                                states="processing" groups="tianv_project.group_project_officer"
                                 context="{
-                                'state': 'finish',
+                                'state': 'finished',
                                 }"/>
                         <button name="common_reject" string="恢复" type="object" class="oe_highlight"
+                                states="canceled,pause" groups="tianv_project.group_project_officer"
                                 context="{
                                 'state': 'processing',
                                 }"/>
                         <button name="common_apply" string="取消" type="object"
+                                states="processing" groups="tianv_project.group_project_officer"
                                 context="{
                                 'state': 'canceled',
                                 }"/>
                         <button name="common_apply" string="暂停" type="object"
+                                states="processing" groups="tianv_project.group_project_officer"
                                 context="{
                                 'state': 'pause',
                                 }"/>
-                        <button name="common_reject" string="重设为草稿" type="object"
+                        <button name="common_reject" string="重设为草稿" type="object" groups="tianv_project.group_project_manager"
+                                states="processing,canceled,pause,finished"
                                 context="{
                                 'state': 'draft',
                                 }"/>
 
-                        <field name="state" widget="statusbar"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,processing,finished"/>
                     </header>
                     <sheet>
                         <div class="oe_title">
                             <h1>
-                                <field name="name" placeholder="项目名称"/>
+                                <field name="name" placeholder="项目名称"
+                                       states_editable="{'draft':{'groups':[%(tianv_project.group_project_officer)d]},
+                                                        'processing':{'groups':[%(tianv_project.group_project_manager)d]}}"
+                                        />
                             </h1>
                             <h2>
-                                <field name="code" placeholder="项目编号"/>
+                                <field name="code" placeholder="项目编号"
+                                       states_editable="{'draft':{'groups':[%(tianv_project.group_project_officer)d]},
+                                                        'processing':{'groups':[%(tianv_project.group_project_manager)d]}}"/>
                             </h2>
                         </div>
                         <group>
                             <group string="基本信息">
-                                <field name="partner_id"/>
-                                <field name="product_id"/>
-                                <field name="order_id"/>
-                                <field name="sign_date"/>
-                                <field name="plan_finish_date"/>
-                                <field name="actual_finish_date"/>
+                                <field name="partner_id"
+                                       states_editable="{'draft':{'groups':[%(tianv_project.group_project_officer)d]},
+                                                        'processing':{'groups':[%(tianv_project.group_project_manager)d]}}"/>
+                                <field name="product_id"
+                                       states_editable="{'draft':{'groups':[%(tianv_project.group_project_officer)d]},
+                                                        'processing':{'groups':[%(tianv_project.group_project_manager)d]}}"/>
+                                <field name="order_id"
+                                       states_editable="{'draft':{'groups':[%(tianv_project.group_project_officer)d]},
+                                                        'processing':{'groups':[%(tianv_project.group_project_manager)d]}}"/>
+                                <field name="sign_date"
+                                       states_editable="{'draft':{'groups':[%(tianv_project.group_project_officer)d]},
+                                                        'processing':{'groups':[%(tianv_project.group_project_manager)d]}}"/>
+                                <field name="plan_finish_date"
+                                       states_editable="{'draft':{'groups':[%(tianv_project.group_project_officer)d]},
+                                                        'processing':{'groups':[%(tianv_project.group_project_manager)d]}}"/>
+                                <field name="actual_finish_date"
+                                       states_editable="{'processing':{'groups':[%(tianv_project.group_project_officer)d]}}"/>
                             </group>
                             <group string="合同金额">
-                                <field name="contract_price"/>
-                                <field name="tax_id"/>
+                                <field name="contract_price" states_editable="{'draft':{'groups':[%(tianv_project.group_project_officer)d]},
+                                                        'processing':{'groups':[%(tianv_project.group_project_manager)d]}}"/>
+                                <field name="tax_id" states_editable="{'draft':{'groups':[%(tianv_project.group_project_officer)d]},
+                                                        'processing':{'groups':[%(tianv_project.group_project_manager)d]}}"/>
                                 <field name="tax_price"/>
                                 <field name="actual_price"/>
                             </group>
                         </group>
-                        <group>
+                        <group class="oe_edit_only">
                             <group col="4">
-                                <field name="template_id"/>
-                                <button name="button_init_template" type="object" string="使用模板" confirm="会清除现有信息!"/>
+                                <field name="template_id" states_editable="{'draft':{'groups':[%(tianv_project.group_project_officer)d]},
+                                                        'processing':{'groups':[%(tianv_project.group_project_manager)d]}}"/>
+                                <button name="button_init_template" type="object" string="使用模板" confirm="会清除现有信息!"
+                                        states_editable="{'draft':{'groups':[%(tianv_project.group_project_officer)d]},
+                                                        'processing':{'groups':[%(tianv_project.group_project_manager)d]}}"/>
                             </group>
                             <group class="oe_inline">
                             </group>
                         </group>
                         <group string="款项分配">
-                            <field name="param_ids" nolabel="1">
+                            <field name="param_ids" nolabel="1"
+                                   states_editable="{'draft':{'groups':[%(tianv_project.group_project_officer)d]},
+                                                        'processing':{'groups':[%(tianv_project.group_project_manager)d]}}">
                                 <tree editable="bottom">
                                     <field name="name"/>
                                     <field name="code"/>
@@ -97,11 +124,15 @@
                             </field>
                         </group>
                         <group string="提成分配">
-                            <div>
-                                <button name="button_compute_record" type="object" string="再计算提成" confirm="会重新计算提成金额"/>
+                            <div class="oe_edit_only">
+                                <button name="button_compute_record" type="object" string="再计算提成" confirm="会重新计算提成金额"
+                                        states_editable="{'draft':{'groups':[%(tianv_project.group_project_officer)d]},
+                                                        'processing':{'groups':[%(tianv_project.group_project_manager)d]}}"/>
                             </div>
                             <newline/>
-                            <field name="record_ids" nolabel="1" context="{'template_id': template_id}">
+                            <field name="record_ids" nolabel="1" context="{'template_id': template_id}"
+                                   states_editable="{'draft':{'groups':[%(tianv_project.group_project_officer)d]},
+                                                        'processing':{'groups':[%(tianv_project.group_project_manager)d]}}">
                                 <tree editable="bottom">
                                     <field name="name"/>
                                     <field name="template_line_id" domain="[('template_id','=',context.get('template_id'))]"/>
