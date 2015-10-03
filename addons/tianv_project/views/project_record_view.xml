@@ -68,13 +68,17 @@
                             <group>
                                 <field name="partner_id" readonly="1"/>
                                 <field name="price" readonly="1"/>
-                                <field name="finish_date" states_editable="{'processing':{
-                                'users':[user_id]},
-                                'groups':[%(tianv_project.group_project_manager)d]}"/>
+                                <field name="finish_date" states_editable="{
+                                'processing':{
+                                    'users':[user_id],
+                                    'groups':[%(tianv_project.group_project_manager)d]
+                                },
+                                'review': {'groups':[%(tianv_project.group_project_manager)d]},
+                                }"/>
                             </group>
                         </group>
                         <group>
-                            <field name="comment" states_editable="{'processing':{'users':[user_id]},'groups':[%(tianv_project.group_project_manager)d]}"/>
+                            <field name="comment" states_editable="{'processing':{'users':[user_id],'groups':[%(tianv_project.group_project_manager)d]}}"/>
                         </group>
                     </sheet>
                     <div class="oe_chatter">

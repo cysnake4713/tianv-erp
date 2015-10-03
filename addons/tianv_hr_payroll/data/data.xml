@@ -315,7 +315,7 @@ else:
             <field name="sequence">38</field>
             <field name="category_id" ref="tianv_hr_payroll.COMMISSION"/>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = inputs.SERVICE_COMMISSION.amount if inputs.SERVICE_COMMISSION else 0.0</field>
+            <!--<field name="amount_python_compute">result = inputs.SERVICE_COMMISSION.amount if inputs.SERVICE_COMMISSION else 0.0</field>-->
         </record>
         <record id="tianv_payroll_rule_project_commission" model="hr.salary.rule">
             <field name="name">项目提成</field>
@@ -323,7 +323,7 @@ else:
             <field name="sequence">40</field>
             <field name="category_id" ref="tianv_hr_payroll.COMMISSION"/>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = inputs.PROJECT_COMMISSION.amount if inputs.PROJECT_COMMISSION else 0.0</field>
+            <!--<field name="amount_python_compute">result = inputs.PROJECT_COMMISSION.amount if inputs.PROJECT_COMMISSION else 0.0</field>-->
         </record>
         <record id="tianv_payroll_rule_business_commission" model="hr.salary.rule">
             <field name="name">商务提成</field>
@@ -331,7 +331,7 @@ else:
             <field name="sequence">41</field>
             <field name="category_id" ref="tianv_hr_payroll.COMMISSION"/>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = inputs.BUSINESS_COMMISSION.amount if inputs.BUSINESS_COMMISSION else 0.0</field>
+            <!--<field name="amount_python_compute">result = inputs.BUSINESS_COMMISSION.amount if inputs.BUSINESS_COMMISSION else 0.0</field>-->
         </record>
 
 
