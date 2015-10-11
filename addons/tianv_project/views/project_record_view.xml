@@ -46,7 +46,7 @@
                                 context="{
                                 'state': 'review',
                                 }"/>
-                        <button name="common_apply" string="审批通过" type="object" class="oe_highlight"
+                        <button name="button_review_apply" string="审批通过" type="object" class="oe_highlight"
                                 confirm="确定审批通过?"
                                 states_editable="{
                                 'review':{'groups':[%(tianv_project.group_project_manager)d]},
@@ -88,16 +88,22 @@
                             <group>
                                 <field name="partner_id" readonly="1"/>
                                 <field name="price" readonly="1"/>
-                                <field name="finish_date" states_editable="{
+                                <field name="partner_finish_date" states_editable="{
                                 'processing':{
                                     'users':[user_id],
                                     'groups':[%(tianv_project.group_project_manager)d]
                                 },
                                 'review': {'groups':[%(tianv_project.group_project_manager)d]},
                                 }"/>
+                                <field name="finish_date" states_editable="{
+                                'processing':{
+                                    'groups':[%(tianv_project.group_project_manager)d]
+                                },
+                                'review': {'groups':[%(tianv_project.group_project_manager)d]},
+                                }"/>
                             </group>
                         </group>
-                        <group>
+                        <group col="1">
                             <field name="comment"
                                    states_editable="{'processing':{'users':[user_id],'groups':[%(tianv_project.group_project_manager)d]}}"/>
                         </group>

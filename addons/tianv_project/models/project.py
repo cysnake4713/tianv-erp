@@ -159,6 +159,7 @@ class ProjectProjectRecord(models.Model):
     project_id = fields.Many2one('tianv.project.project', 'Related Project', required=True)
     finish_date = fields.Date('Finish Date')
     move_id = fields.Many2one('account.move')
+    partner_finish_date = fields.Date('Partner Finish Date')
 
     @api.multi
     @api.depends('partner_id')
@@ -166,6 +167,13 @@ class ProjectProjectRecord(models.Model):
         for record in self:
             partner_id = self.env['res.users'].search([('partner_id', '=', record.partner_id.id)])
             record.user_id = partner_id[0] if partner_id else False
+
+    @api.multi
+    def button_review_apply(self):
+        for record in self:
+            if not record.finish_date:
+                record.finish_date = fields.Date.today()
+        self.common_apply()
 
 
 class HrContract(models.Model):
