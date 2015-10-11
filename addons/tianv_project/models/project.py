@@ -21,7 +21,7 @@ class ProjectProject(models.Model):
                               ('finished', 'Finished'),
                               ('canceled', 'Canceled'),
                               ('pause', 'Pause'), ],
-                             'State', default='draft')
+                             'State', default='draft', track_visibility='onchange')
     # 客户公司
     partner_id = fields.Many2one('res.partner', 'Custom Company', required=True, domain=[('customer', '=', True), ('is_company', '=', True)])
     # 合同编号
@@ -147,7 +147,7 @@ class ProjectProjectRecord(models.Model):
 
     state = fields.Selection(
         [('draft', 'Draft'), ('processing', 'Processing'), ('review', 'Review'), ('finished', 'Finished'), ('cancel', 'Cancel'), ('pause', 'Pause')],
-        'State', default='draft')
+        'State', default='draft', track_visibility='onchange')
     name = fields.Char('Name', required=True)
     template_line_id = fields.Many2one('tianv.project.template.line', 'Related Template Line')
     type_id = fields.Many2one('tianv.project.deduct.type', 'Type', required=True)
