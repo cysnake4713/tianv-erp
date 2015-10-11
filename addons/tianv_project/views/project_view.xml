@@ -1,6 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openerp>
     <data>
+        <record id="view_project_project_search" model="ir.ui.view">
+            <field name="name">view.tianv.project.project.search</field>
+            <field name="model">tianv.project.project</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="code"/>
+                    <field name="name"/>
+                    <field name="partner_id"/>
+                    <field name="product_id"/>
+                    <field name="sign_date"/>
+                    <field name="actual_finish_date"/>
+                    <field name="contract_price"/>
+                    <field name="state"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Status" domain="[]" context="{'group_by':'state'}"/>
+                        <filter string="Partner" domain="[]" context="{'group_by':'partner_id'}"/>
+                        <filter string="Product" domain="[]" context="{'group_by':'product_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
         <record id="view_project_project_tree" model="ir.ui.view">
             <field name="name">view.tianv.project.project.tree</field>
             <field name="model">tianv.project.project</field>
@@ -12,7 +34,6 @@
                     <field name="product_id"/>
                     <field name="sign_date"/>
                     <field name="actual_finish_date"/>
-                    <field name="partner_id"/>
                     <field name="contract_price"/>
                     <field name="state"/>
                 </tree>

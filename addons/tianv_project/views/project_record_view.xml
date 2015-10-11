@@ -1,6 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openerp>
     <data>
+        <record id="view_tianv_project_record_search" model="ir.ui.view">
+            <field name="name">view.tianv.project.project.record.search</field>
+            <field name="model">tianv.project.project.record</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <field name="project_id"/>
+                    <field name="partner_id"/>
+                    <field name="type_id"/>
+                    <field name="price"/>
+                    <field name="state"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Status" domain="[]" context="{'group_by':'state'}"/>
+                        <filter string="Partner" domain="[]" context="{'group_by':'partner_id'}"/>
+                        <filter string="Type" domain="[]" context="{'group_by':'type_id'}"/>
+                        <filter string="Project" domain="[]" context="{'group_by':'project_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
         <record id="view_tianv_project_record_tree" model="ir.ui.view">
             <field name="name">view.tianv.project.project.record.tree</field>
             <field name="model">tianv.project.project.record</field>
@@ -78,7 +98,8 @@
                             </group>
                         </group>
                         <group>
-                            <field name="comment" states_editable="{'processing':{'users':[user_id],'groups':[%(tianv_project.group_project_manager)d]}}"/>
+                            <field name="comment"
+                                   states_editable="{'processing':{'users':[user_id],'groups':[%(tianv_project.group_project_manager)d]}}"/>
                         </group>
                     </sheet>
                     <div class="oe_chatter">
