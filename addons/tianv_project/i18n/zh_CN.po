@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-03 12:03+0000\n"
-"PO-Revision-Date: 2015-10-03 12:03+0000\n"
+"POT-Creation-Date: 2015-10-11 08:02+0000\n"
+"PO-Revision-Date: 2015-10-11 08:02+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -116,13 +116,19 @@ msgstr "职员工资"
 #. module: tianv_project
 #: field:tianv.project.project.record,finish_date:0
 msgid "Finish Date"
-msgstr "完成时间"
+msgstr "审批完成时间"
 
 #. module: tianv_project
 #: selection:tianv.project.project,state:0
 #: selection:tianv.project.project.record,state:0
 msgid "Finished"
 msgstr "已完成"
+
+#. module: tianv_project
+#: view:tianv.project.project:tianv_project.view_project_project_search
+#: view:tianv.project.project.record:tianv_project.view_tianv_project_record_search
+msgid "Group By"
+msgstr "分组"
 
 #. module: tianv_project
 #: field:tianv.project.deduct.type,id:0
@@ -173,9 +179,16 @@ msgid "Params"
 msgstr "参数"
 
 #. module: tianv_project
+#: view:tianv.project.project:tianv_project.view_project_project_search
+#: view:tianv.project.project.record:tianv_project.view_tianv_project_record_search
 #: field:tianv.project.project.record,partner_id:0
 msgid "Partner"
 msgstr "业务伙伴"
+
+#. module: tianv_project
+#: field:tianv.project.project.record,partner_finish_date:0
+msgid "Partner Finish Date"
+msgstr "任务完成时间"
 
 #. module: tianv_project
 #: selection:tianv.project.project,state:0
@@ -206,14 +219,25 @@ msgid "Processing"
 msgstr "进行中"
 
 #. module: tianv_project
+#: view:tianv.project.project:tianv_project.view_project_project_search
 #: field:tianv.project.project,product_id:0
 msgid "Product"
 msgstr "产品"
 
 #. module: tianv_project
+#: view:tianv.project.project.record:tianv_project.view_tianv_project_record_search
+msgid "Project"
+msgstr "项目"
+
+#. module: tianv_project
 #: model:ir.model,name:tianv_project.model_tianv_project_deduct_type
 msgid "Project Deduct Type"
 msgstr "提成类型"
+
+#. module: tianv_project
+#: field:tianv.service.service.wizard,project_ids:0
+msgid "Projects"
+msgstr "项目"
 
 #. module: tianv_project
 #: field:tianv.project.template.line,python_code:0
@@ -263,9 +287,20 @@ msgid "Review"
 msgstr "待确认"
 
 #. module: tianv_project
+#: code:addons/tianv_project/models/project_wizard.py:26
+#, python-format
+msgid "Selected Service have multi or have no partner!"
+msgstr "选择的服务拥有多个或者没有甲方!"
+
+#. module: tianv_project
 #: field:tianv.project.template.line,sequence:0
 msgid "Sequence"
 msgstr "序号"
+
+#. module: tianv_project
+#: model:ir.model,name:tianv_project.model_tianv_service_service_wizard
+msgid "Service record"
+msgstr "服务记录"
 
 #. module: tianv_project
 #: field:tianv.project.project,sign_date:0
@@ -276,6 +311,12 @@ msgstr "签订日期"
 #: field:tianv.project.project,state:0
 #: field:tianv.project.project.record,state:0
 msgid "State"
+msgstr "状态"
+
+#. module: tianv_project
+#: view:tianv.project.project:tianv_project.view_project_project_search
+#: view:tianv.project.project.record:tianv_project.view_tianv_project_record_search
+msgid "Status"
 msgstr "状态"
 
 #. module: tianv_project
@@ -319,6 +360,11 @@ msgid "Tianv Project Template"
 msgstr "项目模板"
 
 #. module: tianv_project
+#: model:ir.model,name:tianv_project.model_tianv_project_template_config
+msgid "Tianv Project Template Config"
+msgstr "项目模板配置"
+
+#. module: tianv_project
 #: model:ir.model,name:tianv_project.model_tianv_project_template_line
 msgid "Tianv Project Template Line"
 msgstr "模板行"
@@ -329,10 +375,16 @@ msgid "Tianv Project Template Param"
 msgstr "模板参数"
 
 #. module: tianv_project
+#: view:tianv.project.project.record:tianv_project.view_tianv_project_record_search
 #: field:tianv.project.project.record,type_id:0
 #: field:tianv.project.template.line,type_id:0
 msgid "Type"
 msgstr "类型"
+
+#. module: tianv_project
+#: view:tianv.service.service.wizard:tianv_project.view_serivce_wizard_form_inherit
+msgid "从项目生成订单"
+msgstr "从项目生成订单"
 
 #. module: tianv_project
 #: model:ir.actions.act_window,name:tianv_project.action_project_record
@@ -391,6 +443,11 @@ msgid "待审批"
 msgstr "待审批"
 
 #. module: tianv_project
+#: model:ir.actions.act_window,name:tianv_project.action_project_order_creation
+msgid "批量创建订单"
+msgstr "批量创建订单"
+
+#. module: tianv_project
 #: view:tianv.project.project:tianv_project.view_project_project_form
 msgid "提成分配"
 msgstr "提成分配"
@@ -399,6 +456,11 @@ msgstr "提成分配"
 #: model:res.groups,name:tianv_project.group_project_user
 msgid "普通员工"
 msgstr "普通员工"
+
+#. module: tianv_project
+#: view:tianv.project.project:tianv_project.view_project_project_form
+msgid "标记完成"
+msgstr "标记完成"
 
 #. module: tianv_project
 #: view:tianv.project.project:tianv_project.view_project_project_form
@@ -415,6 +477,11 @@ msgstr "注意重设为草稿将清除相关会计分录!"
 #, python-format
 msgid "测试结果"
 msgstr "测试结果"
+
+#. module: tianv_project
+#: view:tianv.project.project.record:tianv_project.view_tianv_project_record_form
+msgid "确定审批通过?"
+msgstr "确定审批通过?"
 
 #. module: tianv_project
 #: model:res.groups,name:tianv_project.group_project_admin
