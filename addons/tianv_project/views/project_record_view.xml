@@ -45,6 +45,10 @@
                                 states_editable="{'processing':{'users':[user_id]},}"
                                 context="{
                                 'state': 'review',
+                                'message_groups': [%(tianv_project.group_project_manager)d],
+                                'message': '员工已经确认任务完成,请审批',
+                                'wechat_code': ['tianv.project.project'],
+                                'wechat_template': %(tianv_project.message_project_record)d,
                                 }"/>
                         <button name="button_review_apply" string="审批通过" type="object" class="oe_highlight"
                                 confirm="确定审批通过?"
@@ -54,21 +58,38 @@
                                 }"
                                 context="{
                                 'state': 'finished',
+                                'message_users': [user_id],
+                                'message': '任务已审批通过',
+                                'wechat_code': ['tianv.project.project'],
+                                'wechat_template': %(tianv_project.message_project_record)d,
                                 }"/>
                         <button name="common_reject" string="恢复" type="object"
                                 groups="tianv_project.group_project_manager" states="review,pause,cancel,finished"
                                 context="{
                                 'state': 'processing',
+                                'message_users': [user_id],
+                                'message_groups': [%(tianv_project.group_project_manager)d],
+                                'message': '任务已恢复',
+                                'wechat_code': ['tianv.project.project'],
+                                'wechat_template': %(tianv_project.message_project_record)d,
                                 }"/>
                         <button name="common_apply" string="取消" type="object"
                                 states_editable="{'processing':{'groups':[%(tianv_project.group_project_manager)d]},}"
                                 context="{
                                 'state': 'cancel',
+                                'message_users': [user_id],
+                                'message': '任务已经取消',
+                                'wechat_code': ['tianv.project.project'],
+                                'wechat_template': %(tianv_project.message_project_record)d,
                                 }"/>
                         <button name="common_apply" string="暂停" type="object"
                                 states_editable="{'processing':{'groups':[%(tianv_project.group_project_manager)d]},}"
                                 context="{
                                 'state': 'pause',
+                                'message_users': [user_id],
+                                'message': '任务已暂停',
+                                'wechat_code': ['tianv.project.project'],
+                                'wechat_template': %(tianv_project.message_project_record)d,
                                 }"/>
                         <field name="state" widget="statusbar" statusbar_visible="processing,review,finished"/>
                     </header>

@@ -105,8 +105,13 @@ class ProjectProject(models.Model):
     @api.multi
     def button_start_process(self):
         for project in self.sudo():
-            project.record_ids.write({'state': 'processing'})
             for record in project.record_ids:
+                record.with_context(state='processing',
+                                    message_users=[record.user_id.id] if record.user_id else [],
+                                    message=u'项目已经启动',
+                                    wechat_code=['tianv.project.project'],
+                                    wechat_template=self.env.ref('tianv_project.message_project_record').id,
+                                    ).common_apply()
                 if record.type_id.commission_type == 'account':
                     record.move_id = self.sudo().env['account.move'].create({
                         'journal_id': record.type_id.journal_id.id,
