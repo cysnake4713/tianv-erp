@@ -5,7 +5,7 @@
             <field name="name">view.tianv.project.project.record.tree</field>
             <field name="model">tianv.project.project.record</field>
             <field name="arch" type="xml">
-                <tree>
+                <tree colors="blue:state=='review';grey:state=='finished';red:state in ['cancel','pause']">
                     <field name="name"/>
                     <field name="project_id"/>
                     <field name="partner_id"/>
