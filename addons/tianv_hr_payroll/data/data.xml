@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openerp>
-    <data>
+    <data noupdate="1">
         <record id="BASIC" model="hr.salary.rule.category">
             <field name="name">基本工资</field>
             <field name="code">BASIC</field>
