@@ -97,19 +97,19 @@
                             <group string="基本信息">
                                 <field name="partner_id"
                                        states_editable="{'draft':{'groups':[%(tianv_project.group_project_officer)d]},
-                                                        'processing':{'groups':[%(tianv_project.group_project_manager)d]}}"/>
+                                                        'processing':{'groups':[%(tianv_project.group_project_officer)d]}}"/>
                                 <field name="product_id"
                                        states_editable="{'draft':{'groups':[%(tianv_project.group_project_officer)d]},
-                                                        'processing':{'groups':[%(tianv_project.group_project_manager)d]}}"/>
+                                                        'processing':{'groups':[%(tianv_project.group_project_officer)d]}}"/>
                                 <field name="order_id"
                                        states_editable="{'draft':{'groups':[%(tianv_project.group_project_officer)d]},
-                                                        'processing':{'groups':[%(tianv_project.group_project_manager)d]}}"/>
+                                                        'processing':{'groups':[%(tianv_project.group_project_officer)d]}}"/>
                                 <field name="sign_date"
                                        states_editable="{'draft':{'groups':[%(tianv_project.group_project_officer)d]},
-                                                        'processing':{'groups':[%(tianv_project.group_project_manager)d]}}"/>
+                                                        'processing':{'groups':[%(tianv_project.group_project_officer)d]}}"/>
                                 <field name="plan_finish_date"
                                        states_editable="{'draft':{'groups':[%(tianv_project.group_project_officer)d]},
-                                                        'processing':{'groups':[%(tianv_project.group_project_manager)d]}}"/>
+                                                        'processing':{'groups':[%(tianv_project.group_project_officer)d]}}"/>
                                 <field name="actual_finish_date"
                                        states_editable="{'processing':{'groups':[%(tianv_project.group_project_officer)d]}}"/>
                             </group>
@@ -125,9 +125,10 @@
                         <group class="oe_edit_only">
                             <group col="4">
                                 <field name="template_id" states_editable="{'draft':{'groups':[%(tianv_project.group_project_officer)d]},
-                                                        'processing':{'groups':[%(tianv_project.group_project_manager)d]}}"/>
+                                                        'processing':{'groups':[%(tianv_project.group_project_officer)d]}}"/>
                                 <button name="button_init_template" type="object" string="使用模板" confirm="会清除现有信息!"
-                                        states_editable="{'draft':{'groups':[%(tianv_project.group_project_officer)d]}}"/>
+                                        states_editable="{'draft':{'groups':[%(tianv_project.group_project_officer)d]},
+                                                            'processing':{'groups':[%(tianv_project.group_project_officer)d]}}"/>
                             </group>
                             <group class="oe_inline">
                             </group>
@@ -135,7 +136,7 @@
                         <group string="款项分配">
                             <field name="param_ids" nolabel="1"
                                    states_editable="{'draft':{'groups':[%(tianv_project.group_project_officer)d]},
-                                                        'processing':{'groups':[%(tianv_project.group_project_manager)d]}}">
+                                                        'processing':{'groups':[%(tianv_project.group_project_officer)d]}}">
                                 <tree editable="bottom">
                                     <field name="name"/>
                                     <field name="code"/>
@@ -152,7 +153,7 @@
                             <newline/>
                             <field name="record_ids" nolabel="1" context="{'template_id': template_id}"
                                    states_editable="{'draft':{'groups':[%(tianv_project.group_project_officer)d]},
-                                                        'processing':{'groups':[%(tianv_project.group_project_manager)d]}}">
+                                                        'processing':{'groups':[%(tianv_project.group_project_officer)d]}}">
                                 <tree editable="bottom">
                                     <field name="name"/>
                                     <field name="template_line_id" domain="[('template_id','=',context.get('template_id'))]"/>
@@ -168,6 +169,13 @@
                                             states="processing,review"
                                             context="{
                                                 'state': 'finished',
+                                                }"
+                                            />
+                                    <button name="common_apply" string="确定启动" icon="gtk-media-play" type="object"
+                                            groups="tianv_project.group_project_officer"
+                                            states="draft"
+                                            context="{
+                                                'state': 'processing',
                                                 }"
                                             />
                                 </tree>

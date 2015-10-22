@@ -15,8 +15,7 @@ class ServiceRecordWizard(models.TransientModel):
     def default_get(self, fields_list):
         res = super(ServiceRecordWizard, self).default_get(fields_list)
         if self.env.context['active_model'] == 'tianv.project.project':
-            project_ids = self.env['tianv.project.project'].search([('id', 'in', self.env.context['active_ids']), ('state', '!=', 'draft')])
-            res['project_ids'] = [(6, 0, [p.id for p in project_ids])]
+            res['project_ids'] = [(6, 0, self.env.context['active_ids'])]
         return res
 
     @api.multi

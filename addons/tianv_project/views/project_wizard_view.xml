@@ -9,7 +9,7 @@
 
                 <xpath expr="//group[@string='从服务生成订单']" position="after">
                     <group string="从项目生成订单">
-                        <field name="project_ids" nolabel="1" domain="[('state','!=','draft'),('order_id','=',False)]"/>
+                        <field name="project_ids" nolabel="1" domain="[('order_id','=',False)]"/>
                     </group>
                 </xpath>
 
