@@ -13,6 +13,7 @@ class ProjectProject(models.Model):
     _rec_name = 'name'
     _description = 'Tianv Project'
     _inherit = 'odoosoft.workflow.abstract'
+    _order = 'id desc'
 
     name = fields.Char('Name', required=True)
     # 状态
@@ -87,19 +88,24 @@ class ProjectProject(models.Model):
                         'project_id': project.id,
                     }
                     self.env['tianv.project.project.record'].create(value)
-        self.button_compute_record()
+                    # self.button_compute_record()
+
+    @api.one
+    def get_custom_context(self):
+        custom_context = {
+            'TOTAL': self.tax_price,
+            'ACTUAL_TOTAL': self.actual_price,
+        }
+        for param in self.template_id.param_ids:
+            custom_context[param.code] = 0
+        for param in self.param_ids:
+            custom_context[param.code] = param.price
+        return custom_context
 
     @api.multi
     def button_compute_record(self):
         for project in self:
-            custom_context = {
-                'TOTAL': project.tax_price,
-                'ACTUAL_TOTAL': project.actual_price,
-            }
-            for param in project.template_id.param_ids:
-                custom_context[param.code] = 0
-            for param in project.param_ids:
-                custom_context[param.code] = param.price
+            custom_context = project.get_custom_context()
             for record in project.record_ids:
                 if record.template_line_id:
                     record.price = record.template_line_id.compute_price(custom_context) * record.adjustment
@@ -130,8 +136,7 @@ class ProjectProject(models.Model):
     @api.multi
     def button_reset_draft(self):
         for project in self:
-            for record in project.record_ids:
-                record.sudo().move_id.unlink()
+            project.record_ids.button_reset_draft()
         project.common_reject()
 
 
