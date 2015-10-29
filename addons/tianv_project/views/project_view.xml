@@ -160,22 +160,26 @@
                                     <field name="type_id"/>
                                     <field name="adjustment" widget="percentage"/>
                                     <field name="price"/>
+                                    <button name="button_compute_value" string="再计算" icon="terp-sale" type="object"
+                                            groups="tianv_project.group_project_officer"
+                                            states="draft,processing,review"
+                                            />
                                     <field name="comment"/>
                                     <field name="partner_id"/>
                                     <field name="finish_date" groups="tianv_project.group_project_manager"/>
                                     <field name="state" readonly="1"/>
-                                    <button name="button_review_apply" string="标记完成" icon="gtk-apply" type="object"
-                                            groups="tianv_project.group_project_manager"
-                                            states="processing,review"
-                                            context="{
-                                                'state': 'finished',
-                                                }"
-                                            />
                                     <button name="common_apply" string="确定启动" icon="gtk-media-play" type="object"
                                             groups="tianv_project.group_project_officer"
                                             states="draft"
                                             context="{
                                                 'state': 'processing',
+                                                }"
+                                            />
+                                    <button name="button_review_apply" string="标记完成" icon="gtk-apply" type="object"
+                                            groups="tianv_project.group_project_manager"
+                                            states="processing,review"
+                                            context="{
+                                                'state': 'finished',
                                                 }"
                                             />
                                     <button name="button_reset_draft" string="重设草稿" icon="gtk-undo" type="object"

@@ -90,7 +90,7 @@ class ProjectProject(models.Model):
                     self.env['tianv.project.project.record'].create(value)
                     # self.button_compute_record()
 
-    @api.one
+    @api.multi
     def get_custom_context(self):
         custom_context = {
             'TOTAL': self.tax_price,
@@ -105,10 +105,7 @@ class ProjectProject(models.Model):
     @api.multi
     def button_compute_record(self):
         for project in self:
-            custom_context = project.get_custom_context()
-            for record in project.record_ids:
-                if record.template_line_id:
-                    record.price = record.template_line_id.compute_price(custom_context) * record.adjustment
+            project.record_ids.with_context(custom_context=project.get_custom_context()).button_compute_value()
 
     @api.multi
     def button_start_process(self):
@@ -179,6 +176,13 @@ class ProjectProjectRecord(models.Model):
         for record in self:
             partner_id = self.env['res.users'].search([('partner_id', '=', record.partner_id.id)])
             record.user_id = partner_id[0] if partner_id else False
+
+    @api.multi
+    def button_compute_value(self):
+        custom_context = self.env.context['custom_context'] if self.env.context.get('custom_context', False) else self.project_id.get_custom_context()
+        for record in self:
+            if record.template_line_id:
+                record.price = record.template_line_id.compute_price(custom_context) * record.adjustment
 
     @api.multi
     def button_review_apply(self):
