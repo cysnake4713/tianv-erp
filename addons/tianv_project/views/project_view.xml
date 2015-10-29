@@ -133,7 +133,7 @@
                             <group class="oe_inline">
                             </group>
                         </group>
-                        <group string="款项分配">
+                        <group string="款项明细">
                             <field name="param_ids" nolabel="1"
                                    states_editable="{'draft':{'groups':[%(tianv_project.group_project_officer)d]},
                                                         'processing':{'groups':[%(tianv_project.group_project_officer)d]}}">
