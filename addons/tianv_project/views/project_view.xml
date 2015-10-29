@@ -178,6 +178,10 @@
                                                 'state': 'processing',
                                                 }"
                                             />
+                                    <button name="button_reset_draft" string="重设草稿" icon="gtk-undo" type="object"
+                                            groups="tianv_project.group_project_manager"
+                                            states="processing,review"
+                                            />
                                 </tree>
                             </field>
                         </group>

@@ -23,8 +23,8 @@ class ProjectTemplate(models.Model):
     def button_test_available(self):
         for template in self:
             custom_context = {
-                'TOTAL': 0,
-                'ACTUAL_TOTAL': 0,
+                'TOTAL': 1,
+                'ACTUAL_TOTAL': 1,
             }
             for param in template.param_ids:
                 custom_context[param.code] = 0

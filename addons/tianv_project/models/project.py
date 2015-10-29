@@ -96,6 +96,8 @@ class ProjectProject(models.Model):
                 'TOTAL': project.tax_price,
                 'ACTUAL_TOTAL': project.actual_price,
             }
+            for param in project.template_id.param_ids:
+                custom_context[param.code] = 0
             for param in project.param_ids:
                 custom_context[param.code] = param.price
             for record in project.record_ids:
@@ -179,6 +181,12 @@ class ProjectProjectRecord(models.Model):
             if not record.finish_date:
                 record.finish_date = fields.Date.today()
         self.common_apply()
+
+    @api.multi
+    def button_reset_draft(self):
+        for record in self:
+            record.move_id.unlink()
+        self.with_context(state='draft').common_apply()
 
 
 class HrContract(models.Model):
