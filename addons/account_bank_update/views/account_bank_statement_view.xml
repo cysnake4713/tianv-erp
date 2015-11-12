@@ -1,6 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openerp>
     <data>
+        <record id="action_bank_statement_import" model="ir.actions.act_window">
+            <field name="name">账单导入</field>
+            <field name="res_model">account.bank.statement.import</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="context">{'statement_id':active_id}</field>
+        </record>
+
+        <record id="view_bank_statement_import_form" model="ir.ui.view">
+            <field name="name">view.account.bank.statement.import.form</field>
+            <field name="model">account.bank.statement.import</field>
+            <field name="arch" type="xml">
+                <form>
+                    <field name="state" invisible="1"/>
+                    <div>
+                        <p>点击<a href="/account_bank_update/static/src/file/demo.csv">下载</a>参考样例文件</p>
+                        <p>上传的文件必须是csv格式,并且注意编码选择,一般windows用户请选择gbk,linux用户选择utf-8</p>
+                    </div>
+                    <group>
+                        <field name="code"/>
+                        <field string="文件上传" name="data"/>
+                        <field string="结果" name="message" readonly="1" colspan="2"/>
+                    </group>
+                    <footer>
+                        <button string="导入" name="button_import" type="object" class="oe_highlight" states="draft"/>
+                        or
+                        <button string="关闭" special="cancel" class="oe_link"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
         <!-- Inherit Form View to Modify it -->
         <record id="view_bank_statement_form_inheirt" model="ir.ui.view">
             <field name="name">account.bank.statement.form.inherit</field>
@@ -11,6 +44,10 @@
                     <attribute name="domain">[]</attribute>
                 </field>
 
+                <field name="line_ids" position="before">
+                    <button name="%(action_bank_statement_import)d" type="action" string="导入账单"
+                            confirm="如果需要重新导入账单，请先确保没有已经核销的账项。"/>
+                </field>
             </field>
         </record>
     </data>

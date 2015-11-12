@@ -9,7 +9,7 @@
 Tianv Account Bank Statement Update""",
     'author': 'Matt Cai',
     'website': 'http://odoosoft.com',
-    'depends': ['base'],
+    'depends': ['base', 'account'],
     'data': [
         'views/account_bank_statement_view.xml',
     ],
