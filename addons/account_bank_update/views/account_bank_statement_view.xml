@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <!-- Inherit Form View to Modify it -->
+        <record id="view_bank_statement_form_inheirt" model="ir.ui.view">
+            <field name="name">account.bank.statement.form.inherit</field>
+            <field name="model">account.bank.statement</field>
+            <field name="inherit_id" ref="account.view_bank_statement_form"/>
+            <field name="arch" type="xml">
+                <field name="partner_id" position="attributes">
+                    <attribute name="domain">[]</attribute>
+                </field>
+
+            </field>
+        </record>
+    </data>
+</openerp>
