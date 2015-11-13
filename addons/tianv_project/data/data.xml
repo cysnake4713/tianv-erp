@@ -16,5 +16,15 @@
             </field>
         </record>
 
+        <record model="ir.cron" id="project_record_cron">
+            <field name="name">Project record Pass Plan Date reminder</field>
+            <field name="interval_number">5</field>
+            <field name="interval_type">work_days</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False"/>
+            <field name="model" eval="'tianv.project.project.record'"/>
+            <field name="function" eval="'cron_send_plan_warning'"/>
+            <field name="args" eval="'()'" />
+        </record>
     </data>
 </openerp>

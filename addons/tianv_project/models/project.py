@@ -201,10 +201,21 @@ class ProjectProjectRecord(models.Model):
     @api.multi
     def button_resend_message(self):
         self.with_context(message_users=[self.user_id.id] if self.user_id else [],
-                          message=u'项目已经启动',
+                          message=u'任务已经启动',
                           wechat_code=['tianv.project.project'],
                           wechat_template=self.env.ref('tianv_project.message_project_record').id,
                           ).common_apply()
+
+    @api.model
+    def cron_send_plan_warning(self):
+        records = self.search([('state', '=', 'processing'), ('plan_finish_date', '<', fields.Date.today())])
+        for record in records:
+            record.with_context(message_users=[record.user_id.id] if record.user_id else [],
+                                message=u'任务已超过计划完成时间，请尽快处理',
+                                wechat_code=['tianv.project.project'],
+                                wechat_template=self.env.ref('tianv_project.message_project_record').id,
+                                ).common_apply()
+        return True
 
 
 class HrContract(models.Model):
