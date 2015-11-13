@@ -45,8 +45,7 @@
                 </field>
 
                 <field name="line_ids" position="before">
-                    <button name="%(action_bank_statement_import)d" type="action" string="导入账单" class="oe_edit_only"
-                            confirm="如果需要重新导入账单，请先确保没有已经核销的账项。"/>
+                    <button name="%(action_bank_statement_import)d" type="action" string="导入账单" class="oe_edit_only"/>
                 </field>
             </field>
         </record>

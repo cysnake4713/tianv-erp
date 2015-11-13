@@ -59,9 +59,6 @@ class AccountBankStatementImport(models.TransientModel):
     def button_import(self):
         if not self.statement_id:
             self.statement_id = self.env.context['statement_id']
-        if self.env['account.bank.statement'].browse(self.statement_id).line_ids.filtered(lambda l: l.journal_entry_id):
-            raise exceptions.Warning(_('Already Have Reconcile Lines, if you want to redo import, please reverse current lines and import again.'))
-
         try:
             datas = self._read_csv(base64.decodestring(self.data), self.code)
             data, import_fields = self._convert_import_data(datas, self.statement_id)

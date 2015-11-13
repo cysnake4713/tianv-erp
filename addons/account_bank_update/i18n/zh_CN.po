@@ -1,0 +1,114 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* account_bank_update
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-11-13 14:19+0000\n"
+"PO-Revision-Date: 2015-11-13 14:19+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: account_bank_update
+#: field:account.bank.statement.import,code:0
+msgid "Code"
+msgstr "编码"
+
+#. module: account_bank_update
+#: code:addons/account_bank_update/models/account_bank_statement.py:70
+#, python-format
+msgid "Code Error, please select correct code to import file."
+msgstr "编码错误，请选择正确的文件编码."
+
+#. module: account_bank_update
+#: field:account.bank.statement.import,data:0
+msgid "Data"
+msgstr "文件"
+
+#. module: account_bank_update
+#: selection:account.bank.statement.import,state:0
+msgid "Draft"
+msgstr "草稿"
+
+#. module: account_bank_update
+#: field:account.bank.statement.import,message:0
+msgid "Error Message"
+msgstr "结果"
+
+#. module: account_bank_update
+#: selection:account.bank.statement.import,state:0
+msgid "Finish"
+msgstr "结束"
+
+#. module: account_bank_update
+#: selection:account.bank.statement.import,code:0
+msgid "GBK"
+msgstr "GBK"
+
+#. module: account_bank_update
+#: field:account.bank.statement.import,id:0
+msgid "ID"
+msgstr "ID"
+
+#. module: account_bank_update
+#: code:addons/account_bank_update/models/account_bank_statement.py:42
+#, python-format
+msgid "Name or Date not in the import file!"
+msgstr "'name','date','amount'字段不全！"
+
+#. module: account_bank_update
+#: field:account.bank.statement.import,state:0
+msgid "State"
+msgstr "State"
+
+#. module: account_bank_update
+#: field:account.bank.statement.import,statement_id:0
+msgid "Statement Id"
+msgstr "Statement Id"
+
+#. module: account_bank_update
+#: selection:account.bank.statement.import,code:0
+msgid "UTF-8"
+msgstr "UTF-8"
+
+#. module: account_bank_update
+#: view:account.bank.statement.import:account_bank_update.view_bank_statement_import_form
+msgid "or"
+msgstr "或者"
+
+#. module: account_bank_update
+#: view:account.bank.statement.import:account_bank_update.view_bank_statement_import_form
+msgid "上传的文件必须是csv格式,并且注意编码选择,一般windows用户请选择gbk,linux用户选择utf-8"
+msgstr "上传的文件必须是csv格式,并且注意编码选择,一般windows用户请选择gbk,linux用户选择utf-8"
+
+#. module: account_bank_update
+#: view:account.bank.statement.import:account_bank_update.view_bank_statement_import_form
+msgid "参考样例文件"
+msgstr "参考样例文件"
+
+#. module: account_bank_update
+#: view:account.bank.statement:account_bank_update.view_bank_statement_form_inheirt
+msgid "如果需要重新导入账单，请先确保没有已经核销的账项。"
+msgstr "如果需要重新导入账单，请先确保没有已经核销的账项。"
+
+#. module: account_bank_update
+#: view:account.bank.statement:account_bank_update.view_bank_statement_form_inheirt
+msgid "导入账单"
+msgstr "导入账单"
+
+#. module: account_bank_update
+#: view:account.bank.statement.import:account_bank_update.view_bank_statement_import_form
+msgid "文件上传"
+msgstr "文件上传"
+
+#. module: account_bank_update
+#: model:ir.actions.act_window,name:account_bank_update.action_bank_statement_import
+msgid "账单导入"
+msgstr "账单导入"
+
