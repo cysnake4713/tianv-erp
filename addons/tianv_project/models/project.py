@@ -197,6 +197,14 @@ class ProjectProjectRecord(models.Model):
             record.move_id.unlink()
         self.with_context(state='draft').common_apply()
 
+    @api.multi
+    def button_resend_message(self):
+        self.with_context(message_users=[self.user_id.id] if self.user_id else [],
+                          message=u'项目已经启动',
+                          wechat_code=['tianv.project.project'],
+                          wechat_template=self.env.ref('tianv_project.message_project_record').id,
+                          ).common_apply()
+
 
 class HrContract(models.Model):
     _inherit = 'hr.contract'
