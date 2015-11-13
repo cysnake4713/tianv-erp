@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-11 08:02+0000\n"
-"PO-Revision-Date: 2015-10-11 08:02+0000\n"
+"POT-Creation-Date: 2015-11-13 14:16+0000\n"
+"PO-Revision-Date: 2015-11-13 14:16+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -197,12 +197,8 @@ msgid "Pause"
 msgstr "暂停"
 
 #. module: tianv_project
-#: model:ir.model,name:tianv_project.model_hr_payslip
-msgid "Pay Slip"
-msgstr "工资单"
-
-#. module: tianv_project
 #: field:tianv.project.project,plan_finish_date:0
+#: field:tianv.project.project.record,plan_finish_date:0
 msgid "Plan Finish Date"
 msgstr "计划完成日期"
 
@@ -287,7 +283,7 @@ msgid "Review"
 msgstr "待确认"
 
 #. module: tianv_project
-#: code:addons/tianv_project/models/project_wizard.py:26
+#: code:addons/tianv_project/models/project_wizard.py:25
 #, python-format
 msgid "Selected Service have multi or have no partner!"
 msgstr "选择的服务拥有多个或者没有甲方!"
@@ -360,11 +356,6 @@ msgid "Tianv Project Template"
 msgstr "项目模板"
 
 #. module: tianv_project
-#: model:ir.model,name:tianv_project.model_tianv_project_template_config
-msgid "Tianv Project Template Config"
-msgstr "项目模板配置"
-
-#. module: tianv_project
 #: model:ir.model,name:tianv_project.model_tianv_project_template_line
 msgid "Tianv Project Template Line"
 msgstr "模板行"
@@ -406,6 +397,11 @@ msgstr "会重新计算提成金额"
 #: view:tianv.project.project:tianv_project.view_project_project_form
 msgid "使用模板"
 msgstr "使用模板"
+
+#. module: tianv_project
+#: view:tianv.project.project:tianv_project.view_project_project_form
+msgid "再计算"
+msgstr "再计算"
 
 #. module: tianv_project
 #: view:tianv.project.project:tianv_project.view_project_project_form
@@ -464,8 +460,8 @@ msgstr "标记完成"
 
 #. module: tianv_project
 #: view:tianv.project.project:tianv_project.view_project_project_form
-msgid "款项分配"
-msgstr "款项分配"
+msgid "款项明细"
+msgstr "款项明细"
 
 #. module: tianv_project
 #: view:tianv.project.project:tianv_project.view_project_project_form
@@ -479,9 +475,35 @@ msgid "测试结果"
 msgstr "测试结果"
 
 #. module: tianv_project
+#: view:tianv.project.project:tianv_project.view_project_project_form
+#: view:tianv.project.project.record:tianv_project.view_tianv_project_record_form
+msgid "确定再次发送通知？"
+msgstr "确定再次发送通知？"
+
+#. module: tianv_project
+#: view:tianv.project.project:tianv_project.view_project_project_form
+msgid "确定启动"
+msgstr "确定启动"
+
+#. module: tianv_project
 #: view:tianv.project.project.record:tianv_project.view_tianv_project_record_form
 msgid "确定审批通过?"
 msgstr "确定审批通过?"
+
+#. module: tianv_project
+#: view:tianv.project.project:tianv_project.view_project_project_form
+msgid "确认么?"
+msgstr "确认么?"
+
+#. module: tianv_project
+#: view:tianv.project.project:tianv_project.view_project_project_form
+msgid "确认启动么?"
+msgstr "确认启动么?"
+
+#. module: tianv_project
+#: view:tianv.project.project:tianv_project.view_project_project_form
+msgid "确认结束么?"
+msgstr "确认结束么?"
 
 #. module: tianv_project
 #: model:res.groups,name:tianv_project.group_project_admin
@@ -500,13 +522,24 @@ msgstr "计算项"
 
 #. module: tianv_project
 #: view:tianv.project.project:tianv_project.view_project_project_form
+#: view:tianv.project.project.record:tianv_project.view_tianv_project_record_form
+msgid "重发通知"
+msgstr "重发通知"
+
+#. module: tianv_project
+#: view:tianv.project.project:tianv_project.view_project_project_form
 msgid "重设为草稿"
 msgstr "重设为草稿"
 
 #. module: tianv_project
+#: view:tianv.project.project:tianv_project.view_project_project_form
+msgid "重设草稿"
+msgstr "重设草稿"
+
+#. module: tianv_project
 #: model:ir.ui.menu,name:tianv_project.menu_project_project_root
 msgid "项目"
-msgstr "项目"
+msgstr "项目管理"
 
 #. module: tianv_project
 #: model:ir.actions.act_window,name:tianv_project.action_project_project
