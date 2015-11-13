@@ -108,11 +108,17 @@
                             <group>
                                 <field name="project_id" readonly="1"/>
                                 <field name="type_id" readonly="1"/>
+                                <field name="partner_id" readonly="1"/>
+                                <field name="price" readonly="1"/>
                                 <field name="move_id" readonly="1"/>
                             </group>
                             <group>
-                                <field name="partner_id" readonly="1"/>
-                                <field name="price" readonly="1"/>
+                                <field name="plan_finish_date" states_editable="{
+                                'processing':{
+                                    'groups':[%(tianv_project.group_project_officer)d]
+                                },
+                                'review': {'groups':[%(tianv_project.group_project_manager)d]},
+                                }"/>
                                 <field name="partner_finish_date" states_editable="{
                                 'processing':{
                                     'users':[user_id],

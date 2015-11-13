@@ -169,6 +169,7 @@
                                             />
                                     <field name="comment"/>
                                     <field name="partner_id"/>
+                                    <field name="plan_finish_date" groups="tianv_project.group_project_officer"/>
                                     <field name="finish_date" groups="tianv_project.group_project_manager"/>
                                     <field name="state" readonly="1"/>
                                     <button name="common_apply" string="确定启动" icon="gtk-media-play" type="object"

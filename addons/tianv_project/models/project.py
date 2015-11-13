@@ -166,6 +166,7 @@ class ProjectProjectRecord(models.Model):
     partner_id = fields.Many2one('res.partner', 'Partner')
     user_id = fields.Many2one('res.users', 'User', compute='_compute_user')
     project_id = fields.Many2one('tianv.project.project', 'Related Project', required=True)
+    plan_finish_date = fields.Date('Plan Finish Date')
     finish_date = fields.Date('Finish Date')
     move_id = fields.Many2one('account.move')
     partner_finish_date = fields.Date('Partner Finish Date')
