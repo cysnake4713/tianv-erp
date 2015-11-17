@@ -41,7 +41,7 @@
             <field name="arch" type="xml">
                 <form>
                     <header>
-                        <button name="common_apply" string="待审批" type="object" class="oe_highlight"
+                        <button name="button_finished_apply" string="待审批" type="object" class="oe_highlight"
                                 states_editable="{'processing':{'users':[user_id]},}"
                                 context="{
                                 'state': 'review',
@@ -108,7 +108,7 @@
                             <group>
                                 <field name="project_id" readonly="1"/>
                                 <field name="type_id" readonly="1"/>
-                                <field name="partner_id" readonly="1"/>
+                                <field name="partner_id" states_editable="{'processing':{'groups':[%(tianv_project.group_project_manager)d]},}"/>
                                 <field name="price" readonly="1"/>
                                 <field name="move_id" readonly="1"/>
                             </group>

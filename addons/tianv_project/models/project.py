@@ -199,6 +199,12 @@ class ProjectProjectRecord(models.Model):
         self.with_context(state='draft').common_apply()
 
     @api.multi
+    def button_finished_apply(self):
+        if not self.partner_finish_date:
+            self.partner_finish_date = fields.Date.today()
+        self.common_apply()
+
+    @api.multi
     def button_resend_message(self):
         self.with_context(message_users=[self.user_id.id] if self.user_id else [],
                           message=u'任务已经启动',
