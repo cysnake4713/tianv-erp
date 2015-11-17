@@ -111,23 +111,8 @@ class ProjectProject(models.Model):
     def button_start_process(self):
         for project in self.sudo():
             for record in project.record_ids:
-                record.with_context(state='processing',
-                                    message_users=[record.user_id.id] if record.user_id else [],
-                                    message=u'项目已经启动',
-                                    wechat_code=['tianv.project.project'],
-                                    wechat_template=self.env.ref('tianv_project.message_project_record').id,
-                                    ).common_apply()
-                if record.type_id.commission_type == 'account':
-                    record.move_id = self.sudo().env['account.move'].create({
-                        'journal_id': record.type_id.journal_id.id,
-                        'date': project.sign_date or fields.Date.today(),
-                        'period_id': self.env['account.period'].find(dt=project.sign_date).id,
-                        'line_id': [(0, 0, {'name': record.name, 'account_id': record.type_id.debit_account_id.id, 'debit': record.price,
-                                            'partner_id': record.partner_id.id}),
-                                    (0, 0, {'name': record.name, 'account_id': record.type_id.credit_account_id.id, 'credit': record.price,
-                                            'partner_id': record.partner_id.id}),
-                                    ]
-                    })
+                if record.state == 'draft':
+                    record.button_start_task()
             project.common_apply()
 
     @api.multi
@@ -169,7 +154,7 @@ class ProjectProjectRecord(models.Model):
     plan_finish_date = fields.Date('Plan Finish Date')
     finish_date = fields.Date('Finish Date')
     move_id = fields.Many2one('account.move')
-    partner_finish_date = fields.Date('Partner Finish Date')
+    partner_finish_date = fields.Datetime('Partner Finish Date')
 
     @api.multi
     @api.depends('partner_id')
@@ -184,6 +169,27 @@ class ProjectProjectRecord(models.Model):
         for record in self:
             if record.template_line_id:
                 record.price = record.template_line_id.compute_price(custom_context) * record.adjustment
+
+    @api.multi
+    def button_start_task(self):
+        record = self
+        record.with_context(state='processing',
+                            message_users=[record.user_id.id] if record.user_id else [],
+                            message=u'项目已经启动',
+                            wechat_code=['tianv.project.project'],
+                            wechat_template=self.env.ref('tianv_project.message_project_record').id,
+                            ).common_apply()
+        if record.type_id.commission_type == 'account':
+            record.move_id = self.sudo().env['account.move'].create({
+                'journal_id': record.type_id.journal_id.id,
+                'date': record.project_id.sign_date or fields.Date.today(),
+                'period_id': self.env['account.period'].find(dt=record.project_id.sign_date).id,
+                'line_id': [(0, 0, {'name': record.name, 'account_id': record.type_id.debit_account_id.id, 'debit': record.price,
+                                    'partner_id': record.partner_id.id}),
+                            (0, 0, {'name': record.name, 'account_id': record.type_id.credit_account_id.id, 'credit': record.price,
+                                    'partner_id': record.partner_id.id}),
+                            ]
+            })
 
     @api.multi
     def button_review_apply(self):
@@ -201,7 +207,7 @@ class ProjectProjectRecord(models.Model):
     @api.multi
     def button_finished_apply(self):
         if not self.partner_finish_date:
-            self.partner_finish_date = fields.Date.today()
+            self.partner_finish_date = fields.Datetime.now()
         self.common_apply()
 
     @api.multi
