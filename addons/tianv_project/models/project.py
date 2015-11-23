@@ -111,14 +111,14 @@ class ProjectProject(models.Model):
     def button_start_process(self):
         for project in self.sudo():
             for record in project.record_ids:
-                if record.state == 'draft':
-                    record.button_start_task()
+                if record.state == 'processing':
+                    record.button_resend_message()
             project.common_apply()
 
     @api.multi
     def button_reset_draft(self):
-        for project in self:
-            project.record_ids.button_reset_draft()
+        # for project in self:
+        #     project.record_ids.button_reset_draft()
         project.common_reject()
 
 
@@ -217,6 +217,15 @@ class ProjectProjectRecord(models.Model):
                           wechat_code=['tianv.project.project'],
                           wechat_template=self.env.ref('tianv_project.message_project_record').id,
                           ).common_apply()
+
+    @api.multi
+    def button_act_window(self):
+        res = self.env.ref('tianv_project.action_project_record').read()[0]
+        res['view_mode'] = 'form'
+        res['res_id'] = self.id
+        res['target'] = 'new'
+        del res['view_ids'], res['views']
+        return res
 
     @api.model
     def cron_send_plan_warning(self):

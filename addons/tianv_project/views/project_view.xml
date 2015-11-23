@@ -180,20 +180,22 @@
                                     <button name="button_review_apply" string="标记完成" icon="gtk-apply" type="object"
                                             groups="tianv_project.group_project_manager"
                                             states="processing,review"
-                                            confirm="确认么?"
+                                            confirm="确定审批通过?"
                                             context="{
                                                 'state': 'finished',
                                                 }"
                                             />
                                     <button name="button_reset_draft" string="重设草稿" icon="gtk-undo" type="object"
-                                            confirm="确认么?"
+                                            confirm="确认重设为草稿?"
                                             groups="tianv_project.group_project_manager"
                                             states="processing,review"
                                             />
                                     <button name="button_resend_message" string="重发通知" icon="terp-mail-message-new" type="object"
                                             confirm="确定再次发送通知？"
+                                            groups="tianv_project.group_project_officer"
                                             states="processing,review"
                                             />
+                                    <button name="button_act_window" string="任务详情" icon="gtk-justify-fill" type="object"/>
                                 </tree>
                             </field>
                         </group>
