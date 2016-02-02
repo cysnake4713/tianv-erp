@@ -18,3 +18,4 @@ access_tianv_project_project_record_officer,access_tianv_project_project_record_
 
 access_tianv_project_project,access_tianv_project_project,model_tianv_project_project,tianv_project.group_project_officer,1,1,1,1
 
+access_project_payroll_report,access_project_payroll_report,model_project_payroll_report,tianv_project.group_project_admin,1,0,0,0

@@ -3,3 +3,4 @@ import project
 import project_template
 import project_type
 import project_wizard
+import project_payroll_report

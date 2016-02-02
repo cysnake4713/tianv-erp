@@ -21,6 +21,7 @@ Tianv Project Module""",
         'views/project_view.xml',
         'views/project_record_view.xml',
         'views/project_wizard_view.xml',
+        'views/project_payroll_report.xml',
     ],
     'qweb': [
         'static/src/xml/*.xml',

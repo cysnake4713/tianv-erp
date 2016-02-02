@@ -27,6 +27,11 @@
             <field name="res_model">tianv.project.project.record</field>
             <field name="view_mode">tree,form</field>
         </record>
+        <record id="action_project_report" model="ir.actions.act_window">
+            <field name="name">项目汇总</field>
+            <field name="res_model">project.payroll.report</field>
+            <field name="view_mode">graph,tree</field>
+        </record>
 
         <menuitem id="menu_project_project_root" name="项目" parent="tianv_service.menu_service_root" sequence="50"/>
         <menuitem id="menu_project_project" name="项目信息" parent="menu_project_project_root" sequence="20"
@@ -35,6 +40,9 @@
         <menuitem id="menu_project_record" name="任务信息" parent="menu_project_project_root" sequence="25"
                   action="action_project_record"
                   groups="tianv_project.group_project_user"/>
+        <menuitem id="menu_project_report" name="项目汇总" parent="menu_project_project_root" sequence="30"
+                  action="action_project_report"
+                  groups="tianv_project.group_project_admin"/>
 
         <menuitem id="menu_project_template" name="项目模板" parent="tianv_service.menu_service_config" sequence="10"
                   action="action_project_template"
@@ -45,9 +53,9 @@
                   groups="tianv_project.group_project_admin"/>
 
         <act_window id="action_project_order_creation"
-            multi="True"
-            key2="client_action_multi" name="批量创建订单"
-            res_model="tianv.service.service.wizard" src_model="tianv.project.project"
-            view_mode="form" target="new" view_type="form"/>
+                    multi="True"
+                    key2="client_action_multi" name="批量创建订单"
+                    res_model="tianv.service.service.wizard" src_model="tianv.project.project"
+                    view_mode="form" target="new" view_type="form"/>
     </data>
 </openerp>
