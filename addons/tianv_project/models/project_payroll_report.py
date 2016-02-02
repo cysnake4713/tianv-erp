@@ -26,19 +26,20 @@ create or replace view project_payroll_report as (
     select payslip.id as id, payslip.partner_id as partner_id, payslip.period as period, task.need_paid as need_paid, payslip.paid_total as total_paid,
     COALESCE(task.need_paid,0)-COALESCE(payslip.paid_total,0) as left_paid from
         (
-        select l.slip_id as id, e.address_home_id as partner_id, date_trunc( 'month', p.date_from)::date as period ,l.paid_total  as paid_total from
-            (
-            select payslip_id as slip_id,  sum(amount) as paid_total from hr_payslip_input
-            where code='BUSINESS_COMMISSION' or code = 'PROJECT_COMMISSION' or code = 'SERVICE_COMMISSION'  or code = 'BALANCE'
-            group by payslip_id
-            ) as l,  hr_employee as e, hr_payslip as p
-        where e.id=p.employee_id and p.id=l.slip_id and e.address_home_id is not null
+            select l.slip_id as id, e.address_home_id as partner_id, date_trunc( 'month', p.date_from)::date as period ,l.paid_total as paid_total from
+                (
+                    select payslip_id as slip_id, sum(amount) as paid_total from hr_payslip_input
+                    where code='BUSINESS_COMMISSION' or code='PROJECT_COMMISSION' or code='SERVICE_COMMISSION' or code='BALANCE'
+                    group by payslip_id
+                ) as l,  hr_employee as e, hr_payslip as p
+            where e.id=p.employee_id and p.id=l.slip_id and e.address_home_id is not null
         ) as payslip  LEFT JOIN
         (
-        select  partner_id, date_trunc( 'month', partner_finish_date)::date  as period, sum(price) as need_paid from tianv_project_project_record
-        group by partner_id, date_trunc( 'month', partner_finish_date)::date
+            select  partner_id, date_trunc( 'month', partner_finish_date)::date  as period, sum(price) as need_paid from tianv_project_project_record
+            where state='finished'
+            group by partner_id, date_trunc( 'month', partner_finish_date)::date
         ) as task
-    on payslip.partner_id =  task.partner_id and payslip.period =  task.period
+    on payslip.partner_id=task.partner_id and payslip.period=task.period
     order by period, partner_id
 )
 """)

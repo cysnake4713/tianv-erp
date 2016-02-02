@@ -247,7 +247,7 @@ class HrContract(models.Model):
         result = 0.0
         if employee and employee.user_id:
             records = self.sudo().env['tianv.project.project.record'].search(
-                [('partner_id', '=', employee.user_id.partner_id.id), ('finish_date', '>=', date_from), ('finish_date', '<=', date_to),
+                [('partner_id', '=', employee.user_id.partner_id.id), ('partner_finish_date', '>=', date_from), ('partner_finish_date', '<=', date_to),
                  ('type_id.commission_type', '=', 'employee'), ('type_id.commission_code', '=', commission_code),
                  ('state', '=', 'finished')])
             result = sum([r.price for r in records])
