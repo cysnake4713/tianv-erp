@@ -43,17 +43,17 @@ class AttendanceWizard(models.TransientModel):
             for employee in wizard.employees:
                 try:
                     contract_ids += [employee.contract_ids.filtered(
-                        lambda c: c.date_start <= self.period.date_start and c.date_end >= self.period.date_stop).ensure_one().id]
+                            lambda c: c.date_start <= self.period.date_start and c.date_end >= self.period.date_stop).ensure_one().id]
                 except Exception:
                     raise exceptions.Warning(
-                        _("Related employee have find multi contract or have not match contract for employee: %s") % employee.name)
+                            _("Related employee have find multi contract or have not match contract for employee: %s") % employee.name)
                 wizard.contracts = [(6, 0, contract_ids)]
 
     @api.multi
     def button_period_to_social(self):
         self.button_get_contract()
         self.relative_social = self.env['tianv.social.insurance.record'].search(
-            [('period', '=', self.period.id), ('employee', 'in', [e.id for e in self.employees])])
+                [('period', '=', self.period.id), ('employee', 'in', [e.id for e in self.employees])])
         self.state = 'generate_social'
 
     @api.multi
@@ -61,18 +61,18 @@ class AttendanceWizard(models.TransientModel):
         if self.relative_social.filtered(lambda s: s.state != 'confirm'):
             raise exceptions.Warning(_('Some insurance records still not confirmed yet!'))
         self.relative_attendances = self.env['tianv.hr.attendance.record'].search(
-            [('period', '=', self.period.id), ('contract', 'in', [e.id for e in self.contracts])])
+                [('period', '=', self.period.id), ('contract', 'in', [e.id for e in self.contracts])])
         self.state = 'generate_attendance'
 
     @api.multi
     def button_generate_social(self):
         self.relative_social = self.env['tianv.social.insurance.record'].search(
-            [('period', '=', self.period.id), ('employee', 'in', [e.id for e in self.employees])])
+                [('period', '=', self.period.id), ('employee', 'in', [e.id for e in self.employees])])
         need_process_employees = self.employees.filtered(lambda ep: ep not in [s.employee for s in self.relative_social])
         social_config = self.env['tianv.social.insurance.config'].search([('employee', 'in', [c.id for c in need_process_employees])])
         social_config.with_context(period=self.period.id).generate_insurance_record()
         self.relative_social = self.env['tianv.social.insurance.record'].search(
-            [('period', '=', self.period.id), ('employee', 'in', [e.id for e in self.employees])])
+                [('period', '=', self.period.id), ('employee', 'in', [e.id for e in self.employees])])
 
     @api.multi
     def button_attendance_to_payroll(self):
@@ -84,13 +84,13 @@ class AttendanceWizard(models.TransientModel):
     @api.multi
     def button_generate_attendance(self):
         self.relative_attendances = self.env['tianv.hr.attendance.record'].search(
-            [('period', '=', self.period.id), ('contract', 'in', [e.id for e in self.contracts])])
+                [('period', '=', self.period.id), ('contract', 'in', [e.id for e in self.contracts])])
         need_process_contracts = self.contracts.filtered(lambda c: c not in [s.contract for s in self.relative_attendances])
         for contract in need_process_contracts:
             new_attendance_record = self.env['tianv.hr.attendance.record'].create({'contract': contract.id, 'period': self.period.id})
             new_attendance_record.button_generate_record()
         self.relative_attendances = self.env['tianv.hr.attendance.record'].search(
-            [('period', '=', self.period.id), ('contract', 'in', [e.id for e in self.contracts])])
+                [('period', '=', self.period.id), ('contract', 'in', [e.id for e in self.contracts])])
 
     @api.multi
     def button_generate_payroll(self):
@@ -98,6 +98,7 @@ class AttendanceWizard(models.TransientModel):
                                                                 ('date_to', '>=', self.period.date_stop),
                                                                 ('contract_id', 'in', [c.id for c in self.contracts]), ])
         need_process_contracts = self.contracts.filtered(lambda ct: ct not in [s.contract_id for s in self.relative_payslips])
+        get_commission = self.env['hr.contract'].get_commission
         for contract in need_process_contracts:
             self.env['hr.payslip'].create({
                 'name': u'%s%s' % (contract.employee_id.name, fields.Date.from_string(self.period.date_start).strftime('%Y%m')),
@@ -107,9 +108,15 @@ class AttendanceWizard(models.TransientModel):
                 'date_from': self.period.date_start,
                 'date_to': self.period.date_stop,
                 'journal_id': self.payroll_journal.id,
-                'input_line_ids': [(0, 0, {'contract_id': contract.id, 'name': u'项目提成', 'code': 'PROJECT_COMMISSION'}),
-                                   (0, 0, {'contract_id': contract.id, 'name': u'服务提成', 'code': 'SERVICE_COMMISSION'}),
-                                   (0, 0, {'contract_id': contract.id, 'name': u'商务提成', 'code': 'BUSINESS_COMMISSION'}),
+                'input_line_ids': [(0, 0, {'contract_id': contract.id, 'name': u'项目提成', 'code': 'PROJECT_COMMISSION',
+                                           'amount': get_commission(contract.employee_id, 'PROJECT', self.period.date_start,
+                                                                    self.period.date_stop)}),
+                                   (0, 0, {'contract_id': contract.id, 'name': u'服务提成', 'code': 'SERVICE_COMMISSION',
+                                           'amount': get_commission(contract.employee_id, 'SERVICE', self.period.date_start,
+                                                                    self.period.date_stop)}),
+                                   (0, 0, {'contract_id': contract.id, 'name': u'商务提成', 'code': 'BUSINESS_COMMISSION',
+                                           'amount': get_commission(contract.employee_id, 'BUSINESS', self.period.date_start,
+                                                                    self.period.date_stop)}),
                                    (0, 0, {'contract_id': contract.id, 'name': u'平衡工资', 'code': 'BALANCE'}),
                                    (0, 0, {'contract_id': contract.id, 'name': u'年终奖金', 'code': 'YEAR_AWARD'}),
                                    ],
