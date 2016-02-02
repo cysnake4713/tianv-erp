@@ -6,6 +6,8 @@
             <field name="model">tianv.project.project.record</field>
             <field name="arch" type="xml">
                 <search>
+                    <field name="finish_date"/>
+                    <field name="partner_finish_date"/>
                     <field name="name"/>
                     <field name="project_id"/>
                     <field name="partner_id"/>
@@ -17,6 +19,8 @@
                         <filter string="Partner" domain="[]" context="{'group_by':'partner_id'}"/>
                         <filter string="Type" domain="[]" context="{'group_by':'type_id'}"/>
                         <filter string="Project" domain="[]" context="{'group_by':'project_id'}"/>
+                        <filter string="Finish Date" domain="[]" context="{'group_by':'finish_date:month'}"/>
+                        <filter string="Partner Finish Date" domain="[]" context="{'group_by':'partner_finish_date:month'}"/>
                     </group>
                 </search>
             </field>
@@ -32,6 +36,8 @@
                     <field name="type_id"/>
                     <field name="price"/>
                     <field name="state"/>
+                    <field name="partner_finish_date"/>
+                    <field name="finish_date"/>
                 </tree>
             </field>
         </record>
