@@ -10,7 +10,7 @@
                     <field name="period"/>
                     <group expand="0" string="Group By">
                         <filter string="Partner" context="{'group_by':'partner_id'}"/>
-                        <filter string="period" name="period" context="{'group_by':'period:month'}"/>
+                        <filter string="Period" name="period" context="{'group_by':'period:month'}"/>
                     </group>
                 </search>
             </field>
@@ -25,6 +25,7 @@
                     <field name="need_paid" type="measure"/>
                     <field name="total_paid" type="measure"/>
                     <field name="left_paid" type="measure"/>
+                    <field name="balance_paid" type="measure"/>
                 </graph>
             </field>
         </record>
@@ -39,6 +40,7 @@
                     <field name="need_paid"/>
                     <field name="total_paid"/>
                     <field name="left_paid"/>
+                    <field name="balance_paid"/>
                 </tree>
             </field>
         </record>
