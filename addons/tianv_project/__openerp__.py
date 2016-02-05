@@ -11,6 +11,8 @@ Tianv Project Module""",
     'website': 'http://odoosoft.com',
     'depends': ['base', 'account', 'tianv_service', 'odoosoft_workflow'],
     'data': [
+        'views/template_view.xml',
+
         'data/data.xml',
         'security/security.xml',
         'security/ir.model.access.csv',

@@ -30,7 +30,7 @@
         <record id="action_project_report" model="ir.actions.act_window">
             <field name="name">项目汇总</field>
             <field name="res_model">project.payroll.report</field>
-            <field name="view_mode">graph,tree</field>
+            <field name="view_mode">project_report,tree</field>
         </record>
 
         <menuitem id="menu_project_project_root" name="项目" parent="tianv_service.menu_service_root" sequence="50"/>

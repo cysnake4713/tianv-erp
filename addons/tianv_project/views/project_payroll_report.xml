@@ -19,14 +19,14 @@
             <field name="name">project.payroll.report.graph</field>
             <field name="model">project.payroll.report</field>
             <field name="arch" type="xml">
-                <graph type="pivot">
+                <project_report type="pivot">
                     <field name="partner_id" type="row"/>
                     <field name="period" interval="month" type="col"/>
                     <field name="need_paid" type="measure"/>
                     <field name="total_paid" type="measure"/>
                     <field name="left_paid" type="measure"/>
                     <field name="balance_paid" type="measure"/>
-                </graph>
+                </project_report>
             </field>
         </record>
 

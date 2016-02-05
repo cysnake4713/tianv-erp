@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<templates id="template" xml:space="preserve">
+    
+    <t t-name="PeriodTimePicker">
+        <div class="oe_plan_quickadd ui-toolbar" style="margin-bottom:0px;">
+            <div class="oe_form_dropdown_section">
+                <h4>开始日期:</h4>
+                <div class="oe_start_date_picker"/>
+            </div>
+               <div class="oe_form_dropdown_section">
+                <h4>结束日期:</h4>
+                <div class="oe_end_date_picker"/>
+            </div>
+        </div>
+    </t>
+
+</templates>
