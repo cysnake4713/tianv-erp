@@ -39,6 +39,21 @@
             <field name="perm_unlink" eval="False"/>
         </record>
 
+        <record id="rule_project_report_user" model="ir.rule">
+            <field name="name">普通员工可以查看自己项目report</field>
+            <field name="model_id" ref="model_project_payroll_report"/>
+            <field name="groups"
+                   eval="[(6,0,[ref('tianv_project.group_project_user')])]"/>
+            <field name="domain_force">[('partner_id','=',user.partner_id.id)]</field>
+        </record>
+        <record id="rule_project_report_manager" model="ir.rule">
+            <field name="name">经理可以查看所有项目report</field>
+            <field name="model_id" ref="model_project_payroll_report"/>
+            <field name="groups"
+                   eval="[(6,0,[ref('tianv_project.group_project_manager')])]"/>
+            <field name="domain_force">[]</field>
+        </record>
+
         <!--<record id="rule_tianv_attendance_machine_admin" model="ir.rule">-->
         <!--<field name="name">管理所有打卡</field>-->
         <!--<field name="model_id" ref="model_tianv_attendance_machine"/>-->
