@@ -41,7 +41,6 @@ class SocialInsuranceConfig(models.Model):
             config.company_total = company_total
             config.total = config.personal_total + config.company_total
 
-
     @api.one
     @api.constrains('employee', 'active')
     def _check_employee(self):
@@ -63,7 +62,8 @@ class SocialInsuranceConfig(models.Model):
         try:
             last_month = time.localtime()[1] - 1 or 12
             need_compute_date = '%s-%s-01' % (time.localtime()[0], last_month)
-            period = self.env['account.period'].search([('date_start', '<=', need_compute_date), ('date_stop', '>=', need_compute_date)])
+            period = self.env['account.period'].search(
+                [('date_start', '<=', need_compute_date), ('date_stop', '>=', need_compute_date), ('special', '=', False)])
             self.search([('active', '=', True)]).with_context(period=period.id).generate_insurance_record()
             self.env['odoosoft.wechat.enterprise.message'].create_message(obj=None,
                                                                           content=u'%s 的社保记录已经自动生成,请登陆查看和处理' % period.name,
@@ -76,7 +76,8 @@ class SocialInsuranceConfig(models.Model):
     @api.multi
     def generate_insurance_record(self):
         if 'period' not in self.env.context:
-            period = self.env['account.period'].search([('date_start', '<=', fields.Datetime.now()), ('date_stop', '>=', fields.Datetime.now())])
+            period = self.env['account.period'].search(
+                [('date_start', '<=', fields.Datetime.now()), ('date_stop', '>=', fields.Datetime.now()), ('special', '=', False)])
             period = period.id if period else None
         else:
             period = self.env.context['period']
@@ -224,7 +225,7 @@ class InsuranceWizard(models.TransientModel):
     @api.multi
     def button_confirm(self):
         periods = self.env['account.period'].search(
-            [('date_start', '>=', self.start_period.date_start), ('date_stop', '<=', self.end_period.date_stop)])
+            [('date_start', '>=', self.start_period.date_start), ('date_stop', '<=', self.end_period.date_stop), ('special', '=', False)])
         periods = periods.filtered(lambda p: p.date_start != p.date_stop)
         if not periods:
             raise exceptions.Warning(_('no period found!'))
