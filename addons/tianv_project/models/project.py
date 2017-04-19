@@ -258,7 +258,7 @@ class HrContract(models.Model):
 class IrUiView(models.Model):
     _inherit = 'ir.ui.view'
 
-    type = fields.selection([
+    type = fields.Selection([
         ('tree', 'Tree'),
         ('form', 'Form'),
         ('graph', 'Graph'),
