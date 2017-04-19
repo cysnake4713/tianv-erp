@@ -247,8 +247,25 @@ class HrContract(models.Model):
         result = 0.0
         if employee and employee.user_id:
             records = self.sudo().env['tianv.project.project.record'].search(
-                [('partner_id', '=', employee.user_id.partner_id.id), ('partner_finish_date', '>=', date_from), ('partner_finish_date', '<=', date_to),
+                [('partner_id', '=', employee.user_id.partner_id.id), ('partner_finish_date', '>=', date_from),
+                 ('partner_finish_date', '<=', date_to),
                  ('type_id.commission_type', '=', 'employee'), ('type_id.commission_code', '=', commission_code),
                  ('state', '=', 'finished')])
             result = sum([r.price for r in records])
         return result
+
+
+class IrUiView(models.Model):
+    _inherit = 'ir.ui.view'
+
+    type = fields.selection([
+        ('tree', 'Tree'),
+        ('form', 'Form'),
+        ('graph', 'Graph'),
+        ('calendar', 'Calendar'),
+        ('diagram', 'Diagram'),
+        ('gantt', 'Gantt'),
+        ('kanban', 'Kanban'),
+        ('search', 'Search'),
+        ('project_report', 'project_report'),
+        ('qweb', 'QWeb')], string='View Type')
